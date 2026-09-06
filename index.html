@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP Microeconomics Unit 1 — Study Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>/* BKSTAR design system tokens - vendored from satplatform-entitlements/src/styles/design-system/tokens/
+   Source of truth is that folder. Do not edit here; re-vendor instead. */
+
+/* ---- fonts.css ---- */
+/* BKSTAR webfonts. No original font binaries were supplied with the brand assets;
+   these are the nearest Google Fonts matches. Archivo carries the wordmark's heavy
+   geometric grotesque; JetBrains Mono is the system's second voice and does all
+   labels, metadata and figures; IBM Plex Sans handles long reading text. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+:root {
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-ui: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-reading: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* ---- colors.css ---- */
+:root {
+  /* Brand primitives — sampled from the BKSTAR logo lockup */
+  --navy-900: #071c2e;
+  --navy-800: #0d2f4b; /* BKSTAR navy — primary brand ink */
+  --navy-700: #16456b;
+  --navy-600: #245f8f;
+  --navy-500: #3a7baf;
+  --navy-200: #c3d5e4;
+  --navy-100: #e3ecf3;
+  --navy-050: #f1f6fa;
+
+  --orange-700: #c96f00;
+  --orange-600: #e07e00;
+  --orange-500: #fe8f01; /* BKSTAR orange — accent / action */
+  --orange-300: #ffb44d;
+  --orange-100: #ffe7c4;
+  --orange-050: #fff6e8;
+
+  --sky-700: #1e93ac;
+  --sky-500: #41cce2; /* mascot glow accent */
+  --sky-200: #b6ecf5;
+  --sky-050: #eafafd;
+
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-050: #f7f9fb;
+  --gray-100: #edf1f5;
+  --gray-200: #dde4eb;
+  --gray-300: #c4ced9;
+  --gray-400: #a9b6c4;
+  --gray-500: #6b7c8e;
+  --gray-600: #4d5d6d;
+  --gray-700: #3b4a59;
+
+  /* Semantic primitives */
+  --green-600: #17845a;
+  --green-500: #1f9d6b;
+  --green-100: #dcf4ea;
+  --red-600: #b52f2a;
+  --red-500: #d93a34;
+  --red-100: #fbe2e0;
+  --amber-500: #e9a100;
+  --amber-100: #fcefd0;
+
+  /* ---- Semantic aliases: text ---- */
+  --text-strong: var(--navy-800);
+  --text-body: var(--gray-700);
+  --text-muted: var(--gray-500);
+  --text-subtle: var(--gray-400);
+  --text-inverse: var(--white);
+  --text-accent: var(--orange-600);
+  --text-link: var(--navy-600);
+  --text-link-hover: var(--navy-800);
+
+  /* ---- Semantic aliases: surfaces ---- */
+  --surface-page: var(--gray-050);
+  --surface-grid: var(--white);
+  --surface-card: var(--white);
+  --surface-raised: var(--white);
+  --surface-sunken: var(--gray-100);
+  --surface-brand: var(--navy-800);
+  --surface-brand-soft: var(--navy-050);
+  --surface-accent: var(--orange-500);
+  --surface-accent-soft: var(--orange-050);
+  --surface-hint: var(--sky-050);
+
+  /* ---- Semantic aliases: borders ---- */
+  --border-subtle: var(--gray-200);
+  --border-hairline: var(--grid-line-strong);
+  --border-default: var(--gray-300);
+  --border-strong: var(--navy-800);
+  --border-accent: var(--orange-500);
+  --border-focus: var(--sky-500);
+
+  /* ---- Answer / grading states (core to SAT breakdowns) ---- */
+  --state-correct-fg: var(--green-600);
+  --state-correct-bg: var(--green-100);
+  --state-correct-border: var(--green-500);
+  --state-incorrect-fg: var(--red-600);
+  --state-incorrect-bg: var(--red-100);
+  --state-incorrect-border: var(--red-500);
+  --state-selected-fg: var(--navy-800);
+  --state-selected-bg: var(--navy-100);
+  --state-selected-border: var(--navy-800);
+  --state-eliminated-fg: var(--gray-400);
+  --state-flag-fg: var(--amber-500);
+  --state-flag-bg: var(--amber-100);
+
+  /* ---- Subject accents (Reading & Writing vs Math) ---- */
+  --subject-rw: var(--orange-500);
+  --subject-rw-soft: var(--orange-050);
+  --subject-math: var(--sky-700);
+  --subject-math-soft: var(--sky-050);
+}
+
+/* ---- typography.css ---- */
+:root {
+  /* Sizes */
+  --size-display-1: 54px;
+  --size-display-2: 42px;
+  --size-h1: 32px;
+  --size-h2: 24px;
+  --size-h3: 18px;
+  --size-h4: 16px;
+  --size-body-lg: 17px;
+  --size-body: 15px;
+  --size-body-sm: 13.5px;
+  --size-caption: 12px;
+  --size-micro: 10.5px;
+
+  /* Line heights */
+  --lh-tight: 1.02; /* @kind other */
+  --lh-heading: 1.14; /* @kind other */
+  --lh-snug: 1.35; /* @kind other */
+  --lh-body: 1.5; /* @kind other */
+  --lh-reading: 1.65; /* @kind other */
+
+  /* Weights */
+  --weight-regular: 400; /* @kind other */
+  --weight-medium: 500; /* @kind other */
+  --weight-semibold: 600; /* @kind other */
+  --weight-bold: 700; /* @kind other */
+  --weight-black: 800; /* @kind other */
+
+  /* Tracking */
+  --track-display: -0.03em; /* @kind other */
+  --track-tight: -0.015em; /* @kind other */
+  --track-normal: 0; /* @kind other */
+  --track-label: 0.08em; /* @kind other */
+  --track-eyebrow: 0.16em; /* @kind other */
+
+  /* Composite roles */
+  --type-display: var(--weight-black) var(--size-display-1) / var(--lh-tight) var(--font-display);
+  --type-h1: var(--weight-bold) var(--size-h1) / var(--lh-heading) var(--font-display);
+  --type-h2: var(--weight-bold) var(--size-h2) / var(--lh-heading) var(--font-display);
+  --type-h3: var(--weight-semibold) var(--size-h3) / var(--lh-snug) var(--font-ui);
+  --type-body: var(--weight-regular) var(--size-body) / var(--lh-body) var(--font-ui);
+  --type-body-sm: var(--weight-regular) var(--size-body-sm) / var(--lh-body) var(--font-ui);
+  /* Labels, eyebrows and every piece of metadata are MONO in this system. */
+  --type-label: var(--weight-semibold) var(--size-caption) / var(--lh-snug) var(--font-mono);
+  --type-eyebrow: var(--weight-semibold) var(--size-micro) / var(--lh-snug) var(--font-mono);
+  --type-passage: var(--weight-regular) var(--size-body-lg) / var(--lh-reading) var(--font-reading);
+  --type-mono: var(--weight-medium) var(--size-body-sm) / var(--lh-snug) var(--font-mono);
+  --type-readout: var(--weight-bold) 28px / 1 var(--font-mono);
+}
+
+/* ---- spacing.css ---- */
+:root {
+  --space-0: 0;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 56px;
+  --space-11: 72px;
+  --space-12: 96px;
+
+  /* Data-dense: card padding drops from 24 to 18, rows are 34-40px tall. */
+  --gutter-card: 18px;
+  --gutter-section: 64px;
+  --stack-tight: var(--space-3);
+  --stack-default: var(--space-4);
+  --stack-loose: var(--space-7);
+  --row-height: 36px;
+  --measure-reading: 68ch; /* @kind other */
+  --measure-ui: 46ch; /* @kind other */
+  --width-content: 1180px;
+  --width-app: 1440px;
+}
+
+/* ---- radius.css ---- */
+:root {
+  /* Engineered, not soft: nothing rounder than 8px except toggles. */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-pill: 999px;
+  --radius-card: var(--radius-lg);
+  --radius-control: var(--radius-md);
+  --radius-chip: var(--radius-sm);
+  --radius-screen: var(--radius-xl);
+
+  --border-width-hairline: 1px; /* @kind other */
+  --border-width-default: 1px; /* @kind other */
+  --border-width-strong: 1.5px; /* @kind other */
+}
+
+/* ---- elevation.css ---- */
+:root {
+  /* Borders do the work; shadows are almost absent. Cards are flat. */
+  --shadow-none: none; /* @kind other */
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: 0 1px 0 rgba(13, 47, 75, 0.06), 0 2px 6px rgba(13, 47, 75, 0.06);
+  --shadow-lg: 0 6px 20px rgba(13, 47, 75, 0.12);
+  --shadow-pop: 0 16px 40px rgba(7, 28, 46, 0.24);
+  --shadow-inset: inset 0 1px 0 rgba(13, 47, 75, 0.05);
+
+  /* Focus — a hard 2px cyan frame, no soft glow */
+  --ring-focus: 0 0 0 2px var(--sky-500);
+  --ring-accent: 0 0 0 2px var(--orange-500);
+  --ring-danger: 0 0 0 2px var(--red-500);
+
+  --overlay-scrim: rgba(7, 28, 46, 0.62); /* @kind other */
+  --blur-panel: saturate(120%) blur(8px); /* @kind other */
+
+  /* Hairline grid — the system's background motif */
+  --grid-line: rgba(13, 47, 75, 0.055);
+  --grid-line-strong: rgba(13, 47, 75, 0.1);
+  --grid-size: 24px;
+  --pattern-grid: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); /* @kind other */
+}
+
+/* ---- motion.css ---- */
+:root {
+  /* Snappy and mechanical: linear-ish easing, short durations, no overshoot. */
+  --dur-instant: 60ms; /* @kind other */
+  --dur-fast: 100ms; /* @kind other */
+  --dur-base: 150ms; /* @kind other */
+  --dur-slow: 240ms; /* @kind other */
+  --dur-reveal: 320ms; /* @kind other */
+
+  --ease-standard: cubic-bezier(0.3, 0, 0.2, 1); /* @kind other */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1); /* @kind other */
+  --ease-in: cubic-bezier(0.5, 0, 1, 1); /* @kind other */
+  --ease-pop: cubic-bezier(0.3, 0, 0.2, 1); /* @kind other */
+
+  --transition-control: background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard); /* @kind other */
+  --press-scale: 1; /* @kind other */
+}
+
+/* ---- base.css ---- */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: var(--type-body);
+  color: var(--text-body);
+  background-color: var(--surface-page);
+  background-image: var(--pattern-grid);
+  background-size: var(--grid-size) var(--grid-size);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+h1, h2, h3, h4 { color: var(--text-strong); margin: 0; letter-spacing: var(--track-tight); }
+h1 { font: var(--type-h1); }
+h2 { font: var(--type-h2); }
+h3 { font: var(--type-h3); }
+p { margin: 0; }
+a { color: var(--text-link); text-decoration: none; border-bottom: 1px solid var(--navy-200); transition: var(--transition-control); }
+a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500); }
+:focus-visible { outline: none; box-shadow: var(--ring-focus); border-radius: var(--radius-xs); }
+.bk-eyebrow { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-muted); }
+.bk-label { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); }
+.bk-passage { font: var(--type-passage); color: var(--text-strong); max-width: var(--measure-reading); }
+.bk-mono { font: var(--type-mono); }
+.bk-readout { font: var(--type-readout); letter-spacing: -0.02em; color: var(--navy-800); }
+/* Hairline grid panel — use on page grounds and hero blocks */
+.bk-grid { background-image: var(--pattern-grid); background-size: var(--grid-size) var(--grid-size); }
+
+/* ============================================================================
+   AP Economics — visual grammar
+   ----------------------------------------------------------------------------
+   This is the econ layer ON TOP of BKSTAR (tokens.css). It does not replace any
+   BKSTAR token; it only names the roles an economics diagram needs and binds
+   each one to an existing brand primitive.
+
+   The rule the whole course reads by:
+
+     navy   = what is true now      (initial curves, initial equilibrium, axes)
+     orange = what changed          (the shift, the arrow, the new equilibrium)
+     sky    = what policy imposed   (ceiling, floor, tax wedge, administered rate)
+     gray   = supporting detail     (guides, gridlines, secondary labels)
+     hatch  = loss                  (deadweight loss — never red; red is grading)
+
+   Orange stays scarce inside a graph exactly as it is scarce inside a screen:
+   one change at a time is marked. A graph showing two successive shifts marks
+   the first in navy-600 and only the live one in orange.
+   ========================================================================== */
+
+:root {
+  /* ---- Roles ---- */
+  --econ-initial: var(--navy-800);        /* curves, axes, equilibrium as-is   */
+  --econ-initial-soft: var(--navy-500);   /* a superseded / prior state        */
+  --econ-change: var(--orange-500);       /* the shift being taught right now  */
+  --econ-change-soft: var(--orange-100);  /* its fill, when it needs one       */
+  --econ-policy: var(--sky-700);          /* imposed lines: ceiling, floor, r  */
+  --econ-policy-soft: var(--sky-050);
+  --econ-detail: var(--gray-400);         /* dashed guides to the axes         */
+  --econ-detail-strong: var(--gray-500);
+  --econ-plot-rule: var(--gray-200);      /* the plot frame                    */
+
+  /* ---- Outcome areas (welfare) ----
+     Surplus is a tint, never a saturated block: the curves must stay readable
+     through it. Deadweight loss is a hatch, not a colour, so it survives
+     photocopying and colour-blind readers alike.                              */
+  --econ-cs: rgba(58, 123, 175, 0.20);    /* consumer surplus  — navy tint     */
+  --econ-ps: rgba(254, 143, 1, 0.18);     /* producer surplus  — orange tint   */
+  --econ-gov: rgba(30, 147, 172, 0.18);   /* government revenue/cost — sky     */
+  --econ-dwl-ink: var(--navy-600);        /* stroke colour of the DWL hatch    */
+
+  /* ---- Line weights ----
+     Curves are 2px so they read at card size; guides are 1px hairlines, the
+     same hairline the rest of BKSTAR is built from.                           */
+  --econ-curve-w: 2;
+  --econ-curve-w-strong: 2.5;
+  --econ-guide-w: 1;
+  --econ-axis-w: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Atlas figure shell
+   A figure is a flat white card like every other BKSTAR card: 1px border,
+   6px radius, no shadow, no lift.
+   ------------------------------------------------------------------------ */
+.g-fig {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--gutter-card);
+  margin: 0;
+}
+.g-fig > svg { display: block; width: 100%; height: auto; }
+
+.g-fig figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+.g-fig figcaption .g-id {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+.g-fig figcaption .g-title {
+  font: var(--type-h3);
+  color: var(--text-strong);
+}
+.g-fig figcaption .g-note {
+  font: var(--type-body-sm);
+  color: var(--text-muted);
+  flex-basis: 100%;
+}
+
+/* Dual-panel figures (G-M09, G-M14, G-A06) keep both halves the same height
+   and are separated by a hairline, not a gap. */
+.g-panels { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+.g-panels > svg { display: block; width: 100%; height: auto; }
+.g-panels > svg + svg { border-left: 1px solid var(--border-subtle); padding-left: var(--space-4); }
+
+/* ---------------------------------------------------------------------------
+   In-SVG type. Every label in a graph is mono, because in this system every
+   label and every number is mono.
+   ------------------------------------------------------------------------ */
+.g-axis-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; fill: var(--text-strong); letter-spacing: 0.02em; }
+.g-curve-label { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; }
+.g-tick { font-family: var(--font-mono); font-size: 10px; font-weight: 500; fill: var(--text-muted); }
+.g-point-label { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; fill: var(--text-strong); }
+.g-area-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; fill: var(--navy-700); letter-spacing: 0.04em; }
+.g-panel-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; fill: var(--text-muted); letter-spacing: var(--track-eyebrow); text-transform: uppercase; }
+
+/* ---------------------------------------------------------------------------
+   The two atlas objects that are not plots (G-M16, G-M17).
+   Same card, same mono labelling, same hairlines — they have to read as part of
+   the same set as the graphs, or the atlas stops looking like one thing.
+   ------------------------------------------------------------------------ */
+.g-matrix table { border-collapse: collapse; width: 100%; }
+.g-matrix th, .g-matrix td { border: 1px solid var(--border-subtle); padding: var(--space-4) var(--space-3); text-align: center; }
+.g-matrix thead th, .g-matrix th[scope="row"] {
+  font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase;
+  color: var(--text-muted); background: var(--surface-sunken); font-weight: 600;
+}
+.g-matrix th[scope="row"] { text-align: left; white-space: nowrap; }
+.g-matrix td { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); position: relative; }
+.g-matrix .corner {
+  background: var(--surface-sunken); position: relative; min-width: 96px; height: 46px;
+  background-image: linear-gradient(to top right, transparent calc(50% - 0.5px), var(--border-subtle) 50%, transparent calc(50% + 0.5px));
+}
+.g-matrix .corner .who-a, .g-matrix .corner .who-b {
+  position: absolute; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase; color: var(--text-muted);
+}
+.g-matrix .corner .who-a { left: var(--space-3); bottom: var(--space-2); }
+.g-matrix .corner .who-b { right: var(--space-3); top: var(--space-2); }
+.g-matrix .pa { color: var(--navy-800); }
+.g-matrix .pb { color: var(--orange-600); }
+.g-matrix .sep { color: var(--text-subtle); margin: 0 2px; }
+.g-matrix .g-best { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.g-matrix .g-nash { background: var(--surface-hint); }
+.g-matrix .g-nash-tag {
+  display: block; margin-top: var(--space-2); font: var(--type-eyebrow);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--sky-700);
+}
+.g-matrix-key { font: var(--type-body-sm); color: var(--text-muted); margin-top: var(--space-4); }
+.g-matrix-key .pa, .g-matrix-key .pb { font: var(--type-mono); }
+
+.g-quadrant .q-grid { display: grid; grid-template-columns: 104px 1fr 1fr; gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
+.g-quadrant .q-head {
+  background: var(--surface-sunken); padding: var(--space-3);
+  font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted);
+  display: flex; align-items: center;
+}
+.g-quadrant .q-head--col:first-of-type { grid-column: 2; }
+.g-quadrant .q-grid > .q-head--col:nth-of-type(1) { grid-column-start: 2; }
+.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); }
+.g-quadrant .q-cell--key { background: var(--surface-hint); }
+.g-quadrant .q-name { font: var(--type-h3); color: var(--text-strong); }
+.g-quadrant .q-eg { font: var(--type-mono); color: var(--text-muted); }
+.g-quadrant .q-note { font: var(--type-body-sm); color: var(--text-body); }
+.g-quadrant .q-head--row { text-align: left; }
+
+/* The T-account (G-A05). Same table treatment as the payoff matrix. */
+.g-balance { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+@media (max-width: 700px) { .g-balance { grid-template-columns: 1fr; } }
+.g-t-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-3); }
+.g-t table { border-collapse: collapse; width: 100%; }
+.g-t th, .g-t td { border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; }
+.g-t th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
+.g-t .k { display: block; font: var(--type-body-sm); color: var(--text-body); }
+.g-t .v { display: block; font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); margin-top: var(--space-1); }
+.g-t .v-accent { color: var(--orange-600); }
+
+.g-steps { list-style: none; margin: 0; padding: 0; }
+.g-steps li { display: flex; justify-content: space-between; gap: var(--space-4); align-items: baseline; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.g-steps li:last-child { border-bottom: 0; }
+.g-steps .s-k { font: var(--type-body-sm); color: var(--text-body); }
+.g-steps .s-v { font: var(--type-mono); color: var(--text-strong); white-space: nowrap; }
+.g-steps .v-accent { color: var(--orange-600); }
+.g-steps .s-warn { border-top: 1.5px solid var(--navy-800); margin-top: var(--space-3); padding-top: var(--space-4); }
+.g-steps .s-warn .s-k { color: var(--text-subtle); text-decoration: line-through; font: var(--type-mono); }
+.g-steps .s-warn .s-v { font: var(--type-body-sm); color: var(--text-muted); white-space: normal; text-align: right; }
+/* A trap with a long struck line and a long reason interleaved into a mess when
+   both halves wrapped against each other. Stack them instead: the wrong number
+   on its own line, the reason underneath it. */
+.g-steps li.s-warn { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.g-steps .s-warn .s-v { text-align: left; }
+
+/* ---------------------------------------------------------------------------
+   4. Calculation objects — the atlas members that are arithmetic, not curves.
+   ---------------------------------------------------------------------------
+   G-A10 the multiplier, G-A11 bonds, G-A12 indicators. Every one of these is
+   examined as a "calculate ... with shown work" point, and every one of them
+   is lost the same way: the right formula applied to the wrong number. So the
+   shared rule for this family is that the substitution is visible, not just
+   the answer, and the wrong number is shown struck through next to the right
+   one. That is the .g-calc / .s-warn pair.
+
+   These four classes are shared, not per-graph. A new calculation object
+   should compose them rather than invent its own.
+   ------------------------------------------------------------------------ */
+
+.g-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+.g-cols--wide { grid-template-columns: 1.15fr 1fr; }
+.g-col-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin: 0 0 var(--space-3); }
+
+/* A computation: name, the substitution, the result. */
+.g-calc { list-style: none; margin: 0; padding: 0; }
+.g-calc li { padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.g-calc li:last-child { border-bottom: 0; }
+.g-calc .c-name { display: block; font: var(--type-body-sm); color: var(--text-body); }
+.g-calc .c-work {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  align-items: baseline; margin-top: var(--space-2);
+}
+.g-calc .c-sub { font: var(--type-mono); color: var(--text-muted); }
+.g-calc .c-out { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); white-space: nowrap; }
+.g-calc .c-out--accent { color: var(--orange-600); }
+.g-calc li.c-lead { border-bottom: 1.5px solid var(--navy-800); }
+/* When the concluding row is followed immediately by a trap, its rule and the
+   trap's own rule stacked into a visible double line. One rule is enough. */
+.g-calc li.c-lead:last-child { border-bottom: 0; }
+
+/* A directional chain: step arrow step arrow step. The terminal step is the
+   claim the rubric awards, so it carries the accent. */
+.g-chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.g-chain li { display: flex; align-items: center; gap: var(--space-2); }
+.g-chain .ch-step {
+  font: var(--type-mono); color: var(--text-strong);
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-chip); padding: var(--space-2) var(--space-3);
+}
+.g-chain .ch-step--policy { background: var(--sky-050); border-color: var(--sky-200); color: var(--navy-700); }
+.g-chain .ch-step--end { background: var(--orange-050); border-color: var(--orange-300); color: var(--orange-700); font-weight: var(--weight-bold); }
+.g-chain .ch-arrow { color: var(--text-subtle); font: var(--type-mono); }
+.g-chain-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin: var(--space-5) 0 var(--space-3); }
+
+/* A proportional partition: one bar whose segments are sized by the numbers
+   they carry, so "the labor force is a subset of the adult population" is
+   visible rather than asserted. */
+.g-partition { display: flex; flex-direction: column; gap: var(--space-3); }
+.g-partition .p-row { display: flex; align-items: stretch; width: 100%; }
+.g-partition .p-seg {
+  display: flex; flex-direction: column; justify-content: center; gap: var(--space-1);
+  padding: var(--space-3); min-width: 0; overflow: hidden;
+  border: 1px solid var(--border-subtle); background: var(--surface-card);
+}
+.g-partition .p-row .p-seg + .p-seg { border-left: 0; }
+.g-partition .p-seg--in { background: var(--navy-050); border-color: var(--navy-200); }
+.g-partition .p-seg--out { background: var(--surface-sunken); }
+.g-partition .p-seg--sub { background: var(--orange-050); border-color: var(--orange-300); }
+.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-partition .p-note { font: var(--type-body-sm); color: var(--text-body); margin: var(--space-2) 0 0; display: flex; align-items: baseline; gap: var(--space-2); }
+.g-partition .p-swatch { flex: 0 0 auto; width: 10px; height: 10px; border-radius: var(--radius-xs); background: var(--orange-050); border: 1px solid var(--orange-300); }
+.g-partition .p-v { font: var(--type-mono); color: var(--text-strong); }
+.g-partition .p-brace { font: var(--type-eyebrow); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin: var(--space-2) 0 0; }
+/* Rounded top corners belong to whichever row starts the object, and every row
+   below it is a fresh bar now that levels are scaled to their own totals. */
+.g-partition .p-row .p-seg:first-child { border-radius: var(--radius-card) 0 0 var(--radius-card); }
+.g-partition .p-row .p-seg:last-child { border-radius: 0 var(--radius-card) var(--radius-card) 0; }
+.g-partition .p-row .p-seg:only-child { border-radius: var(--radius-card); }
+
+/* A price-and-quantity table: the one place two years sit side by side and the
+   student has to keep base-year prices apart from current-year prices. */
+.g-pq table { border-collapse: collapse; width: 100%; }
+.g-pq th, .g-pq td { border: 1px solid var(--border-subtle); padding: var(--space-2) var(--space-3); text-align: right; }
+.g-pq th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
+.g-pq th[scope="row"], .g-pq td:first-child { text-align: left; }
+.g-pq td { font: var(--type-mono); color: var(--text-strong); }
+.g-pq .col-base { background: var(--navy-050); }
+.g-pq tfoot td { font-weight: var(--weight-bold); background: var(--surface-sunken); }
+.g-pq caption { font: var(--type-body-sm); color: var(--text-muted); text-align: left; margin-bottom: var(--space-3); }
+
+/* ---------------------------------------------------------------------------
+   Scope badges
+   ---------------------------------------------------------------------------
+   Out-of-scope material is MARKED, never removed. A figure that disappears
+   because CB excluded it leaves a teacher unable to tell the difference between
+   "we decided not to build this" and "the exam will not ask this", and the
+   second is worth knowing while planning a lesson.
+   ------------------------------------------------------------------------ */
+.g-scope {
+  font: var(--type-eyebrow); letter-spacing: var(--track-label); text-transform: uppercase;
+  color: var(--sky-700); background: var(--sky-050); border: 1px solid var(--sky-200);
+  border-radius: var(--radius-pill); padding: 2px var(--space-3);
+}
+.g-scope--out { color: var(--orange-700); background: var(--orange-050); border-color: var(--orange-300); }
+.g-note--out { font: var(--type-body-sm); color: var(--text-body); background: var(--orange-050); border-left: 2px solid var(--orange-300); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); }
+
+/* The circular flow (G-A13). A diagram of relationships, so it is HTML like the
+   T-account and the quadrant: the labels are the content. */
+.g-flow { display: flex; flex-direction: column; gap: var(--space-4); }
+.g-flow .cf-loop { border-left: 2px solid var(--border-subtle); padding: var(--space-3) var(--space-4); }
+.g-flow .cf-loop--real { border-left-color: var(--navy-500); }
+.g-flow .cf-loop--money { border-left-color: var(--orange-500); }
+.g-flow .cf-loop-title { display: block; font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-2); }
+.g-flow .cf-loop p { font: var(--type-body-sm); color: var(--text-body); }
+.g-flow .cf-loop p strong { color: var(--text-strong); }
+.g-flow .cf-sectors { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.g-flow .cf-sector { background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); }
+.g-flow .cf-name { font: var(--type-h3); color: var(--text-strong); }
+.g-flow .cf-holds { font: var(--type-body-sm); color: var(--text-muted); }
+
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--surface-page); color: var(--text-body); font: var(--type-body); font-family: var(--font-reading); }
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--text-link-hover); }
+
+.hero { background: var(--surface-brand); color: var(--text-inverse); padding: 44px 0 36px; }
+.hero .wrap { display: grid; gap: 10px; }
+.eyebrow { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; opacity: .78; }
+/* grammar.css colours headings navy; on the navy band that is invisible. */
+.hero h1 { font: var(--type-display); margin: 0; letter-spacing: var(--track-display); color: var(--text-inverse); }
+.hero .lead { max-width: 62ch; opacity: .88; margin: 4px 0 0; font-size: var(--size-body-lg); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.chips a { color: var(--text-inverse); background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius-pill); padding: 5px 12px; font: var(--type-label); }
+.chips a:hover { background: rgba(255,255,255,.2); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 16px; font: var(--type-body-sm); opacity: .9; }
+.legend span::before { content: ""; display: inline-block; width: 22px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 7px; }
+.legend .now::before { background: #fff; }
+.legend .changed::before { background: var(--orange-500); }
+
+.wrap { width: min(var(--width-app, 1200px), calc(100% - 48px)); margin: 0 auto; }
+.layout { display: grid; grid-template-columns: 228px minmax(0, 1fr); gap: 40px; padding: 36px 0 80px; }
+@media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .rail { display: none; } }
+
+.rail { position: sticky; top: 24px; align-self: start; }
+.rail .lab { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin: 0 0 10px; }
+.rail a { display: block; padding: 7px 10px 7px 12px; border-left: 2px solid var(--border-subtle); color: var(--text-muted); font: var(--type-body-sm); }
+.rail a.on { color: var(--text-strong); border-left-color: var(--orange-500); background: var(--surface-card); }
+
+section.sec { padding: 8px 0 28px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); scroll-margin-top: 20px; }
+section.sec:last-child { border-bottom: 0; }
+h2 { font: var(--type-h2); color: var(--text-strong); margin: 0 0 14px; letter-spacing: var(--track-tight); }
+h3 { font: var(--type-h3); color: var(--text-strong); margin: 22px 0 8px; }
+p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
+.lede { font-size: var(--size-body-lg); color: var(--text-muted); }
+
+.figgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; margin: 4px 0 22px; }
+.figgrid figure { margin: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: var(--shadow-xs); padding: 14px 14px 12px; display: flex; flex-direction: column; }
+.figgrid figure svg { display: block; width: 100%; height: auto; }
+.figgrid figcaption { margin-top: 8px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-reading); }
+.figgrid figcaption .eg { display: block; margin-top: 10px; padding: 9px 12px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
+.figgrid figcaption sub { font-size: .75em; vertical-align: sub; }
+.figgrid figcaption .reads { list-style: none; margin: 10px 0 0; padding: 0 0 0 12px; border-left: 3px solid var(--navy-200); color: var(--text-body); }
+.figgrid figcaption .reads .lab { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 4px; }
+.figgrid figcaption .reads li + li { margin-top: 5px; }
+.figgrid figcaption .reads li:not(.lab)::before { content: "\2192"; color: var(--navy-500); margin-right: 7px; }
+.figgrid figure.motion { cursor: pointer; }
+.figgrid figure .replay { margin-top: 8px; align-self: flex-start; font: var(--type-label); color: var(--text-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 3px 10px; }
+.figgrid figure.motion:hover .replay { color: var(--text-accent); border-color: var(--border-accent); }
+
+/* motion states - only ever applied by script, and only when motion is welcome */
+figure.armed .g-after, figure.armed .g-arrow { opacity: 0; }
+figure.armed .g-arrow { stroke-dasharray: 1; stroke-dashoffset: 1; }
+figure.play .g-arrow { animation: g-draw .6s ease-out forwards; }
+figure.play .g-after { animation: g-fade .45s ease-out forwards; }
+figure.play.shift .g-arrow { animation-delay: 1.35s; }
+figure.play.shift .g-after { animation-delay: 1.75s; }
+figure.play.move .g-after { animation-delay: .5s; }
+@keyframes g-draw { from { opacity: 1; stroke-dashoffset: 1; } to { opacity: 1; stroke-dashoffset: 0; } }
+@keyframes g-fade { from { opacity: 0; } to { opacity: 1; } }
+
+table.q-tbl { border-collapse: collapse; font: var(--type-body-sm); margin: 6px 0 12px; }
+table.q-tbl th, table.q-tbl td { border: 1px solid var(--border-default); padding: 6px 14px; text-align: center; }
+table.q-tbl th { background: var(--surface-sunken); font-weight: var(--weight-semibold); }
+table.q-tbl td:first-child, table.q-tbl th:first-child { text-align: left; }
+
+.rule-box, .trap-box, .work-box { padding: 14px 18px; margin: 14px 0; border-radius: var(--radius-md); line-height: var(--lh-reading); max-width: 76ch; }
+.rule-box { background: var(--navy-050); border-left: 4px solid var(--navy-700); }
+.trap-box { background: var(--surface-card); border: 1px solid var(--border-subtle); border-left: 4px solid var(--orange-500); }
+.work-box { background: var(--surface-sunken); border: 1px solid var(--border-subtle); }
+.rule-box .lab, .trap-box .lab, .work-box .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 6px; }
+.rule-box .big { font-size: var(--size-body-lg); }
+.work-box p { max-width: none; }
+dl.defs { margin: 0 0 8px; max-width: 76ch; }
+dl.defs dt { font-weight: var(--weight-semibold); color: var(--text-strong); margin-top: 10px; }
+dl.defs dd { margin: 2px 0 0; color: var(--text-body); }
+ul.tight, ol.tight { margin: 6px 0 12px; padding-left: 1.3em; max-width: 76ch; }
+ul.tight li, ol.tight li { margin: 4px 0; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+.checklist { list-style: none; padding: 0; margin: 8px 0 14px; max-width: 76ch; }
+.checklist li { margin: 6px 0; padding-left: 1.6em; text-indent: -1.6em; }
+.checklist li::before { content: "\2610"; color: var(--orange-500); margin-right: .55em; }
+.tag { font: var(--type-label); color: var(--text-subtle); }
+</style>
+</head><body>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">AP Microeconomics</div>
+  <h1>Unit 1 — Basic Economic Concepts</h1>
+  <p class="lead">Six topics, one idea: there is not enough to go around, so every choice has a cost. Read a section, then cover the worked example and reproduce it. The last card is the test of whether the unit is done.</p>
+  <div class="chips"><a href="#s-1.1">1.1</a><a href="#s-1.2">1.2</a><a href="#s-1.3">1.3</a><a href="#s-1.4">1.4</a><a href="#s-1.5">1.5</a><a href="#s-1.6">1.6</a></div>
+  <div class="legend"><span class="now">what was already true</span><span class="changed">what changed - on screen, it moves</span><span class="tag">Unit 1 is 12&ndash;15% of the AP Microeconomics exam.</span></div>
+</div></header>
+<div class="wrap layout">
+  <nav class="rail"><p class="lab">On this page</p><a href="#s-1.1">1.1 Scarcity, resources and opportunity cost</a><a href="#s-1.2">1.2 Resource allocation and economic systems</a><a href="#s-1.3">1.3 The production possibilities curve</a><a href="#s-1.3a">What moves the curve, and what only moves the point</a><a href="#s-1.3b">Drawing the PPC on the free-response section, step by step</a><a href="#s-1.4">1.4 Comparative advantage, specialization and trade</a><a href="#s-1.5">1.5 Cost-benefit analysis</a><a href="#s-1.6">1.6 Marginal analysis and consumer choice</a><a href="#s-recall">The card to memorize</a></nav>
+  <main><section class="sec" id="s-1.1">
+  <h2>1.1 Scarcity, resources and opportunity cost</h2>
+  
+  
+<p class="lede">Every idea in this unit descends from one fact: there is not enough to go around.</p>
+
+<div class="rule-box">
+  <span class="lab">The chain the whole course hangs on</span>
+  <span class="big"><b>Scarcity &rarr; choice &rarr; opportunity cost.</b></span>
+  Resources are limited and wants are not, so something must be given up. That sacrifice is the cost economists care about &mdash; not the price tag.
+</div>
+
+<dl class="defs">
+  <dt>Scarcity</dt>
+  <dd>Less of something is available than people want when it is free. Scarcity is about the gap between availability and desire, not about rarity alone: a thing nobody wants is not scarce however little of it exists.</dd>
+  <dt>Trade-off</dt>
+  <dd>Everything you give up when you choose. A choice usually has many trade-offs.</dd>
+  <dt>Opportunity cost</dt>
+  <dd>The value of the <b>next best</b> alternative given up &mdash; one alternative, the best of the rejected ones, never the sum of all of them.</dd>
+  <dt>Sunk cost</dt>
+  <dd>Money or time already spent that cannot be recovered. It is <b>not</b> part of opportunity cost, because it is gone whichever way you choose.</dd>
+  <dt>Marginal</dt>
+  <dd>&ldquo;One more.&rdquo; Every decision rule in this course compares the benefit of one more unit with its cost.</dd>
+</dl>
+
+<h3>The four factors of production</h3>
+<table class="q-tbl">
+  <thead><tr><th>Factor</th><th>What it is</th><th>Its payment</th></tr></thead>
+  <tbody>
+    <tr><td>Land</td><td>Natural resources &mdash; soil, oil, water, timber</td><td>Rent</td></tr>
+    <tr><td>Labor</td><td>Human physical and mental effort</td><td>Wages</td></tr>
+    <tr><td>Capital</td><td>Produced tools used to make other goods</td><td>Interest</td></tr>
+    <tr><td>Entrepreneurship</td><td>Risk-taking that combines the other three</td><td>Profit</td></tr>
+  </tbody>
+</table>
+
+<div class="trap-box">
+  <span class="lab">Two traps the exam sets here</span>
+  <b>Money is not a factor of production.</b> It buys resources; it does not produce anything. Neither is time.<br>
+  <b>Capital splits in two.</b> <i>Physical capital</i> is the equipment &mdash; an excavator, an oven, a delivery van. <i>Human capital</i> is the skill and knowledge inside the worker &mdash; training, education, certification. A question that names a machine and a training course in the same sentence is testing exactly this distinction.
+</div>
+
+<div class="work-box">
+  <span class="lab">Worked example &mdash; what counts in opportunity cost</span>
+  Jalen paid $150 for a concert ticket months ago. Tonight he could resell it for $200. He goes, and spends $50 on food inside.<br>
+  <b>Opportunity cost = $200 + $50 = $250.</b> The $200 is the resale he gave up; the $50 could have bought other things. The original $150 is <b>sunk</b> &mdash; it is spent whether he attends or not, so it never enters the calculation.
+</div>
+</section>
+<section class="sec" id="s-1.2">
+  <h2>1.2 Resource allocation and economic systems</h2>
+  
+  
+<p>Scarcity forces <b>every</b> society &mdash; whatever its politics &mdash; to answer the same three questions.</p>
+
+<div class="rule-box">
+  <span class="lab">The three economic questions</span>
+  <b>1. What</b> should be produced? &nbsp;&nbsp; <b>2. How</b> should it be produced? &nbsp;&nbsp; <b>3. For whom</b> is it produced?
+</div>
+
+<table class="q-tbl">
+  <thead><tr><th>System</th><th>Who decides</th><th>Property rights</th></tr></thead>
+  <tbody>
+    <tr><td>Market</td><td>Prices, through buyers and sellers acting for themselves</td><td>Private, enforced</td></tr>
+    <tr><td>Command</td><td>Central planners in government</td><td>State-held</td></tr>
+    <tr><td>Mixed</td><td>Mostly prices, with government intervention</td><td>Private, regulated</td></tr>
+  </tbody>
+</table>
+
+<p>In a market economy the price is doing two jobs at once. It <b>informs</b> &mdash; a high price says buyers value this good &mdash; and it <b>motivates</b> &mdash; that same price is the profit a producer can capture by supplying it. Resources move toward profit, so they move toward what people value most.</p>
+
+<div class="trap-box">
+  <span class="lab">Trap</span>
+  Planning does <b>not</b> abolish scarcity. A command economy changes <i>who decides</i>, not whether resources are limited. Every system faces the same three questions; only the answering mechanism differs.
+</div>
+</section>
+<section class="sec" id="s-1.3">
+  <h2>1.3 The production possibilities curve</h2>
+  <div class="figgrid"><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — points" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Trucks</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Cars</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text><circle cx="137.58" cy="89.9" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="144.58" y="83.9" fill="var(--econ-initial)" text-anchor="start">A</text><text class="g-area-label" x="121.58" y="106.9" text-anchor="end">efficient</text><circle cx="96.62" cy="141.9" r="3.2" fill="var(--econ-detail-strong)" stroke="var(--econ-detail-strong)" stroke-width="0"/><text class="g-point-label" x="103.62" y="135.9" fill="var(--econ-detail-strong)" text-anchor="start">B</text><text class="g-area-label" x="102.62" y="157.9" text-anchor="middle">inefficient</text><circle cx="188.78" cy="49.9" r="3.2" fill="var(--econ-policy)" stroke="var(--econ-policy)" stroke-width="0"/><text class="g-point-label" x="195.78" y="43.9" fill="var(--econ-policy)" text-anchor="start">C</text><text class="g-area-label" x="182.78" y="65.9" text-anchor="middle">unattainable</text></svg><figcaption>Three points, three verdicts. A on the curve is productively efficient; B inside is attainable but wasteful; C beyond is unattainable with today&rsquo;s resources and technology.<span class="eg"><b>Example.</b> A vehicle plant in a recession runs one shift instead of two and builds fewer cars AND fewer trucks &mdash; that is B. Restoring the second shift returns it to A. A new robot line could reach C; nothing available today can.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: cars. Vertical axis: trucks. One plant, one year.</li><li>B, inside the curve: one shift running. Fewer cars AND fewer trucks than the plant could make.</li><li>A, on the curve: both shifts running. Every worker and machine in use.</li><li>C, beyond the curve: what the robot line would allow. Not reachable with today&rsquo;s equipment.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — opportunity-cost" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Corn</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Soybeans</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text><path d="M109.05 69.97 L180.37 69.97 L180.37 130.69" fill="none" stroke="var(--econ-detail)" stroke-width="1" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="109.05" cy="69.97" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="107.15" y="62.97" fill="var(--econ-initial)" text-anchor="end">A</text><circle cx="180.37" cy="130.69" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="188.37" y="125.69" fill="var(--econ-change)" text-anchor="start">B</text><path d="M109.05 83.97 L180.37 83.97 M109.05 79.97 L109.05 87.97 M180.37 79.97 L180.37 87.97" fill="none" stroke="var(--econ-change)" stroke-width="1.2"/><text class="g-point-label" x="138.71" y="100.97" text-anchor="end" fill="var(--econ-change)">X gained</text><path d="M196.37 69.97 L196.37 130.69 M192.37 69.97 L200.37 69.97 M192.37 130.69 L200.37 130.69" fill="none" stroke="var(--econ-change)" stroke-width="1.2"/><text class="g-point-label" x="205.37" y="104.33" text-anchor="start" fill="var(--econ-change)">Y given up</text></svg><figcaption>Reading opportunity cost. Moving from A to B, the gain is read along the horizontal axis and the cost along the vertical. The cost of the move is the corn given up &mdash; only that.<span class="eg"><b>Example.</b> An Iowa farm shifts 40 acres from corn to soybeans. The soybeans gained are the benefit; the bushels of corn those acres would have grown are the opportunity cost. The seed money is not &mdash; it was spent either way.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: soybeans. Vertical axis: corn. The farm&rsquo;s acres are the resources.</li><li>A: the acreage before the switch. B: after 40 acres move to soybeans.</li><li>The bracket along the bottom, &ldquo;X gained&rdquo;: the extra soybeans. The benefit.</li><li>The bracket up the side, &ldquo;Y given up&rdquo;: the corn those acres no longer grow. The opportunity cost, and nothing else &mdash; the seed money is not in the figure because it is not a cost of the switch.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — base" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Steel</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Wheat</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text></svg><figcaption>Bowed outward: increasing opportunity cost. Resources are not equally suited to both goods, so each extra unit of wheat costs more steel than the last. The normal case.<span class="eg"><b>Example.</b> The first land pulled into wheat is rocky ground that made little steel anyway &mdash; cheap. The last is the ground under a steel mill &mdash; expensive. The next figure puts numbers on it: each additional 10 tons of wheat costs 10, then 20, then 30, then 40 tons of steel.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: wheat. Vertical axis: steel. The bow is the whole lesson.</li><li>Near the top left, the curve is almost flat: the first tons of wheat cost little steel, because the land that moves is rocky ground that made little steel anyway.</li><li>Near the bottom right, it is almost vertical: the last tons of wheat cost a great deal of steel, because now the mill&rsquo;s own ground is being farmed.</li><li>Norland&rsquo;s table (next figure) is this same bow as numbers.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — schedule" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Steel (tons)</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Wheat (tons)</text><path d="M52 43.43 L107.65 61.29 L163.3 97 L218.96 150.57 L274.61 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="43.43" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="59" y="37.43" fill="var(--econ-initial)" text-anchor="start">A</text><circle cx="107.65" cy="61.29" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="114.65" y="55.29" fill="var(--econ-initial)" text-anchor="start">B</text><circle cx="163.3" cy="97" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="170.3" y="91" fill="var(--econ-initial)" text-anchor="start">C</text><circle cx="218.96" cy="150.57" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="225.96" y="144.57" fill="var(--econ-initial)" text-anchor="start">D</text><circle cx="274.61" cy="222" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="281.61" y="216" fill="var(--econ-initial)" text-anchor="start">E</text><text class="g-tick" x="274.61" y="236" text-anchor="middle" fill="var(--econ-initial)">40</text><text class="g-tick" x="218.96" y="236" text-anchor="middle" fill="var(--econ-initial)">30</text><text class="g-tick" x="163.3" y="236" text-anchor="middle" fill="var(--econ-initial)">20</text><text class="g-tick" x="107.65" y="236" text-anchor="middle" fill="var(--econ-initial)">10</text><text class="g-tick" x="46" y="46.93" text-anchor="end" fill="var(--econ-initial)">100</text><text class="g-tick" x="46" y="100.5" text-anchor="end" fill="var(--econ-initial)">70</text><text class="g-tick" x="46" y="154.07" text-anchor="end" fill="var(--econ-initial)">40</text></svg><figcaption>A production schedule, plotted. Five combinations, joined. This is the bowed curve above, as the exam actually presents it &mdash; you are given the table and asked to reason from it.<span class="eg"><b>Example.</b> Combination A is all steel; E is all wheat. Read the steel lost between neighbours: A to B costs 10 tons, B to C costs 20, C to D costs 30, D to E costs 40. The same 10 tons of wheat costs more steel every time.</span><ul class="reads"><li class="lab">In the figure</li><li>Each dot is one row of the table: A (0, 100) through E (40, 0).</li><li>Each segment steepens: that IS increasing opportunity cost, drawn. A to B is nearly flat (10 steel per 10 wheat); D to E is nearly vertical (40 steel per 10 wheat).</li><li>A point at (25, 45) would sit below the C&ndash;D segment: attainable, but leaving output on the table. Inefficient.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — schedule" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Consumer goods</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Capital goods</text><path d="M52 43.43 L106.47 50.57 L160.94 64.86 L215.4 93.43 L269.87 150.57" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="43.43" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="59" y="37.43" fill="var(--econ-initial)" text-anchor="start">A</text><circle cx="106.47" cy="50.57" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="113.47" y="44.57" fill="var(--econ-initial)" text-anchor="start">B</text><circle cx="160.94" cy="64.86" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="167.94" y="58.86" fill="var(--econ-initial)" text-anchor="start">C</text><circle cx="215.4" cy="93.43" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="222.4" y="87.43" fill="var(--econ-initial)" text-anchor="start">D</text><circle cx="269.87" cy="150.57" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="276.87" y="144.57" fill="var(--econ-initial)" text-anchor="start">E</text><text class="g-tick" x="269.87" y="236" text-anchor="middle" fill="var(--econ-initial)">8</text><text class="g-tick" x="215.4" y="236" text-anchor="middle" fill="var(--econ-initial)">6</text><text class="g-tick" x="160.94" y="236" text-anchor="middle" fill="var(--econ-initial)">4</text><text class="g-tick" x="106.47" y="236" text-anchor="middle" fill="var(--econ-initial)">2</text><text class="g-tick" x="46" y="46.93" text-anchor="end" fill="var(--econ-initial)">50</text><text class="g-tick" x="46" y="68.36" text-anchor="end" fill="var(--econ-initial)">44</text><text class="g-tick" x="46" y="96.93" text-anchor="end" fill="var(--econ-initial)">36</text><text class="g-tick" x="46" y="154.07" text-anchor="end" fill="var(--econ-initial)">20</text></svg><figcaption>A capital-goods schedule &mdash; the one worked through below. Capital goods along the bottom, consumer goods up the side.<span class="eg"><b>Example.</b> Moving from B to D: capital goods 2 to 6, consumer goods 48 to 36. The opportunity cost is 12 consumer goods &mdash; the vertical drop between the two dots, nothing more.</span><ul class="reads"><li class="lab">In the figure</li><li>B and D are the two combinations the worked example compares. Their horizontal distance is the capital gained; their vertical distance, 12, is the cost.</li><li>The drops between neighbours, 2, 4, 8, 16, grow: increasing opportunity cost, exactly as in Norland&rsquo;s figure.</li><li>Choosing D over B is choosing a point further down this curve today so that the whole curve can sit further out tomorrow.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — linear" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Cakes</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Cookies</text><path d="M52 42 L251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text></svg><figcaption>Straight line: constant opportunity cost. Resources are perfectly adaptable between the goods. Draw this only when a question says so.<span class="eg"><b>Example.</b> One bakery, one oven, one baker. Every batch of cakes costs the same number of cookies whether it is the first batch or the tenth, because nothing about the flour, the oven or the baker prefers one product.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: cookies. Vertical axis: cakes. One bakery.</li><li>The slope is the same everywhere along the line: each batch of cakes costs the same number of cookies, first batch or tenth.</li><li>That is what &ldquo;resources equally adaptable&rdquo; looks like &mdash; the oven and the baker have no preference. Compare the bow in the figure before this one.</li></ul></figcaption></figure></div>
+  
+<p>The PPC shows every combination of two goods an economy can produce when it uses all its resources with the technology it has. It is a picture of scarcity, of opportunity cost, of efficiency and of growth, all at once.</p>
+
+<table class="q-tbl">
+  <thead><tr><th>Where the point is</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr><td>On the curve</td><td>Productively efficient &mdash; no output is being wasted</td></tr>
+    <tr><td>Inside the curve</td><td>Attainable but inefficient &mdash; unemployed or misallocated resources</td></tr>
+    <tr><td>Outside the curve</td><td>Unattainable with current resources and technology</td></tr>
+  </tbody>
+</table>
+
+<h3>The shape carries a claim</h3>
+<ul class="tight">
+  <li><b>Bowed outward (concave)</b> &mdash; <b>increasing</b> opportunity cost. Resources are not equally suited to both goods, so each extra unit costs more of the other than the last did. This is the normal case.</li>
+  <li><b>Straight line</b> &mdash; <b>constant</b> opportunity cost. Resources are perfectly adaptable between the two goods. This is the special case, and the one you draw when a question says &ldquo;assume constant opportunity cost.&rdquo;</li>
+</ul>
+
+<h3>What moves the curve, and what does not</h3>
+<ul class="tight">
+  <li><b>Shifts out:</b> more resources, better resources, better technology. More capital, a larger or better-trained labor force, a new resource discovery.</li>
+  <li><b>Shifts in:</b> fewer or worse resources. A war, a natural disaster, a falling literacy rate.</li>
+  <li><b>Pivots:</b> a technology that improves only one good. That good&rsquo;s intercept moves out; the other intercept does not move at all.</li>
+  <li><b>Does NOT shift it:</b> a change in demand, a change in unemployment, or moving from inside the curve onto it. Those change the point chosen, not what is possible.</li>
+</ul>
+
+<div class="rule-box">
+  <span class="lab">Capital goods today buy the curve of tomorrow</span>
+  Producing <b>capital goods</b> instead of <b>consumer goods</b> means less consumption now in exchange for a larger productive capacity later. The curve shifts out <b>later</b>, when that capital is built and working &mdash; not at the moment the choice is made.
+</div>
+
+<div class="work-box">
+  <span class="lab">Worked example &mdash; opportunity cost from a table</span>
+  <table class="q-tbl">
+    <thead><tr><th>Combination</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead>
+    <tbody>
+      <tr><td>Capital goods</td><td>0</td><td>2</td><td>4</td><td>6</td><td>8</td></tr>
+      <tr><td>Consumer goods</td><td>50</td><td>48</td><td>44</td><td>36</td><td>20</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:6px">Moving <b>B to D</b>: capital rises 2 &rarr; 6, consumer falls 48 &rarr; 36. <b>Cost = 12 consumer goods.</b> Only the sacrifice counts &mdash; never the sacrifice plus the gain.</p>
+  <p style="margin:0">Each additional 2 capital goods costs 2, then 4, then 8, then 16 consumer goods. The sacrifice grows, so opportunity cost is <b>increasing</b> and the curve is <b>bowed outward</b>.</p>
+</div>
+</section>
+<section class="sec" id="s-1.3a">
+  <h2>What moves the curve, and what only moves the point</h2>
+  <div class="figgrid"><figure class="g-fig motion shift"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — growth" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Capital goods</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Consumer goods</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial-soft)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="101.05" y="83.97" fill="var(--econ-initial-soft)" text-anchor="end">PPC&#8321;</text><path class="g-shift" data-from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" d="M52 30 C54.86 31.17 63.46 34.64 69.19 37.04 C74.92 39.44 80.65 41.85 86.38 44.41 C92.11 46.98 97.84 49.61 103.57 52.44 C109.3 55.27 115.02 58.22 120.75 61.4 C126.48 64.59 132.21 67.94 137.94 71.54 C143.67 75.15 149.4 78.96 155.13 83.04 C160.86 87.11 166.59 91.43 172.32 96 C178.05 100.57 183.78 105.4 189.51 110.47 C195.24 115.53 200.97 120.86 206.7 126.4 C212.43 131.94 218.16 137.73 223.89 143.69 C229.62 149.65 235.34 155.84 241.07 162.15 C246.8 168.46 252.53 174.98 258.26 181.55 C263.99 188.13 269.72 194.87 275.45 201.61 C281.18 208.35 289.78 218.6 292.64 222" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" begin="indefinite" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" to="M52 30 C54.86 31.17 63.46 34.64 69.19 37.04 C74.92 39.44 80.65 41.85 86.38 44.41 C92.11 46.98 97.84 49.61 103.57 52.44 C109.3 55.27 115.02 58.22 120.75 61.4 C126.48 64.59 132.21 67.94 137.94 71.54 C143.67 75.15 149.4 78.96 155.13 83.04 C160.86 87.11 166.59 91.43 172.32 96 C178.05 100.57 183.78 105.4 189.51 110.47 C195.24 115.53 200.97 120.86 206.7 126.4 C212.43 131.94 218.16 137.73 223.89 143.69 C229.62 149.65 235.34 155.84 241.07 162.15 C246.8 168.46 252.53 174.98 258.26 181.55 C263.99 188.13 269.72 194.87 275.45 201.61 C281.18 208.35 289.78 218.6 292.64 222"/></path><text class="g-after g-curve-label" x="299.64" y="216" fill="var(--econ-change)" text-anchor="start">PPC&#8322;</text><path pathLength="1" class="g-arrow" d="M155.94 100.8 Q162.08 99 168.22 97.2" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><text class="g-after g-point-label" x="210.72" y="94" text-anchor="start" fill="var(--econ-change)">growth</text></svg><figcaption>Growth. More resources, better resources or better technology move the whole curve out &mdash; both intercepts with it.<span class="eg"><b>Example.</b> South Korea, 1960 to 2000: mass schooling plus decades of factory investment. The country could make more of everything, not just one thing, so the entire curve moved out.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: consumer goods. Vertical axis: capital goods. The country is South Korea.</li><li>PPC&#8321; (navy): what the economy could make in 1960.</li><li>PPC&#8322; (orange): what it could make by 2000. Both intercepts moved out, because schooling and factories raise the maximum of everything, not one thing.</li><li>The arrow is the forty years.</li></ul></figcaption></figure><figure class="g-fig motion shift"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — growth-one-good" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Steel</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Wheat</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial-soft)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="101.05" y="83.97" fill="var(--econ-initial-soft)" text-anchor="end">PPC&#8321;</text><path class="g-shift" data-from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" d="M52 42 C54.93 43.03 63.7 46.07 69.55 48.18 C75.41 50.3 81.26 52.42 87.11 54.7 C92.96 56.98 98.81 59.32 104.66 61.87 C110.51 64.41 116.37 67.08 122.22 69.97 C128.07 72.87 133.92 75.94 139.77 79.26 C145.62 82.58 151.47 86.1 157.33 89.9 C163.18 93.69 169.03 97.71 174.88 102 C180.73 106.29 186.58 110.83 192.43 115.61 C198.29 120.39 204.14 125.43 209.99 130.69 C215.84 135.94 221.69 141.44 227.54 147.12 C233.39 152.79 239.25 158.7 245.1 164.72 C250.95 170.75 256.8 176.98 262.65 183.27 C268.5 189.56 274.35 196.01 280.21 202.47 C286.06 208.92 294.83 218.74 297.76 222" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" begin="indefinite" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" to="M52 42 C54.93 43.03 63.7 46.07 69.55 48.18 C75.41 50.3 81.26 52.42 87.11 54.7 C92.96 56.98 98.81 59.32 104.66 61.87 C110.51 64.41 116.37 67.08 122.22 69.97 C128.07 72.87 133.92 75.94 139.77 79.26 C145.62 82.58 151.47 86.1 157.33 89.9 C163.18 93.69 169.03 97.71 174.88 102 C180.73 106.29 186.58 110.83 192.43 115.61 C198.29 120.39 204.14 125.43 209.99 130.69 C215.84 135.94 221.69 141.44 227.54 147.12 C233.39 152.79 239.25 158.7 245.1 164.72 C250.95 170.75 256.8 176.98 262.65 183.27 C268.5 189.56 274.35 196.01 280.21 202.47 C286.06 208.92 294.83 218.74 297.76 222"/></path><text class="g-after g-curve-label" x="304.76" y="216" fill="var(--econ-change)" text-anchor="start">PPC&#8322;</text><path pathLength="1" class="g-arrow" d="M231.05 183.27 Q242.9 183.27 254.75 183.27" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><circle cx="52" cy="42" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="59" y="35" fill="var(--econ-initial)" text-anchor="start">Y intercept fixed</text></svg><figcaption>Growth in one good only. A technology specific to wheat pivots the curve: the wheat intercept moves out and the steel intercept stays exactly where it was. Examiners test the half that did not move.<span class="eg"><b>Example.</b> Drought-resistant seed raises wheat yields per acre. It does nothing for a steel mill. If every resource went to steel, output would be exactly what it was before the seed existed &mdash; so that intercept cannot move.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: wheat. Vertical axis: steel.</li><li>PPC&#8321; (navy): before the drought-resistant seed. PPC&#8322; (orange): after.</li><li>The wheat intercept moved out: all resources to wheat now yield more wheat.</li><li>The steel intercept, marked &ldquo;Y intercept fixed,&rdquo; did not move: all resources to steel yield exactly what they did, because seed does nothing in a mill. The arrow is horizontal for the same reason.</li></ul></figcaption></figure><figure class="g-fig motion shift"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — contraction" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="61.4" y="11" text-anchor="middle">Manufactured goods</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Food</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial-soft)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="117.05" y="63.97" fill="var(--econ-initial-soft)" text-anchor="start">PPC&#8321;</text><path class="g-shift" data-from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" d="M52 74 C53.83 74.65 59.31 76.54 62.97 77.9 C66.63 79.25 70.29 80.61 73.94 82.13 C77.6 83.65 81.26 85.23 84.91 87.01 C88.57 88.79 92.23 90.69 95.89 92.83 C99.54 94.97 103.2 97.27 106.86 99.83 C110.51 102.39 114.17 105.15 117.83 108.18 C121.49 111.21 125.14 114.48 128.8 118 C132.46 121.52 136.11 125.3 139.77 129.32 C143.43 133.34 147.09 137.62 150.74 142.11 C154.4 146.6 158.06 151.35 161.71 156.26 C165.37 161.17 169.03 166.32 172.69 171.58 C176.34 176.84 180 182.31 183.66 187.84 C187.31 193.37 190.97 199.06 194.63 204.75 C198.29 210.45 203.77 219.13 205.6 222" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" begin="indefinite" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" from="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" to="M52 74 C53.83 74.65 59.31 76.54 62.97 77.9 C66.63 79.25 70.29 80.61 73.94 82.13 C77.6 83.65 81.26 85.23 84.91 87.01 C88.57 88.79 92.23 90.69 95.89 92.83 C99.54 94.97 103.2 97.27 106.86 99.83 C110.51 102.39 114.17 105.15 117.83 108.18 C121.49 111.21 125.14 114.48 128.8 118 C132.46 121.52 136.11 125.3 139.77 129.32 C143.43 133.34 147.09 137.62 150.74 142.11 C154.4 146.6 158.06 151.35 161.71 156.26 C165.37 161.17 169.03 166.32 172.69 171.58 C176.34 176.84 180 182.31 183.66 187.84 C187.31 193.37 190.97 199.06 194.63 204.75 C198.29 210.45 203.77 219.13 205.6 222"/></path><text class="g-after g-curve-label" x="212.6" y="216" fill="var(--econ-change)" text-anchor="start">PPC&#8322;</text><path pathLength="1" class="g-arrow" d="M147.23 105.2 Q140.32 110 133.41 114.8" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><text class="g-after g-point-label" x="200.48" y="82" text-anchor="start" fill="var(--econ-change)">fewer resources</text></svg><figcaption>Contraction. Fewer or worse resources &mdash; a war, a disaster, a falling literacy rate &mdash; move the whole curve in.<span class="eg"><b>Example.</b> A civil war destroys roads, factories and farmland, and skilled workers emigrate. Fewer and worse resources of every kind: the maximum of both goods falls, and the curve moves in.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: food. Vertical axis: manufactured goods.</li><li>PPC&#8321; (navy): the economy before the war. PPC&#8322; (orange): after.</li><li>Both intercepts moved IN: with roads, factories, farmland and skilled workers gone, the maximum of both goods is lower.</li><li>The arrow points inward &mdash; the only shift figure on this page where it does.</li></ul></figcaption></figure><figure class="g-fig motion move"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — unemployment" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Goods</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Services</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text><circle cx="116" cy="142" r="3.2" fill="var(--econ-detail-strong)" stroke="var(--econ-detail-strong)" stroke-width="0"/><text class="g-point-label" x="108" y="148" fill="var(--econ-detail-strong)" text-anchor="end">B</text><circle cx="151.84" cy="102" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="158.84" y="96" fill="var(--econ-initial)" text-anchor="start">A</text><path pathLength="1" class="g-arrow" d="M121.12 136 Q133.92 122 146.72 108" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><text class="g-after g-area-label" x="62.24" y="210" text-anchor="start" fill="var(--econ-change)">idle resources put to work</text><text class="g-area-label" x="149.28" y="54" text-anchor="start">the curve did not move</text></svg><figcaption>Not growth. Putting idle resources to work moves the economy from B, inside the curve, to A on it. The point moved; the curve did not. Falling unemployment never shifts a PPC.<span class="eg"><b>Example.</b> The US from 2010 to 2019: unemployment fell from about 10% to under 4%. Output rose because idle workers went back to work &mdash; a move from B toward A. The curve itself moved only as far as new capital and technology moved it.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: services. Vertical axis: goods. The economy is the United States.</li><li>B, inside the curve: 2010, unemployment near 10%. Idle workers mean less of both.</li><li>A, on the curve: 2019, unemployment under 4%. The same curve, fully used.</li><li>The arrow from B to A is the recovery. Note what is NOT in the figure: a second curve. Output rose without the PPC moving.</li></ul></figcaption></figure></div>
+  
+<div class="trap-box">
+  <span class="lab">The examined confusion</span>
+  Falling unemployment, rising demand, or a move from inside the curve onto it are all <b>movements of the point</b>. Only a change in resources or technology moves the <b>curve</b>. A question that describes a recovery is asking about the point.
+</div>
+</section>
+<section class="sec" id="s-1.3b">
+  <h2>Drawing the PPC on the free-response section, step by step</h2>
+  <div class="figgrid"><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — frq-1" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Rice</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Fish</text></svg><figcaption>Step 1 &mdash; axes. Draw two axes and label each with the good the question names, not X and Y. Nothing else yet.<span class="eg"><b>Example.</b> The question: &ldquo;Bergland can produce 60 fish or 30 rice per day. Draw a correctly labelled PPC assuming constant opportunity cost.&rdquo; So: Fish on one axis, Rice on the other.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: Fish. Vertical axis: Rice. The goods the question names, spelled out. Nothing else is on the page yet, and nothing else should be.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — frq-2" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Rice</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Fish</text><circle cx="52" cy="72" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="244" cy="222" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-tick" x="46" y="75.5" text-anchor="end" fill="var(--econ-initial)">30</text><text class="g-tick" x="244" y="236" text-anchor="middle" fill="var(--econ-initial)">60</text></svg><figcaption>Step 2 &mdash; intercepts. All resources to one good gives that good&rsquo;s maximum. Mark it on the axis and write the number.<span class="eg"><b>Example.</b> All resources to fish: 60 fish, 0 rice &mdash; a point on the horizontal axis at 60. All resources to rice: 30 rice, 0 fish &mdash; a point on the vertical axis at 30.</span><ul class="reads"><li class="lab">In the figure</li><li>The dot on the vertical axis at 30: all resources to rice.</li><li>The dot on the horizontal axis at 60: all resources to fish.</li><li>The numbers beside each dot are a rubric point each.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — frq-3" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Rice</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Fish</text><circle cx="52" cy="72" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="244" cy="222" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-tick" x="46" y="75.5" text-anchor="end" fill="var(--econ-initial)">30</text><text class="g-tick" x="244" y="236" text-anchor="middle" fill="var(--econ-initial)">60</text><path d="M52 72 L148 147 L244 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="142" y="161" fill="var(--econ-initial)" text-anchor="end">PPC&#8321;</text></svg><figcaption>Step 3 &mdash; the curve. Join the intercepts. Straight, because the question said constant opportunity cost; bowed if it had not. Label it PPC&#8321;. It must touch both axes.<span class="eg"><b>Example.</b> The line from 30 rice to 60 fish. Its slope is the opportunity cost: every fish costs half a rice, everywhere along it. That is what &ldquo;constant&rdquo; looks like.</span><ul class="reads"><li class="lab">In the figure</li><li>The line joining the two dots: Bergland&rsquo;s PPC, labelled PPC&#8321;.</li><li>Straight, because the question said constant opportunity cost. Its slope, 30/60, is the cost of a fish in rice: one half.</li><li>It touches both axes. A curve that floats above an axis loses the point.</li></ul></figcaption></figure><figure class="g-fig motion shift"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — frq-4" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Rice</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Fish</text><circle cx="52" cy="72" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="244" cy="222" r="3" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-tick" x="46" y="75.5" text-anchor="end" fill="var(--econ-initial)">30</text><text class="g-tick" x="244" y="236" text-anchor="middle" fill="var(--econ-initial)">60</text><path d="M52 72 L148 147 L244 222" fill="none" stroke="var(--econ-initial-soft)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="142" y="161" fill="var(--econ-initial-soft)" text-anchor="end">PPC&#8321;</text><path class="g-shift" data-from="M52 72 L148 147 L244 222" d="M52 42 L167.2 132 L282.4 222" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" begin="indefinite" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" from="M52 72 L148 147 L244 222" to="M52 42 L167.2 132 L282.4 222"/></path><text class="g-after g-curve-label" x="173.2" y="124" fill="var(--econ-change)" text-anchor="start">PPC&#8322;</text><circle class="g-after" cx="52" cy="42" r="3" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle class="g-after" cx="282.4" cy="222" r="3" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-after g-tick" x="46" y="45.5" text-anchor="end" fill="var(--econ-change)">36</text><text class="g-after g-tick" x="282.4" y="236" text-anchor="middle" fill="var(--econ-change)">72</text><path pathLength="1" class="g-arrow" d="M92.96 98 Q96.8 92 100.64 86" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/></svg><figcaption>Step 4 &mdash; the shift, if asked. Draw the new curve, label it PPC&#8322;, add an arrow, and leave PPC&#8321; on the page. New intercept values if the question gives them.<span class="eg"><b>Example.</b> &ldquo;Bergland&rsquo;s labour force grows.&rdquo; More labour makes more of both goods, so both intercepts move out &mdash; here to 72 fish and 36 rice. A one-good technology would have moved only one of them.</span><ul class="reads"><li class="lab">In the figure</li><li>PPC&#8321; (navy) stays on the page. PPC&#8322; (orange) is the new curve, with its own intercepts, 72 and 36, written in.</li><li>The arrow between them is the direction of the shift.</li><li>Both intercepts moved because labour makes both goods. Had the question said &ldquo;a better fishing net,&rdquo; only the fish intercept would move.</li></ul></figcaption></figure></div>
+  
+<p>The same figure, built in four moves. Every point on the rubric is a label: the goods on the axes, the numbers at the intercepts, the name on each curve.</p>
+<ul class="checklist">
+  <li>Label both axes with the actual goods named in the question, not &ldquo;X&rdquo; and &ldquo;Y.&rdquo;</li>
+  <li>Let the curve touch both axes. A PPC floating above its intercepts claims the economy cannot devote everything to one good, which nobody claims.</li>
+  <li>Label the original curve PPC&#8321; and any new curve PPC&#8322;.</li>
+  <li>Label any point the question asks you to identify, and label the intercept values when the question gives numbers.</li>
+  <li>Bow the curve unless the question says constant opportunity cost &mdash; then draw a straight line.</li>
+  <li>For a one-good improvement, move one intercept and leave the other exactly where it was.</li>
+</ul>
+<div class="trap-box">
+  <span class="lab">Where points are lost</span>
+  An unlabeled axis earns no point, however correct the drawing. Graders read labels first.
+</div>
+</section>
+<section class="sec" id="s-1.4">
+  <h2>1.4 Comparative advantage, specialization and trade</h2>
+  <div class="figgrid"><figure class="g-fig motion move"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — trade-numbers" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Rice</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Fish</text><path d="M52 55.33 L158.67 138.67 L265.33 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="152.67" y="152.67" fill="var(--econ-initial)" text-anchor="end">PPC</text><circle cx="265.33" cy="222" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="271.33" y="214" fill="var(--econ-initial)" text-anchor="start">A</text><circle class="g-after" cx="194.22" cy="138.67" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-after g-point-label" x="202.22" y="132.67" fill="var(--econ-change)" text-anchor="start">C</text><circle cx="194.22" cy="166.44" r="2.6" fill="var(--econ-detail-strong)" stroke="var(--econ-detail-strong)" stroke-width="0"/><line class="g-after" x1="194.22" y1="166.44" x2="194.22" y2="138.67" stroke="var(--econ-change)" stroke-width="1" stroke-dasharray="4 3"/><path pathLength="1" class="g-arrow" d="M251.11 205.33 Q229.78 180.33 208.44 155.33" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><text class="g-after g-tick" x="194.22" y="236" text-anchor="middle" fill="var(--econ-change)">40</text><text class="g-tick" x="265.33" y="236" text-anchor="middle" fill="var(--econ-initial)">60</text><text class="g-tick" x="46" y="169.94" text-anchor="end" fill="var(--econ-detail-strong)">10</text><text class="g-after g-tick" x="46" y="142.17" text-anchor="end" fill="var(--econ-change)">15</text><text class="g-tick" x="46" y="58.83" text-anchor="end" fill="var(--econ-initial)">30</text></svg><figcaption>The same idea with numbers on it. Bergland can make 60 fish or 30 rice. It makes only fish, trades 20 of them to Coastia at 0.75 rice each, and consumes 40 fish and 15 rice.<span class="eg"><b>Example.</b> A fish costs Bergland 0.5 rice to make and Coastia 1 rice, so any price between them works; 0.75 is in the middle. At 40 fish, Bergland&rsquo;s own line allows only 10 rice. It is eating 15. The extra 5 rice exist because of trade and nothing else &mdash; not one more worker, boat or paddy.</span><ul class="reads"><li class="lab">In the figure</li><li>The line from 30 rice to 60 fish: Bergland&rsquo;s PPC, constant opportunity cost, slope one half.</li><li>A, at 60 fish on the axis: production. Bergland specialises completely.</li><li>The small grey dot at 40 fish, 10 rice: the best Bergland could do ALONE with 40 fish.</li><li>C, at 40 fish, 15 rice: what it consumes after trade. The dashed step from 10 up to 15 is the gain from trade, measured.</li><li>The arrow is 20 fish going out and 15 rice coming in.</li></ul></figcaption></figure><figure class="g-fig motion move"><svg viewBox="0 0 340 268" role="img" aria-label="Production possibilities curve — trade" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Tables</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Chairs</text><path d="M52 42 C54.38 43.03 61.51 46.07 66.26 48.18 C71.02 50.3 75.77 52.42 80.53 54.7 C85.28 56.98 90.03 59.32 94.79 61.87 C99.54 64.41 104.3 67.08 109.05 69.97 C113.81 72.87 118.56 75.94 123.31 79.26 C128.07 82.58 132.82 86.1 137.58 89.9 C142.33 93.69 147.09 97.71 151.84 102 C156.59 106.29 161.35 110.83 166.1 115.61 C170.86 120.39 175.61 125.43 180.37 130.69 C185.12 135.94 189.87 141.44 194.63 147.12 C199.38 152.79 204.14 158.7 208.89 164.72 C213.65 170.75 218.4 176.98 223.15 183.27 C227.91 189.56 232.66 196.01 237.42 202.47 C242.17 208.92 249.3 218.74 251.68 222" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="258.68" y="216" fill="var(--econ-initial)" text-anchor="start">PPC</text><circle cx="137.58" cy="89.9" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-point-label" x="134.68" y="103.9" fill="var(--econ-initial)" text-anchor="end">produce at A</text><circle class="g-after" cx="178.54" cy="59.9" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-after g-point-label" x="186.54" y="53.9" fill="var(--econ-change)" text-anchor="start">consume at C</text><path pathLength="1" class="g-arrow" d="M142.7 85.9 Q158.06 74.9 173.42 63.9" fill="none" stroke="var(--econ-change)" stroke-width="1.6" marker-end="url(#g-ah-change)"/><text class="g-after g-point-label" x="177.16" y="84.9" text-anchor="middle" fill="var(--econ-change)">trade</text></svg><figcaption>What trade does to the picture. The economy still produces at A, on its own curve. Specialising and exchanging lets it consume at C, beyond the curve. Trade moves consumption, not the PPC &mdash; the curve is exactly where it was.<span class="eg"><b>Example.</b> Sacramento specialises in chairs (its comparative advantage), makes 30 a day, and trades some to Jacksonville for tables at 0.7 tables per chair. It ends up with a chair-and-table bundle its own workshop could never have produced &mdash; without a single new worker or tool.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: chairs. Vertical axis: tables. The curve is Sacramento&rsquo;s own.</li><li>A, on the curve: what Sacramento produces &mdash; it stays here.</li><li>C, beyond the curve: what Sacramento consumes after trading chairs for tables.</li><li>The arrow from A to C is the trade. The curve has not moved; the next figure puts the actual numbers on it.</li></ul></figcaption></figure></div>
+  
+<dl class="defs">
+  <dt>Absolute advantage</dt>
+  <dd>Producing <b>more</b> output with the same resources, or the same output with fewer. A comparison of raw productivity.</dd>
+  <dt>Comparative advantage</dt>
+  <dd>Producing at a <b>lower opportunity cost</b> than the other party. This &mdash; not absolute advantage &mdash; determines who should specialize in what.</dd>
+</dl>
+
+<p>One country can hold the absolute advantage in <b>both</b> goods and still gain from trade, because it cannot hold the comparative advantage in both. Lower cost in one good is higher cost in the other; that is what a ratio does.</p>
+
+<div class="rule-box">
+  <span class="lab">Two problem types &mdash; the ratio runs opposite ways</span>
+  Both are read within one country&rsquo;s row. What changes is which number goes on top.<br>
+  <b>Output problem</b> (&ldquo;can produce 30 chairs <i>or</i> 20 tables&rdquo;) &mdash; cost of 1 chair = <b>the OTHER good&rsquo;s output &divide; this good&rsquo;s output</b> = 20/30 tables.<br>
+  <b>Input problem</b> (&ldquo;takes 4 hours per computer, 1 hour per shirt&rdquo;) &mdash; cost of 1 computer = <b>this good&rsquo;s hours &divide; the other good&rsquo;s hours</b> = 4/1 shirts.<br>
+  The flip is not arbitrary: with outputs, being good at a thing is a <i>big</i> number; with inputs, being good at it is a <i>small</i> one.
+</div>
+
+<div class="work-box">
+  <span class="lab">Worked example &mdash; output problem</span>
+  <table class="q-tbl">
+    <thead><tr><th></th><th>Chairs</th><th>Tables</th></tr></thead>
+    <tbody>
+      <tr><td>Sacramento</td><td>30</td><td>20</td></tr>
+      <tr><td>Jacksonville</td><td>20</td><td>15</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:6px"><b>Cost of 1 chair:</b> Sacramento 20/30 = 2/3 table. Jacksonville 15/20 = 3/4 table. 2/3 &lt; 3/4, so <b>Sacramento has the comparative advantage in chairs</b>.</p>
+  <p><b>Cost of 1 table:</b> Sacramento 30/20 = 1.5 chairs. Jacksonville 20/15 &asymp; 1.33 chairs. So <b>Jacksonville has the comparative advantage in tables</b>.</p>
+  <p style="margin:0"><b>Absolute advantage:</b> Sacramento, in both goods (30 &gt; 20 and 20 &gt; 15) &mdash; and it still pays both to trade.</p>
+</div>
+
+<div class="rule-box">
+  <span class="lab">Terms of trade</span>
+  A rate works for both sides only when it sits <b>between the two opportunity costs</b>. For chairs above, between <b>2/3 and 3/4 tables per chair</b>. The exporter must get more than its own cost; the importer must pay less than its own cost. Outside that band, one side would rather produce the good itself.
+</div>
+
+<div class="trap-box">
+  <span class="lab">Traps</span>
+  <b>Trade does not shift the PPC.</b> It expands what a country can <i>consume</i>, letting it reach a point beyond its own curve. Production still happens on the curve.<br>
+  <b>Identical opportunity costs mean no gains.</b> If the ratios match, no rate makes both better off, no matter how different the countries&rsquo; sizes are.
+</div>
+</section>
+<section class="sec" id="s-1.5">
+  <h2>1.5 Cost-benefit analysis</h2>
+  <div class="figgrid"><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Marginal benefit and marginal cost — schedule" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Dollars</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Miles of trail</text><path d="M94.67 72 L137.33 84.5 L180 109.5 L222.67 147 L265.33 172" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="272.33" y="176" fill="var(--econ-initial)" text-anchor="start">MB</text><path d="M94.67 172 L137.33 159.5 L180 122 L222.67 84.5 L265.33 47" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="272.33" y="51" fill="var(--econ-change)" text-anchor="start">MC</text><circle cx="94.67" cy="72" r="2.8" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="137.33" cy="84.5" r="2.8" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="180" cy="109.5" r="2.8" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="222.67" cy="147" r="2.8" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="265.33" cy="172" r="2.8" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="94.67" cy="172" r="2.8" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="137.33" cy="159.5" r="2.8" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="180" cy="122" r="2.8" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="222.67" cy="84.5" r="2.8" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="265.33" cy="47" r="2.8" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-tick" x="94.67" y="236" text-anchor="middle" fill="var(--econ-initial)">1</text><text class="g-tick" x="137.33" y="236" text-anchor="middle" fill="var(--econ-initial)">2</text><text class="g-tick" x="180" y="236" text-anchor="middle" fill="var(--econ-initial)">3</text><text class="g-tick" x="222.67" y="236" text-anchor="middle" fill="var(--econ-initial)">4</text><text class="g-tick" x="265.33" y="236" text-anchor="middle" fill="var(--econ-initial)">5</text><line x1="180" y1="222" x2="180" y2="109.5" stroke="var(--econ-detail)" stroke-width="var(--econ-guide-w)" stroke-dasharray="4 3"/><text class="g-area-label" x="180" y="92" text-anchor="middle">build 3</text></svg><figcaption>A town deciding how long to build a bike trail, as marginals. Each dot is the benefit or cost of ONE more mile, not the running total.<span class="eg"><b>Example.</b> From the running totals: MB of miles 1 to 5 is 300, 275, 225, 150, 100; MC is 100, 125, 200, 275, 350. MB is above MC through mile 3 and below it from mile 4. Build three miles &mdash; net benefit there is $800 &minus; $425 = $375, the largest in the table.</span><ul class="reads"><li class="lab">In the figure</li><li>Navy dots and line: MB by mile, falling. Orange: MC by mile, rising.</li><li>Miles 1&ndash;3: the navy dot is above the orange one. Each of those miles adds more than it costs.</li><li>Mile 4: the orange dot is above the navy. It would cost $275 to add $150 of benefit.</li><li>The dashed line at 3 marks the last mile worth building. The generic MB/MC figure beside this is the same crossing with the numbers removed.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Marginal benefit and marginal cost — base" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="54.8" y="11" text-anchor="middle">Dollars per unit</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Quantity</text><path d="M52 42 L308 202" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="315" y="206" fill="var(--econ-initial)" text-anchor="start">MB</text><path d="M52 202 L308 42" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="315" y="46" fill="var(--econ-change)" text-anchor="start">MC</text><line x1="180" y1="222" x2="180" y2="122" stroke="var(--econ-detail)" stroke-width="var(--econ-guide-w)" stroke-dasharray="4 3"/><circle cx="180" cy="122" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><text class="g-area-label" x="180" y="32" text-anchor="middle">MB = MC at Q*</text><text class="g-tick" x="180" y="236" text-anchor="middle" fill="var(--econ-initial)">Q*</text><text class="g-area-label" x="103.2" y="116" text-anchor="middle">MB &gt; MC</text><text class="g-area-label" x="103.2" y="132" text-anchor="middle">do more</text><text class="g-area-label" x="256.8" y="116" text-anchor="middle">MB &lt; MC</text><text class="g-area-label" x="256.8" y="132" text-anchor="middle">stop</text></svg><figcaption>The rule as a picture. MB falls, MC rises, and they cross once. Left of Q* each extra unit adds more than it costs; right of Q* each extra unit costs more than it adds. Net benefit is largest exactly at the crossing.<span class="eg"><b>Example.</b> Hours of study before a test. The first hour is worth a lot and costs little; the fifth is worth less (you already know most of it) and costs more (sleep). The bike-trail table below is the same picture as numbers: build until mile 3, where MB is about to drop below MC.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: hours of study. Vertical axis: dollars of benefit or cost per hour.</li><li>MB slopes down: the first hour teaches the most, the fifth the least.</li><li>MC slopes up: the first hour costs a free evening, the fifth costs sleep before the test.</li><li>Q*: the hour at which the next one would cost more than it teaches. Stop there. The bike-trail figure next to this one is the same picture with numbers on it.</li></ul></figcaption></figure></div>
+  
+<div class="rule-box">
+  <span class="lab">The marginal decision rule</span>
+  <span class="big">Do it while <b>MB &gt; MC</b>. Stop where <b>MB = MC</b>.</span>
+  Past that point each extra unit costs more than it is worth and subtracts from net benefit &mdash; even while total benefit still exceeds total cost.
+</div>
+
+<p><b>Marginal</b> means the change: MB is the change in total benefit from one more unit, MC the change in total cost. When a table gives you <i>totals</i>, your first move is to subtract down the column and turn them into <i>marginals</i>.</p>
+
+<div class="work-box">
+  <span class="lab">Worked example &mdash; how many miles of trail?</span>
+  <table class="q-tbl">
+    <thead><tr><th>Miles</th><th>Total benefit</th><th>Total cost</th><th>MB</th><th>MC</th><th>Net benefit</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>$300</td><td>$100</td><td>$300</td><td>$100</td><td>$200</td></tr>
+      <tr><td>2</td><td>$575</td><td>$225</td><td>$275</td><td>$125</td><td>$350</td></tr>
+      <tr><td>3</td><td>$800</td><td>$425</td><td>$225</td><td>$200</td><td>$375</td></tr>
+      <tr><td>4</td><td>$950</td><td>$700</td><td>$150</td><td>$275</td><td>$250</td></tr>
+      <tr><td>5</td><td>$1,050</td><td>$1,050</td><td>$100</td><td>$350</td><td>$0</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:6px;margin-bottom:0">Build through mile 3, where MB ($225) still exceeds MC ($200). Mile 4 would lose $125. Net benefit is largest at 3 miles &mdash; exactly where the marginal rule says to stop, which is the point of the rule.</p>
+</div>
+
+<div class="trap-box">
+  <span class="lab">Trap</span>
+  &ldquo;Total benefit still exceeds total cost&rdquo; is <b>not</b> a reason to continue. At 5 miles the totals are equal and net benefit is zero, yet total benefit was positive the whole way. Decisions are made at the margin.
+</div>
+</section>
+<section class="sec" id="s-1.6">
+  <h2>1.6 Marginal analysis and consumer choice</h2>
+  <div class="figgrid"><figure class="g-fig"><svg viewBox="0 0 340 268" data-below="41.27" role="img" aria-label="Total and marginal utility — base" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="180.73" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="180.73" x2="314" y2="180.73" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Utility</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Quantity</text><path d="M52 180.73 C53.64 178.07 58.54 169.93 61.81 164.78 C65.08 159.63 68.36 154.66 71.63 149.85 C74.9 145.04 78.17 140.4 81.44 135.94 C84.71 131.47 87.98 127.17 91.25 123.04 C94.52 118.91 97.8 114.95 101.07 111.16 C104.34 107.37 107.61 103.75 110.88 100.3 C114.15 96.85 117.42 93.57 120.69 90.46 C123.96 87.34 127.24 84.4 130.51 81.63 C133.78 78.86 137.05 76.25 140.32 73.82 C143.59 71.39 146.86 69.12 150.13 67.03 C153.4 64.94 156.68 63.01 159.95 61.26 C163.22 59.5 166.49 57.92 169.76 56.5 C173.03 55.08 176.3 53.84 179.57 52.76 C182.84 51.69 186.12 50.78 189.39 50.04 C192.66 49.3 195.93 48.74 199.2 48.34 C202.47 47.94 205.74 47.71 209.01 47.65 C212.28 47.59 215.56 47.7 218.83 47.98 C222.1 48.26 225.37 48.71 228.64 49.33 C231.91 49.95 235.18 50.74 238.45 51.7 C241.72 52.66 245 53.79 248.27 55.08 C251.54 56.38 254.81 57.85 258.08 59.49 C261.35 61.12 264.62 62.93 267.89 64.91 C271.16 66.88 274.44 69.03 277.71 71.34 C280.98 73.66 285.88 77.56 287.52 78.8" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="293.52" y="74.8" fill="var(--econ-initial)" text-anchor="start">TU</text><path d="M52 107.71 C53.64 108.47 58.54 110.72 61.81 112.23 C65.08 113.73 68.36 115.24 71.63 116.74 C74.9 118.25 78.17 119.75 81.44 121.26 C84.71 122.76 87.98 124.27 91.25 125.77 C94.52 127.28 97.8 128.78 101.07 130.29 C104.34 131.79 107.61 133.3 110.88 134.8 C114.15 136.31 117.42 137.81 120.69 139.32 C123.96 140.82 127.24 142.32 130.51 143.83 C133.78 145.33 137.05 146.84 140.32 148.34 C143.59 149.85 146.86 151.35 150.13 152.86 C153.4 154.36 156.68 155.87 159.95 157.37 C163.22 158.88 166.49 160.38 169.76 161.89 C173.03 163.39 176.3 164.9 179.57 166.4 C182.84 167.91 186.12 169.41 189.39 170.92 C192.66 172.42 195.93 173.93 199.2 175.43 C202.47 176.94 205.74 178.44 209.01 179.95 C212.28 181.45 215.56 182.95 218.83 184.46 C222.1 185.96 225.37 187.47 228.64 188.97 C231.91 190.48 235.18 191.98 238.45 193.49 C241.72 194.99 245 196.5 248.27 198 C251.54 199.51 254.81 201.01 258.08 202.52 C261.35 204.02 264.62 205.53 267.89 207.03 C271.16 208.54 274.44 210.04 277.71 211.55 C280.98 213.05 285.88 215.31 287.52 216.06" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="261.89" y="219.03" fill="var(--econ-change)" text-anchor="end">MU</text><line x1="210.72" y1="180.73" x2="210.72" y2="47.64" stroke="var(--econ-detail)" stroke-width="var(--econ-guide-w)" stroke-dasharray="4 3"/><circle cx="210.72" cy="47.64" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="210.72" cy="180.73" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-tick" x="203.04" y="191.84" text-anchor="end" fill="var(--econ-change)">Q<tspan baseline-shift="sub" font-size="8">sat</tspan></text><text class="g-area-label" x="220.72" y="37.64" text-anchor="middle">TU peaks</text><text class="g-area-label" x="203.04" y="210.89" text-anchor="end">where MU = 0</text></svg><figcaption>Total and marginal utility are one schedule read twice. TU rises while MU is positive, peaks exactly where MU crosses zero at Q<sub>sat</sub>, and falls once MU is negative. The examined error is putting TU&rsquo;s peak where MU peaks.<span class="eg"><b>Example.</b> Slices of pizza at one sitting. Each slice adds satisfaction until, at some slice, the next one adds nothing &mdash; that is Q<sub>sat</sub>, where total satisfaction is highest. Eat past it and the next slice makes you worse off: MU negative, TU falling.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: slices of pizza at one sitting. Vertical axis: utility.</li><li>TU (navy): total satisfaction after that many slices.</li><li>MU (orange): what the LAST slice added. It falls with every slice.</li><li>Q<sub>sat</sub>, where MU crosses zero and TU peaks: the slice that adds nothing. Past it MU is below the axis and TU turns down &mdash; the slice that made you worse off.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" data-below="41.27" role="img" aria-label="Total and marginal utility — diminishing" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="180.73" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="180.73" x2="314" y2="180.73" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Utility</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Quantity</text><path d="M52 180.73 C53.64 178.07 58.54 169.93 61.81 164.78 C65.08 159.63 68.36 154.66 71.63 149.85 C74.9 145.04 78.17 140.4 81.44 135.94 C84.71 131.47 87.98 127.17 91.25 123.04 C94.52 118.91 97.8 114.95 101.07 111.16 C104.34 107.37 107.61 103.75 110.88 100.3 C114.15 96.85 117.42 93.57 120.69 90.46 C123.96 87.34 127.24 84.4 130.51 81.63 C133.78 78.86 137.05 76.25 140.32 73.82 C143.59 71.39 146.86 69.12 150.13 67.03 C153.4 64.94 156.68 63.01 159.95 61.26 C163.22 59.5 166.49 57.92 169.76 56.5 C173.03 55.08 176.3 53.84 179.57 52.76 C182.84 51.69 186.12 50.78 189.39 50.04 C192.66 49.3 195.93 48.74 199.2 48.34 C202.47 47.94 205.74 47.71 209.01 47.65 C212.28 47.59 215.56 47.7 218.83 47.98 C222.1 48.26 225.37 48.71 228.64 49.33 C231.91 49.95 235.18 50.74 238.45 51.7 C241.72 52.66 245 53.79 248.27 55.08 C251.54 56.38 254.81 57.85 258.08 59.49 C261.35 61.12 264.62 62.93 267.89 64.91 C271.16 66.88 274.44 69.03 277.71 71.34 C280.98 73.66 285.88 77.56 287.52 78.8" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="293.52" y="74.8" fill="var(--econ-initial)" text-anchor="start">TU</text><path d="M52 107.71 C53.64 108.47 58.54 110.72 61.81 112.23 C65.08 113.73 68.36 115.24 71.63 116.74 C74.9 118.25 78.17 119.75 81.44 121.26 C84.71 122.76 87.98 124.27 91.25 125.77 C94.52 127.28 97.8 128.78 101.07 130.29 C104.34 131.79 107.61 133.3 110.88 134.8 C114.15 136.31 117.42 137.81 120.69 139.32 C123.96 140.82 127.24 142.32 130.51 143.83 C133.78 145.33 137.05 146.84 140.32 148.34 C143.59 149.85 146.86 151.35 150.13 152.86 C153.4 154.36 156.68 155.87 159.95 157.37 C163.22 158.88 166.49 160.38 169.76 161.89 C173.03 163.39 176.3 164.9 179.57 166.4 C182.84 167.91 186.12 169.41 189.39 170.92 C192.66 172.42 195.93 173.93 199.2 175.43 C202.47 176.94 205.74 178.44 209.01 179.95 C212.28 181.45 215.56 182.95 218.83 184.46 C222.1 185.96 225.37 187.47 228.64 188.97 C231.91 190.48 235.18 191.98 238.45 193.49 C241.72 194.99 245 196.5 248.27 198 C251.54 199.51 254.81 201.01 258.08 202.52 C261.35 204.02 264.62 205.53 267.89 207.03 C271.16 208.54 274.44 210.04 277.71 211.55 C280.98 213.05 285.88 215.31 287.52 216.06" fill="none" stroke="var(--econ-change)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="261.89" y="219.03" fill="var(--econ-change)" text-anchor="end">MU</text><line x1="210.72" y1="180.73" x2="210.72" y2="47.64" stroke="var(--econ-detail)" stroke-width="var(--econ-guide-w)" stroke-dasharray="4 3"/><circle cx="210.72" cy="47.64" r="3.2" fill="var(--econ-initial)" stroke="var(--econ-initial)" stroke-width="0"/><circle cx="210.72" cy="180.73" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="90.4" cy="125.38" r="3" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><circle cx="139.04" cy="147.76" r="3" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><path d="M82.4 180.73 L82.4 125.38 M78.4 180.73 L86.4 180.73 M78.4 125.38 L86.4 125.38" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><path d="M147.04 180.73 L147.04 147.76 M143.04 180.73 L151.04 180.73 M143.04 147.76 L151.04 147.76" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><text class="g-area-label" x="90.4" y="193.43" text-anchor="middle">MU of the 15th</text><text class="g-area-label" x="139.04" y="209.43" text-anchor="middle">MU of the 34th</text><text class="g-area-label" x="180" y="41.05" text-anchor="middle">TU still rising throughout</text></svg><figcaption>Diminishing marginal utility. The 34th unit adds less than the 15th &mdash; that is the whole meaning of MU sloping down. Total utility is still rising throughout this stretch, only more slowly.<span class="eg"><b>Example.</b> The first cold drink on a hot day is worth a great deal; the third is pleasant; the fifth you barely notice. Each still adds something, so your total satisfaction keeps rising &mdash; the additions are just shrinking.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: cold drinks on a hot day. Vertical axis: utility.</li><li>The tall bracket, &ldquo;MU of the 15th&rdquo;: what an early drink adds. The short bracket, &ldquo;MU of the 34th&rdquo;: what a later one adds. Shorter &mdash; that is diminishing marginal utility.</li><li>TU (navy) is still climbing across both brackets: every drink still adds something. Only the additions shrink.</li></ul></figcaption></figure></div>
+  
+<dl class="defs">
+  <dt>Utility</dt><dd>Satisfaction, counted in made-up units called utils.</dd>
+  <dt>Total utility (TU)</dt><dd>Satisfaction from all units consumed.</dd>
+  <dt>Marginal utility (MU)</dt><dd>The change in total utility from one more unit.</dd>
+  <dt>Law of diminishing marginal utility</dt><dd>Past some point, each extra unit adds less than the one before.</dd>
+</dl>
+
+<ul class="tight">
+  <li>While MU is <b>positive</b>, TU is <b>rising</b>.</li>
+  <li>Where MU <b>= 0</b>, TU is at its <b>maximum</b>.</li>
+  <li>Where MU is <b>negative</b>, TU is <b>falling</b>.</li>
+</ul>
+
+<div class="rule-box">
+  <span class="lab">The utility-maximizing rule</span>
+  <span class="big"><b>MU<sub>X</sub> / P<sub>X</sub> = MU<sub>Y</sub> / P<sub>Y</sub></b>, with the entire budget spent.</span>
+  Equalize satisfaction <b>per dollar</b>, not per unit. If one good gives more utils per dollar, move a dollar toward it &mdash; that raises total utility, so you were not yet at the optimum.
+</div>
+
+<div class="work-box">
+  <span class="lab">Worked example &mdash; spending $10</span>
+  Popcorn costs $2, a drink costs $1.
+  <table class="q-tbl">
+    <thead><tr><th>Unit</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>5th</th><th>6th</th></tr></thead>
+    <tbody>
+      <tr><td>MU popcorn</td><td>20</td><td>16</td><td>12</td><td>8</td><td>4</td><td>0</td></tr>
+      <tr><td>MU per $ (&divide;2)</td><td>10</td><td>8</td><td>6</td><td>4</td><td>2</td><td>0</td></tr>
+      <tr><td>MU drink</td><td>12</td><td>10</td><td>8</td><td>6</td><td>4</td><td>2</td></tr>
+      <tr><td>MU per $ (&divide;1)</td><td>12</td><td>10</td><td>8</td><td>6</td><td>4</td><td>2</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:6px;margin-bottom:0">Buy in descending order of MU per dollar: drink (12), popcorn (10), drink (10), drink (8), popcorn (8), popcorn (6), drink (6). That is <b>3 popcorn and 4 drinks</b>, exactly $10, with the last unit of each delivering 6 utils per dollar. Rule satisfied, budget exhausted.</p>
+</div>
+
+<div class="trap-box">
+  <span class="lab">Trap</span>
+  Comparing MU <b>per unit</b> is the single most common error in this topic. A bag of popcorn worth 25 utils at $5 is worse value than a soda worth 10 utils at $1 &mdash; 5 utils per dollar against 10. Always divide by price before you compare.
+</div>
+</section>
+<section class="sec" id="s-recall">
+  <h2>The card to memorize</h2>
+  
+  
+<div class="two">
+  <div>
+    <h3>Formulas</h3>
+    <ul class="tight">
+      <li>Opportunity cost, output problem: <b>other good&rsquo;s output &divide; this good&rsquo;s output</b></li>
+      <li>Opportunity cost, input problem: <b>this good&rsquo;s hours &divide; other good&rsquo;s hours</b></li>
+      <li>Marginal anything: <b>change in total &divide; change in quantity</b></li>
+      <li>Optimal quantity: <b>MB = MC</b></li>
+      <li>Optimal bundle: <b>MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></b>, budget spent</li>
+      <li>Terms of trade: strictly <b>between the two opportunity costs</b></li>
+    </ul>
+  </div>
+  <div>
+    <h3>The traps, in one list</h3>
+    <ul class="tight">
+      <li>Money and time are not factors of production</li>
+      <li>Sunk costs never enter opportunity cost</li>
+      <li>Opportunity cost is the sacrifice only, not sacrifice plus gain</li>
+      <li>Comparative, not absolute, advantage drives specialization</li>
+      <li>Trade expands consumption, not production possibilities</li>
+      <li>Falling unemployment moves the point, not the curve</li>
+      <li>Diminishing MU still means total utility is rising</li>
+      <li>Compare utility per dollar, never per unit</li>
+    </ul>
+  </div>
+</div>
+
+<div class="rule-box">
+  <span class="lab">If you can do these six things, you are ready for Unit 1</span>
+  <ol class="tight" style="margin:0">
+    <li>State an opportunity cost from a table, in the correct units, with work shown.</li>
+    <li>Classify a point as efficient, inefficient or unattainable and say why.</li>
+    <li>Draw a labeled PPC and shift or pivot it correctly for a named event.</li>
+    <li>Find comparative advantage from either an output table or an input table, and give a workable terms of trade.</li>
+    <li>Turn a table of totals into marginals and apply MB = MC.</li>
+    <li>Find the utility-maximizing bundle for a given budget and prices.</li>
+  </ol>
+</div>
+</section></main>
+</div>
+<script>
+(function () {
+  // Section rail: light up the section that is on screen.
+  var links = {};
+  document.querySelectorAll('.rail a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      Object.keys(links).forEach(function (k) { links[k].classList.remove('on'); });
+      var a = links[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' }).observe && document.querySelectorAll('section.sec').forEach(function (s) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Object.keys(links).forEach(function (k) { links[k].classList.remove('on'); });
+        var a = links[e.target.id]; if (a) a.classList.add('on');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' }).observe(s);
+  });
+
+  if (!matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+
+  var play = function (f) {
+    f.classList.remove('play');
+    void f.offsetWidth;                       // restart the CSS keyframes
+    f.classList.add('armed');
+    var shift = f.querySelector('path.g-shift');
+    if (shift) {
+      shift.setAttribute('d', shift.getAttribute('data-from'));   // start ON the old curve
+      var anim = shift.querySelector('animate');
+      requestAnimationFrame(function () { anim.beginElement(); });
+    }
+    f.classList.add('play');
+  };
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting && !e.target.dataset.played) { e.target.dataset.played = '1'; play(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.55 });
+  document.querySelectorAll('figure.motion').forEach(function (f) {
+    f.classList.add('armed');
+    var shift = f.querySelector('path.g-shift');
+    if (shift) shift.setAttribute('d', shift.getAttribute('data-from'));
+    io.observe(f);
+    f.addEventListener('click', function () { play(f); });
+    var r = document.createElement('span'); r.className = 'replay'; r.textContent = 'replay'; f.appendChild(r);
+  });
+})();
+</script>
+</body></html>
