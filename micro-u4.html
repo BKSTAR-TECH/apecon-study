@@ -445,25 +445,50 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-matrix-key { font: var(--type-body-sm); color: var(--text-muted); margin-top: var(--space-4); }
 .g-matrix-key .pa, .g-matrix-key .pb { font: var(--type-mono); }
 
-.g-quadrant .q-grid { display: grid; grid-template-columns: 104px 1fr 1fr; gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
+/* 112px, not 104: CONTRACTIONARY is the longest row header in the atlas and at
+   104 it broke one character short of fitting.
+
+   And minmax(0, 1fr), not 1fr - the trap the playbook names in section 8. A
+   bare 1fr is minmax(AUTO, 1fr) and auto floors the track at its content's
+   min-content width, so the two cell columns could not shrink below their
+   longest word and the whole grid ran 8px past the 340px figure column. The
+   measured gate caught it on macro-u5. */
+.g-quadrant .q-grid { display: grid; grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1fr); gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
 .g-quadrant .q-head {
   background: var(--surface-sunken); padding: var(--space-3);
   font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted);
   display: flex; align-items: center;
+  /* The row-header column is a fixed 104px and the grid clips (overflow:hidden,
+     for the rounded corners), so a single long word had its tail cut off
+     mid-letter - "CONTRACTIONARY FISCAL" printed as "CONTRACTIONA". A clipped
+     word is worse than a wrapped one, and no gate sees either. */
+  overflow-wrap: anywhere;
 }
 .g-quadrant .q-head--col:first-of-type { grid-column: 2; }
 .g-quadrant .q-grid > .q-head--col:nth-of-type(1) { grid-column-start: 2; }
-.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); }
+/* A cell's own words have to fit its column once the tracks can shrink. The
+   mono examples carry long unbreakable tokens - recessionary, inflationary -
+   and each ran 4px past its column in the 340px deck. break-word breaks only a
+   word that would not fit on a line of its own, so ordinary wrapping is
+   unchanged. */
+.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); overflow-wrap: break-word; }
 .g-quadrant .q-cell--key { background: var(--surface-hint); }
 .g-quadrant .q-name { font: var(--type-h3); color: var(--text-strong); }
 .g-quadrant .q-eg { font: var(--type-mono); color: var(--text-muted); }
 .g-quadrant .q-note { font: var(--type-body-sm); color: var(--text-body); }
-.g-quadrant .q-head--row { text-align: left; }
+/* No extra tracking on the row header: it is the one cell in a fixed 104px
+   column, and the tracking alone was enough to push CONTRACTIONARY past the
+   edge. Without it the word fits and the break above is never reached. */
+.g-quadrant .q-head--row { text-align: left; letter-spacing: normal; padding-inline: var(--space-2); }
 
 /* The T-account (G-A05). Same table treatment as the payoff matrix. */
 .g-balance { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
 @media (max-width: 700px) { .g-balance { grid-template-columns: 1fr; } }
 .g-t-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-3); }
+/* A table cannot shrink below its own min-content, so in the 340px deck the
+   bank's balance sheet ran 19px past the figure. Wide content scrolls inside
+   its own container - the same answer .g-pq and .g-steps already use. */
+.g-t { overflow-x: auto; }
 .g-t table { border-collapse: collapse; width: 100%; }
 .g-t th, .g-t td { border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; }
 .g-t th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
@@ -472,7 +497,15 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-t .v-accent { color: var(--orange-600); }
 
 .g-steps { list-style: none; margin: 0; padding: 0; }
-.g-steps li { display: flex; justify-content: space-between; gap: var(--space-4); align-items: baseline; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.g-steps li {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  align-items: baseline; padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  /* Same reason as .g-calc .c-work: in the 340px deck the working and its
+     result would not both fit on one line, and the pair ran 44 and 49 pixels
+     past the row. Let the result drop under its working instead. */
+  flex-wrap: wrap;
+}
 .g-steps li:last-child { border-bottom: 0; }
 .g-steps .s-k { font: var(--type-body-sm); color: var(--text-body); }
 .g-steps .s-v { font: var(--type-mono); color: var(--text-strong); white-space: nowrap; }
@@ -512,6 +545,10 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-calc .c-work {
   display: flex; justify-content: space-between; gap: var(--space-4);
   align-items: baseline; margin-top: var(--space-2);
+  /* The result is nowrap, so in a narrow column it cannot shrink and ran into
+     the substitution beside it. Let the pair wrap instead: the result drops
+     under its own working, which is how it would be written by hand. */
+  flex-wrap: wrap;
 }
 .g-calc .c-sub { font: var(--type-mono); color: var(--text-muted); }
 .g-calc .c-out { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); white-space: nowrap; }
@@ -542,14 +579,26 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-partition .p-row { display: flex; align-items: stretch; width: 100%; }
 .g-partition .p-seg {
   display: flex; flex-direction: column; justify-content: center; gap: var(--space-1);
-  padding: var(--space-3); min-width: 0; overflow: hidden;
+  padding: var(--space-3); overflow: hidden;
   border: 1px solid var(--border-subtle); background: var(--surface-card);
+  /* A segment's width is its SHARE, so a small share gets a narrow box - and
+     with min-width:0 the box could end up narrower than the number printed in
+     it, which `overflow: hidden` then cut. The measured gate found 15,000 nine
+     pixels short of its own segment and 8,000 five short. A figure about
+     numbers may not clip a number.
+
+     min-content here is the value's width and nothing else: .p-k is nowrap and
+     would otherwise contribute its whole string, so it is pinned to zero just
+     below and truncates with its ellipsis exactly as before. The cost is that a
+     very small share's segment is a few pixels wider than its share - which is
+     a smaller lie than a number with a digit missing. */
+  min-width: min-content;
 }
 .g-partition .p-row .p-seg + .p-seg { border-left: 0; }
 .g-partition .p-seg--in { background: var(--navy-050); border-color: var(--navy-200); }
 .g-partition .p-seg--out { background: var(--surface-sunken); }
 .g-partition .p-seg--sub { background: var(--orange-050); border-color: var(--orange-300); }
-.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .g-partition .p-note { font: var(--type-body-sm); color: var(--text-body); margin: var(--space-2) 0 0; display: flex; align-items: baseline; gap: var(--space-2); }
 .g-partition .p-swatch { flex: 0 0 auto; width: 10px; height: 10px; border-radius: var(--radius-xs); background: var(--orange-050); border: 1px solid var(--orange-300); }
 .g-partition .p-v { font: var(--type-mono); color: var(--text-strong); }
@@ -722,7 +771,33 @@ p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
 /* ---- figures ------------------------------------------------------------- */
 .figs figure { margin: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: 12px 12px 10px; display: flex; flex-direction: column; }
 .figs figure svg { display: block; width: 100%; height: auto; }
-.figs figcaption { margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* Running prose, not a row of parts. grammar.css makes .g-fig figcaption a
+   flex container, because on the ATLAS contact sheet a caption is three
+   labelled pieces - id, title, note - laid out side by side. A study page's
+   caption is a paragraph, and in a flex container every inline child becomes a
+   flex ITEM: a <sub> mid-sentence was thrown onto its own line with the
+   container's gap around it, so "Output RISES, from Q_M to Q_C" printed as four
+   lines. 37 captions across five published pages carry a subscript, and the
+   sub rule on the next line was written expecting them to work. No gate could
+   see it: it is not a label collision, and the figures measure clean either
+   way. */
+.figs figcaption { display: block; margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* A two-column non-plot figure stacks in the DECK, and only there.
+
+   .g-cols is a fixed two-column grid, and the sticky figure column is 340-400px
+   wide, so each column lands at about 150px. At that width G-A66, G-A67, G-A68,
+   G-A69, G-A48 and G-A13 all read as clipped: a .g-calc row's mono result would
+   not shrink (white-space: nowrap) and ran into the substitution beside it, and
+   a column title wrapped to four lines. Six live pages looked like that.
+
+   Stacking is right rather than scrolling here. .g-pq and .g-steps get
+   overflow-x because they are TABLES, where the columns have to stay beside
+   each other to be read across; .g-cols is two independent panels, and one
+   above the other loses nothing. The expand dialog is a sibling of the deck,
+   not a child, so it keeps both columns at full width - which is what expand is
+   for. No gate could see this either: it is not a label collision and it does
+   not overflow the page. */
+.figs .g-cols, .figs .g-cols--wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 .figs figcaption .eg { display: block; margin-top: 8px; padding: 8px 11px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
 .figs figcaption sub { font-size: .75em; vertical-align: sub; }
 .figs figcaption .reads { list-style: none; margin: 8px 0 0; padding: 0 0 0 10px; border-left: 3px solid var(--navy-200); color: var(--text-body); font-size: var(--size-caption); line-height: var(--lh-body); }
@@ -943,7 +1018,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <div class="prose">
 <p class="lede">This is a one-idea section, and the idea is worth more marks than any single graph in the unit. Learn it here and the monopoly, the discriminating monopolist and the monopolistically competitive firm all draw themselves.</p>
 
-<dl class="defs"><div class="def"><dt>The demand curve a price setter faces</dt><dd><b class="brief">Downward-sloping, so selling more means charging less.</b><span class="eg"><span class="lab">In real life</span>A food truck with a unique menu can fill its lunch queue at $9 or run half empty at $14. Both are available to it; neither can be had at the other&rsquo;s quantity.</span><span class="detail">In an imperfectly competitive market the individual firm&rsquo;s demand curve <b>is</b> the downward-sloping market demand curve (for a monopoly) or a downward-sloping slice of it (for the other three structures). That is the whole structural difference from Unit 3, where the individual firm&rsquo;s demand curve is horizontal at the market price. Everything else in this unit is a consequence: because the curve slopes down, price and marginal revenue part company, and because they part company, price ends up above marginal cost.</span></dd></div><div class="def"><dt>Marginal revenue (MR)</dt><dd><b class="brief">What one more unit adds to revenue - less than its price, once the curve slopes down.</b><span class="eg"><span class="lab">In real life</span>A stall selling 20 mugs at $74 drops the price to $58 and shifts 40. It takes $1,160 from the twenty extra mugs and gives up $16 on each of the twenty it was already selling, so those twenty units really brought in $840 - forty-two dollars each, not the fifty-eight on the price tag.</span><span class="detail">The change in total revenue from selling one more unit. In an imperfectly competitive output market, holding everything else constant, a firm must <b>lower price</b> to sell additional units - and it must lower it on <b>every</b> unit, not only on the extra one. So the extra unit&rsquo;s contribution is its price <b>minus</b> the price cut suffered on all the units already being sold, which makes <b>MR &lt; P</b> at every positive quantity. On a straight-line demand curve MR starts at the same vertical intercept and falls at <b>twice the slope</b>, so it hits the quantity axis at half the quantity demand does. This one sentence is the engine of the unit; the monopoly graph is its picture.</span><div class="exam"><span class="lab">On the exam</span><div class="tbl-scroll"><table class="q-tbl exam-tbl"><thead><tr><th>Quantity</th><th>Price ($)</th></tr></thead><tbody><tr><td>1</td><td>70</td></tr><tr><td>2</td><td>60</td></tr><tr><td>3</td><td>50</td></tr><tr><td>4</td><td>40</td></tr><tr><td>5</td><td>30</td></tr></tbody></table></div><p class="stem">The table shows the demand schedule facing a firm with market power. What is the marginal revenue of the third unit?</p><ol class="opts"><li><span class="ltr">A</span>$50</li><li><span class="ltr">B</span>$40</li><li><span class="ltr">C</span>$30</li><li><span class="ltr">D</span>$150</li></ol><details><summary>Answer</summary><p class="ans"><b>C.</b> Work in total revenue, never in price. Two units at $60 is $120; three units at $50 is $150. The third unit added $30, not the $50 it sold for, because taking the price from $60 to $50 gave up $10 on each of the two units already being sold: 50 &minus; 20 = 30. Choosing $50 is reading the price and calling it marginal revenue, which is the error this table exists to catch.</p></details></div></dd></div><div class="def"><dt>Total revenue (TR)</dt><dd><b class="brief">Price times quantity - and it does not rise forever as output grows.</b><span class="eg"><span class="lab">In real life</span>A ferry filling more seats by cutting fares takes more money at first and then less, because at some point the fare is falling faster than the passengers are arriving.</span><span class="detail">P &times; Q. On a straight-line demand curve total revenue rises while marginal revenue is <b>positive</b>, peaks exactly where <b>MR = 0</b>, and falls once MR is negative. Two exam facts fall straight out of that. First, the demand curve is <b>elastic</b> above the midpoint and <b>inelastic</b> below it, so a price cut raises revenue in the top half and lowers it in the bottom half. Second, a profit-maximising firm never produces where MR is negative: marginal cost is always positive, so MR = MC can never be solved down there. A monopolist therefore always operates on the <b>elastic</b> part of its demand curve.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">A single-price monopolist finds that it is currently producing on the inelastic portion of its demand curve. What should it do to increase profit?</p><ol class="opts"><li><span class="ltr">A</span>Raise the price and sell less, because revenue rises and costs fall</li><li><span class="ltr">B</span>Lower the price and sell more, because revenue rises</li><li><span class="ltr">C</span>Keep output where it is; the elasticity of demand does not affect profit</li><li><span class="ltr">D</span>Raise the price and sell more, because demand is inelastic</li></ol><details><summary>Answer</summary><p class="ans"><b>A.</b> On the inelastic stretch marginal revenue is negative, so the last units are subtracting from revenue while still costing something to make. Cutting output raises total revenue and lowers total cost at the same time, so profit rises on both sides. The firm keeps cutting until it is back on the elastic stretch, which is why an unregulated monopolist is never found operating in the inelastic range.</p></details></div></dd></div></dl>
+<dl class="defs"><div class="def"><dt>The demand curve a price setter faces</dt><dd><b class="brief">Downward-sloping, so selling more means charging less.</b><span class="eg"><span class="lab">In real life</span>A food truck with a unique menu can fill its lunch queue at $9 or run half empty at $14. Both are available to it; neither can be had at the other&rsquo;s quantity.</span><span class="detail">In an imperfectly competitive market the individual firm&rsquo;s demand curve <b>is</b> the downward-sloping market demand curve (for a monopoly) or a downward-sloping slice of it (for the other three structures). That is the whole structural difference from Unit 3, where the individual firm&rsquo;s demand curve is horizontal at the market price. Everything else in this unit is a consequence: because the curve slopes down, price and marginal revenue part company, and because they part company, price ends up above marginal cost.</span></dd></div><div class="def"><dt>Marginal revenue (MR)</dt><dd><b class="brief">What one more unit adds to revenue - less than its price, once the curve slopes down.</b><span class="eg"><span class="lab">In real life</span>A stall selling 20 mugs at $74 drops the price to $58 and shifts 40. It takes $1,160 from the twenty extra mugs and gives up $16 on each of the twenty it was already selling, so those twenty units really brought in $840 - forty-two dollars each, not the fifty-eight on the price tag.</span><span class="detail">The change in total revenue from selling one more unit. In an imperfectly competitive output market, holding everything else constant, a firm must <b>lower price</b> to sell additional units - and it must lower it on <b>every</b> unit, not only on the extra one. So the extra unit&rsquo;s contribution is its price <b>minus</b> the price cut suffered on all the units already being sold, which makes <b>MR &lt; P</b> at every positive quantity. On a straight-line demand curve MR starts at the same vertical intercept and falls at <b>twice the slope</b>, so it hits the quantity axis at half the quantity demand does. This one sentence is the engine of the unit; the monopoly graph is its picture.</span><div class="exam"><span class="lab">On the exam</span><div class="tbl-scroll"><table class="q-tbl exam-tbl"><thead><tr><th>Quantity</th><th>Price ($)</th></tr></thead><tbody><tr><td>1</td><td>44</td></tr><tr><td>2</td><td>38</td></tr><tr><td>3</td><td>32</td></tr><tr><td>4</td><td>26</td></tr><tr><td>5</td><td>20</td></tr></tbody></table></div><p class="stem">The table shows the demand schedule facing a firm with market power. What is the marginal revenue of the third unit?</p><ol class="opts"><li><span class="ltr">A</span>$32</li><li><span class="ltr">B</span>$26</li><li><span class="ltr">C</span>$20</li><li><span class="ltr">D</span>$96</li></ol><details><summary>Answer</summary><p class="ans"><b>C.</b> Work in total revenue, never in price. Two units at $38 is $76; three units at $32 is $96. The third unit added $20, not the $32 it sold for, because taking the price from $38 to $32 gave up $6 on each of the two units already being sold: 32 &minus; 12 = 20. Choosing $32 is reading the price and calling it marginal revenue, which is the error this table exists to catch; $96 is the total revenue rather than the change in it.</p></details></div></dd></div><div class="def"><dt>Total revenue (TR)</dt><dd><b class="brief">Price times quantity - and it does not rise forever as output grows.</b><span class="eg"><span class="lab">In real life</span>A ferry filling more seats by cutting fares takes more money at first and then less, because at some point the fare is falling faster than the passengers are arriving.</span><span class="detail">P &times; Q. On a straight-line demand curve total revenue rises while marginal revenue is <b>positive</b>, peaks exactly where <b>MR = 0</b>, and falls once MR is negative. Two exam facts fall straight out of that. First, the demand curve is <b>elastic</b> above the midpoint and <b>inelastic</b> below it, so a price cut raises revenue in the top half and lowers it in the bottom half. Second, a profit-maximising firm never produces where MR is negative: marginal cost is always positive, so MR = MC can never be solved down there. A monopolist therefore always operates on the <b>elastic</b> part of its demand curve.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">A single-price monopolist finds that it is currently producing on the inelastic portion of its demand curve. What should it do to increase profit?</p><ol class="opts"><li><span class="ltr">A</span>Raise the price and sell less, because revenue rises and costs fall</li><li><span class="ltr">B</span>Lower the price and sell more, because revenue rises</li><li><span class="ltr">C</span>Keep output where it is; the elasticity of demand does not affect profit</li><li><span class="ltr">D</span>Raise the price and sell more, because demand is inelastic</li></ol><details><summary>Answer</summary><p class="ans"><b>A.</b> On the inelastic stretch marginal revenue is negative, so the last units are subtracting from revenue while still costing something to make. Cutting output raises total revenue and lowers total cost at the same time, so profit rises on both sides. The firm keeps cutting until it is back on the elastic stretch, which is why an unregulated monopolist is never found operating in the inelastic range.</p></details></div></dd></div></dl>
 
 <div class="work-box">
   <span class="lab">Worked example &mdash; marginal revenue from a demand schedule</span>

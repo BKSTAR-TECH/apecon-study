@@ -445,25 +445,50 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-matrix-key { font: var(--type-body-sm); color: var(--text-muted); margin-top: var(--space-4); }
 .g-matrix-key .pa, .g-matrix-key .pb { font: var(--type-mono); }
 
-.g-quadrant .q-grid { display: grid; grid-template-columns: 104px 1fr 1fr; gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
+/* 112px, not 104: CONTRACTIONARY is the longest row header in the atlas and at
+   104 it broke one character short of fitting.
+
+   And minmax(0, 1fr), not 1fr - the trap the playbook names in section 8. A
+   bare 1fr is minmax(AUTO, 1fr) and auto floors the track at its content's
+   min-content width, so the two cell columns could not shrink below their
+   longest word and the whole grid ran 8px past the 340px figure column. The
+   measured gate caught it on macro-u5. */
+.g-quadrant .q-grid { display: grid; grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1fr); gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
 .g-quadrant .q-head {
   background: var(--surface-sunken); padding: var(--space-3);
   font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted);
   display: flex; align-items: center;
+  /* The row-header column is a fixed 104px and the grid clips (overflow:hidden,
+     for the rounded corners), so a single long word had its tail cut off
+     mid-letter - "CONTRACTIONARY FISCAL" printed as "CONTRACTIONA". A clipped
+     word is worse than a wrapped one, and no gate sees either. */
+  overflow-wrap: anywhere;
 }
 .g-quadrant .q-head--col:first-of-type { grid-column: 2; }
 .g-quadrant .q-grid > .q-head--col:nth-of-type(1) { grid-column-start: 2; }
-.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); }
+/* A cell's own words have to fit its column once the tracks can shrink. The
+   mono examples carry long unbreakable tokens - recessionary, inflationary -
+   and each ran 4px past its column in the 340px deck. break-word breaks only a
+   word that would not fit on a line of its own, so ordinary wrapping is
+   unchanged. */
+.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); overflow-wrap: break-word; }
 .g-quadrant .q-cell--key { background: var(--surface-hint); }
 .g-quadrant .q-name { font: var(--type-h3); color: var(--text-strong); }
 .g-quadrant .q-eg { font: var(--type-mono); color: var(--text-muted); }
 .g-quadrant .q-note { font: var(--type-body-sm); color: var(--text-body); }
-.g-quadrant .q-head--row { text-align: left; }
+/* No extra tracking on the row header: it is the one cell in a fixed 104px
+   column, and the tracking alone was enough to push CONTRACTIONARY past the
+   edge. Without it the word fits and the break above is never reached. */
+.g-quadrant .q-head--row { text-align: left; letter-spacing: normal; padding-inline: var(--space-2); }
 
 /* The T-account (G-A05). Same table treatment as the payoff matrix. */
 .g-balance { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
 @media (max-width: 700px) { .g-balance { grid-template-columns: 1fr; } }
 .g-t-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-3); }
+/* A table cannot shrink below its own min-content, so in the 340px deck the
+   bank's balance sheet ran 19px past the figure. Wide content scrolls inside
+   its own container - the same answer .g-pq and .g-steps already use. */
+.g-t { overflow-x: auto; }
 .g-t table { border-collapse: collapse; width: 100%; }
 .g-t th, .g-t td { border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; }
 .g-t th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
@@ -472,7 +497,15 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-t .v-accent { color: var(--orange-600); }
 
 .g-steps { list-style: none; margin: 0; padding: 0; }
-.g-steps li { display: flex; justify-content: space-between; gap: var(--space-4); align-items: baseline; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.g-steps li {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  align-items: baseline; padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  /* Same reason as .g-calc .c-work: in the 340px deck the working and its
+     result would not both fit on one line, and the pair ran 44 and 49 pixels
+     past the row. Let the result drop under its working instead. */
+  flex-wrap: wrap;
+}
 .g-steps li:last-child { border-bottom: 0; }
 .g-steps .s-k { font: var(--type-body-sm); color: var(--text-body); }
 .g-steps .s-v { font: var(--type-mono); color: var(--text-strong); white-space: nowrap; }
@@ -512,6 +545,10 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-calc .c-work {
   display: flex; justify-content: space-between; gap: var(--space-4);
   align-items: baseline; margin-top: var(--space-2);
+  /* The result is nowrap, so in a narrow column it cannot shrink and ran into
+     the substitution beside it. Let the pair wrap instead: the result drops
+     under its own working, which is how it would be written by hand. */
+  flex-wrap: wrap;
 }
 .g-calc .c-sub { font: var(--type-mono); color: var(--text-muted); }
 .g-calc .c-out { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); white-space: nowrap; }
@@ -542,14 +579,26 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-partition .p-row { display: flex; align-items: stretch; width: 100%; }
 .g-partition .p-seg {
   display: flex; flex-direction: column; justify-content: center; gap: var(--space-1);
-  padding: var(--space-3); min-width: 0; overflow: hidden;
+  padding: var(--space-3); overflow: hidden;
   border: 1px solid var(--border-subtle); background: var(--surface-card);
+  /* A segment's width is its SHARE, so a small share gets a narrow box - and
+     with min-width:0 the box could end up narrower than the number printed in
+     it, which `overflow: hidden` then cut. The measured gate found 15,000 nine
+     pixels short of its own segment and 8,000 five short. A figure about
+     numbers may not clip a number.
+
+     min-content here is the value's width and nothing else: .p-k is nowrap and
+     would otherwise contribute its whole string, so it is pinned to zero just
+     below and truncates with its ellipsis exactly as before. The cost is that a
+     very small share's segment is a few pixels wider than its share - which is
+     a smaller lie than a number with a digit missing. */
+  min-width: min-content;
 }
 .g-partition .p-row .p-seg + .p-seg { border-left: 0; }
 .g-partition .p-seg--in { background: var(--navy-050); border-color: var(--navy-200); }
 .g-partition .p-seg--out { background: var(--surface-sunken); }
 .g-partition .p-seg--sub { background: var(--orange-050); border-color: var(--orange-300); }
-.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .g-partition .p-note { font: var(--type-body-sm); color: var(--text-body); margin: var(--space-2) 0 0; display: flex; align-items: baseline; gap: var(--space-2); }
 .g-partition .p-swatch { flex: 0 0 auto; width: 10px; height: 10px; border-radius: var(--radius-xs); background: var(--orange-050); border: 1px solid var(--orange-300); }
 .g-partition .p-v { font: var(--type-mono); color: var(--text-strong); }
@@ -722,7 +771,33 @@ p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
 /* ---- figures ------------------------------------------------------------- */
 .figs figure { margin: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: 12px 12px 10px; display: flex; flex-direction: column; }
 .figs figure svg { display: block; width: 100%; height: auto; }
-.figs figcaption { margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* Running prose, not a row of parts. grammar.css makes .g-fig figcaption a
+   flex container, because on the ATLAS contact sheet a caption is three
+   labelled pieces - id, title, note - laid out side by side. A study page's
+   caption is a paragraph, and in a flex container every inline child becomes a
+   flex ITEM: a <sub> mid-sentence was thrown onto its own line with the
+   container's gap around it, so "Output RISES, from Q_M to Q_C" printed as four
+   lines. 37 captions across five published pages carry a subscript, and the
+   sub rule on the next line was written expecting them to work. No gate could
+   see it: it is not a label collision, and the figures measure clean either
+   way. */
+.figs figcaption { display: block; margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* A two-column non-plot figure stacks in the DECK, and only there.
+
+   .g-cols is a fixed two-column grid, and the sticky figure column is 340-400px
+   wide, so each column lands at about 150px. At that width G-A66, G-A67, G-A68,
+   G-A69, G-A48 and G-A13 all read as clipped: a .g-calc row's mono result would
+   not shrink (white-space: nowrap) and ran into the substitution beside it, and
+   a column title wrapped to four lines. Six live pages looked like that.
+
+   Stacking is right rather than scrolling here. .g-pq and .g-steps get
+   overflow-x because they are TABLES, where the columns have to stay beside
+   each other to be read across; .g-cols is two independent panels, and one
+   above the other loses nothing. The expand dialog is a sibling of the deck,
+   not a child, so it keeps both columns at full width - which is what expand is
+   for. No gate could see this either: it is not a label collision and it does
+   not overflow the page. */
+.figs .g-cols, .figs .g-cols--wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 .figs figcaption .eg { display: block; margin-top: 8px; padding: 8px 11px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
 .figs figcaption sub { font-size: .75em; vertical-align: sub; }
 .figs figcaption .reads { list-style: none; margin: 8px 0 0; padding: 0 0 0 10px; border-left: 3px solid var(--navy-200); color: var(--text-body); font-size: var(--size-caption); line-height: var(--lh-body); }
@@ -1135,7 +1210,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <div class="prose">
 <p class="lede">Three things can happen to a point on this diagram, and the exam&rsquo;s favourite question is which one it just described. The tell is whether inflation and unemployment moved in opposite directions or in the same one.</p>
 
-<dl class="defs"><div class="def"><dt>A demand shock, on this diagram</dt><dd><b class="brief">Moves the economy ALONG one short-run curve. Inflation and unemployment move in opposite directions.</b><span class="eg"><span class="lab">In real life</span>A collapse in household confidence that cuts spending pushes unemployment up and inflation down at the same time - one slide down one curve.</span><span class="detail">Demand shocks correspond to <b>movement along</b> the short-run Phillips curve. Nothing shifts, because a demand shock does not change what it costs firms to produce - it changes how much is bought. The diagnostic is the direction: a demand shock moves inflation and unemployment in <b>opposite</b> directions, up-and-left for a positive shock and down-and-right for a negative one, and either move stays on the curve it started on. On the aggregate demand and aggregate supply diagram the same event is aggregate demand shifting along a fixed short-run aggregate supply curve.</span></dd></div><div class="def"><dt>A supply shock, on this diagram</dt><dd><b class="brief">SHIFTS the short-run curve. Inflation and unemployment move in the SAME direction, which no movement along can do.</b><span class="eg"><span class="lab">In real life</span>A sharp rise in the price of a fuel every industry uses raises costs everywhere at once: firms produce less and charge more, so unemployment and inflation both rise.</span><span class="detail">Supply shocks correspond to <b>shifts of the SRPC</b>. A shock that changes production costs changes the inflation rate associated with every unemployment rate at once, so the whole curve moves - outward for an adverse shock, inward for a favourable one. The signature that identifies it is that inflation and unemployment move the <b>same</b> way, which is impossible along a downward-sloping curve. This is the Phillips-curve twin of stagflation on the aggregate demand and aggregate supply diagram, where short-run aggregate supply falls and output drops while the price level rises.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">A country reports that its inflation rate and its unemployment rate both increased over the same year. Which of the following best explains the change?</p><ol class="opts"><li><span class="ltr">A</span>A positive demand shock, moving the economy up along its short-run Phillips curve</li><li><span class="ltr">B</span>A negative demand shock, moving the economy down along its short-run Phillips curve</li><li><span class="ltr">C</span>A negative supply shock, shifting the short-run Phillips curve outward</li><li><span class="ltr">D</span>A decrease in the natural rate of unemployment, shifting the long-run Phillips curve left</li></ol><details><summary>Answer</summary><p class="ans"><b>C.</b> A movement along a downward-sloping curve always moves the two rates in opposite directions, so no demand shock in either direction can raise both. Only a shift of the short-run curve can, and an adverse supply shock is what shifts it outward. A change in the natural rate moves the vertical long-run curve, which is a different event with a different signature.</p></details></div></dd></div><div class="def"><dt>Expected inflation</dt><dd><b class="brief">The inflation rate people build into wages and contracts. It sets which short-run curve the economy is on.</b><span class="eg"><span class="lab">In real life</span>A union negotiating a three-year wage deal has to guess what prices will do over those three years, and whatever it guesses is written into the contract whether or not it turns out right.</span><span class="detail">Each short-run Phillips curve is drawn for one expected inflation rate, and it crosses the long-run curve exactly at that rate. Raise what people expect and the whole short-run curve moves outward, because firms and workers now write higher price and wage increases into their decisions at every level of unemployment. The natural rate does not change, so the long-run curve does not move - which makes this the clearest case of one curve shifting past a stationary other one, and a case the exam sets far more often than the CED&rsquo;s own wording suggests.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">An increase in the expected rate of inflation will most likely cause which of the following?</p><ol class="opts"><li><span class="ltr">A</span>A movement up along the existing short-run Phillips curve</li><li><span class="ltr">B</span>An outward shift of the short-run Phillips curve, with the long-run curve unchanged</li><li><span class="ltr">C</span>A leftward shift of the long-run Phillips curve</li><li><span class="ltr">D</span>A movement down along the existing short-run Phillips curve</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> Higher expected inflation raises the inflation rate associated with every unemployment rate, so the short-run curve shifts outward. It is not a change in frictional or structural unemployment, so the natural rate is unchanged and the vertical long-run curve stays where it is. Movements along the curve are what demand shocks produce, not what a change in expectations produces.</p></details></div></dd></div><div class="def"><dt>A shift of the LRPC</dt><dd><b class="brief">Only a change in the natural rate of unemployment moves the vertical curve. Nothing else does.</b><span class="eg"><span class="lab">In real life</span>A national online job-matching service that shortens the average gap between leaving one job and starting the next lowers frictional unemployment, and with it the natural rate.</span><span class="detail">Factors that cause the natural rate of unemployment to change will cause the long-run Phillips curve to shift. Because the natural rate is frictional plus structural unemployment, the things that move it are things that change how well workers and jobs match: how job search is conducted, how quickly skills go out of date, how easily people move between regions and industries, and the composition of the labour force itself. Improved matching moves the curve <b>left</b>; worse matching moves it <b>right</b>. The same event moves long-run aggregate supply the other way - left here is right there - and a question that gives you one is testing whether you can produce the other.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">Which of the following would most likely shift a country&rsquo;s long-run Phillips curve to the right?</p><ol class="opts"><li><span class="ltr">A</span>An increase in the expected rate of inflation</li><li><span class="ltr">B</span>An increase in the money supply</li><li><span class="ltr">C</span>An increase in the proportion of workers whose skills no longer match available jobs</li><li><span class="ltr">D</span>A decrease in aggregate demand</li></ol><details><summary>Answer</summary><p class="ans"><b>C.</b> The long-run curve stands at the natural rate of unemployment, so it moves only when the natural rate moves - and the natural rate is frictional plus structural unemployment. More workers with mismatched skills is more structural unemployment, so the natural rate rises and the vertical curve shifts right. Expectations move the short-run curve, and money and aggregate demand move the point along it.</p></details></div></dd></div><div class="def"><dt>The stagflation signature</dt><dd><b class="brief">Both rates rising together. It rules out every demand-side explanation in one step.</b><span class="eg"><span class="lab">In real life</span>A year in which a country reports both its worst unemployment and its worst inflation in a decade is not describing a boom or a bust - it is describing a cost shock.</span><span class="detail">Not a CED term but the diagnostic the CED&rsquo;s two shock statements imply, and worth naming because it is how a stem is usually written. If inflation and unemployment moved in <b>opposite</b> directions, you slid along one short-run curve and the cause was on the demand side. If they moved in the <b>same</b> direction, the curve itself moved and the cause was on the supply side. There is no third pattern, and the test takes one reading of the direction of each rate.</span></dd></div></dl>
+<dl class="defs"><div class="def"><dt>A demand shock, on this diagram</dt><dd><b class="brief">Moves the economy ALONG one short-run curve. Inflation and unemployment move in opposite directions.</b><span class="eg"><span class="lab">In real life</span>A collapse in household confidence that cuts spending pushes unemployment up and inflation down at the same time - one slide down one curve.</span><span class="detail">Demand shocks correspond to <b>movement along</b> the short-run Phillips curve. Nothing shifts, because a demand shock does not change what it costs firms to produce - it changes how much is bought. The diagnostic is the direction: a demand shock moves inflation and unemployment in <b>opposite</b> directions, up-and-left for a positive shock and down-and-right for a negative one, and either move stays on the curve it started on. On the aggregate demand and aggregate supply diagram the same event is aggregate demand shifting along a fixed short-run aggregate supply curve.</span></dd></div><div class="def"><dt>A supply shock, on this diagram</dt><dd><b class="brief">SHIFTS the short-run curve. Inflation and unemployment move in the SAME direction, which no movement along can do.</b><span class="eg"><span class="lab">In real life</span>A sharp rise in the price of a fuel every industry uses raises costs everywhere at once: firms produce less and charge more, so unemployment and inflation both rise.</span><span class="detail">Supply shocks correspond to <b>shifts of the SRPC</b>. A shock that changes production costs changes the inflation rate associated with every unemployment rate at once, so the whole curve moves - outward for an adverse shock, inward for a favourable one. The signature that identifies it is that inflation and unemployment move the <b>same</b> way, which is impossible along a downward-sloping curve. This is the Phillips-curve twin of stagflation on the aggregate demand and aggregate supply diagram, where short-run aggregate supply falls and output drops while the price level rises.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">A country reports that its inflation rate and its unemployment rate both increased over the same year. Which of the following best explains the change?</p><ol class="opts"><li><span class="ltr">A</span>A positive demand shock, moving the economy up along its short-run Phillips curve</li><li><span class="ltr">B</span>A negative demand shock, moving the economy down along its short-run Phillips curve</li><li><span class="ltr">C</span>A negative supply shock, shifting the short-run Phillips curve outward</li><li><span class="ltr">D</span>A decrease in the natural rate of unemployment, shifting the long-run Phillips curve left</li></ol><details><summary>Answer</summary><p class="ans"><b>C.</b> A movement along a downward-sloping curve always moves the two rates in opposite directions, so no demand shock in either direction can raise both. Only a shift of the short-run curve can, and an adverse supply shock is what shifts it outward. A change in the natural rate moves the vertical long-run curve, which is a different event with a different signature.</p></details></div></dd></div><div class="def"><dt>Expected inflation</dt><dd><b class="brief">The inflation rate people build into wages and contracts. It sets which short-run curve the economy is on.</b><span class="eg"><span class="lab">In real life</span>A union negotiating a three-year wage deal has to guess what prices will do over those three years, and whatever it guesses is written into the contract whether or not it turns out right.</span><span class="detail">Each short-run Phillips curve is drawn for one expected inflation rate, and it crosses the long-run curve exactly at that rate. Raise what people expect and the whole short-run curve moves outward, because firms and workers now write higher price and wage increases into their decisions at every level of unemployment. The natural rate does not change, so the long-run curve does not move - which makes this the clearest case of one curve shifting past a stationary other one, and a case the exam sets far more often than the CED&rsquo;s own wording suggests.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">An increase in the expected rate of inflation will most likely cause which of the following?</p><ol class="opts"><li><span class="ltr">A</span>A movement up along the existing short-run Phillips curve</li><li><span class="ltr">B</span>An outward shift of the short-run Phillips curve, with the long-run curve unchanged</li><li><span class="ltr">C</span>A leftward shift of the long-run Phillips curve</li><li><span class="ltr">D</span>A movement down along the existing short-run Phillips curve</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> Higher expected inflation raises the inflation rate associated with every unemployment rate, so the short-run curve shifts outward. It is not a change in frictional or structural unemployment, so the natural rate is unchanged and the vertical long-run curve stays where it is. Movements along the curve are what demand shocks produce, not what a change in expectations produces.</p></details></div></dd></div><div class="def"><dt>A shift of the LRPC</dt><dd><b class="brief">Only a change in the natural rate of unemployment moves the vertical curve. Nothing else does.</b><span class="eg"><span class="lab">In real life</span>A national online job-matching service that shortens the average gap between leaving one job and starting the next lowers frictional unemployment, and with it the natural rate.</span><span class="detail">Factors that cause the natural rate of unemployment to change will cause the long-run Phillips curve to shift. Because the natural rate is frictional plus structural unemployment, the things that move it are things that change how well workers and jobs match: how job search is conducted, how quickly skills go out of date, how easily people move between regions and industries, and the composition of the labour force itself. Improved matching moves the curve <b>left</b>; worse matching moves it <b>right</b>. The same event moves long-run aggregate supply the other way - left here is right there - and a question that gives you one is testing whether you can produce the other.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">A country automates much of its factory work, and a large group of those workers find their skills no longer match the jobs on offer. What happens to that country&rsquo;s long-run Phillips curve?</p><ol class="opts"><li><span class="ltr">A</span>It shifts right, because the natural rate of unemployment has risen</li><li><span class="ltr">B</span>It shifts left, because the economy can now produce more with fewer workers</li><li><span class="ltr">C</span>It does not move; only the short-run curve shifts</li><li><span class="ltr">D</span>It stops being vertical, because unemployment and inflation now trade off in the long run</li></ol><details><summary>Answer</summary><p class="ans"><b>A.</b> The long-run curve stands at the natural rate of unemployment, so it moves only when the natural rate moves - and the natural rate is frictional plus structural unemployment. Workers whose skills no longer match the available jobs are structurally unemployed, so the natural rate rises and the vertical curve shifts right. Automation raising output does not move it: the curve is about the labour market, not about capacity. Expectations move the SHORT-run curve, and the long-run curve stays vertical however severe the mismatch gets.</p></details></div></dd></div><div class="def"><dt>The stagflation signature</dt><dd><b class="brief">Both rates rising together. It rules out every demand-side explanation in one step.</b><span class="eg"><span class="lab">In real life</span>A year in which a country reports both its worst unemployment and its worst inflation in a decade is not describing a boom or a bust - it is describing a cost shock.</span><span class="detail">Not a CED term but the diagnostic the CED&rsquo;s two shock statements imply, and worth naming because it is how a stem is usually written. If inflation and unemployment moved in <b>opposite</b> directions, you slid along one short-run curve and the cause was on the demand side. If they moved in the <b>same</b> direction, the curve itself moved and the cause was on the supply side. There is no third pattern, and the test takes one reading of the direction of each rate.</span></dd></div></dl>
 
 <div class="rule-box">
   <span class="lab">MOD-3.B.1 and MOD-3.B.2, a matched pair</span>

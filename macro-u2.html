@@ -445,25 +445,50 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-matrix-key { font: var(--type-body-sm); color: var(--text-muted); margin-top: var(--space-4); }
 .g-matrix-key .pa, .g-matrix-key .pb { font: var(--type-mono); }
 
-.g-quadrant .q-grid { display: grid; grid-template-columns: 104px 1fr 1fr; gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
+/* 112px, not 104: CONTRACTIONARY is the longest row header in the atlas and at
+   104 it broke one character short of fitting.
+
+   And minmax(0, 1fr), not 1fr - the trap the playbook names in section 8. A
+   bare 1fr is minmax(AUTO, 1fr) and auto floors the track at its content's
+   min-content width, so the two cell columns could not shrink below their
+   longest word and the whole grid ran 8px past the 340px figure column. The
+   measured gate caught it on macro-u5. */
+.g-quadrant .q-grid { display: grid; grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1fr); gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; }
 .g-quadrant .q-head {
   background: var(--surface-sunken); padding: var(--space-3);
   font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted);
   display: flex; align-items: center;
+  /* The row-header column is a fixed 104px and the grid clips (overflow:hidden,
+     for the rounded corners), so a single long word had its tail cut off
+     mid-letter - "CONTRACTIONARY FISCAL" printed as "CONTRACTIONA". A clipped
+     word is worse than a wrapped one, and no gate sees either. */
+  overflow-wrap: anywhere;
 }
 .g-quadrant .q-head--col:first-of-type { grid-column: 2; }
 .g-quadrant .q-grid > .q-head--col:nth-of-type(1) { grid-column-start: 2; }
-.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); }
+/* A cell's own words have to fit its column once the tracks can shrink. The
+   mono examples carry long unbreakable tokens - recessionary, inflationary -
+   and each ran 4px past its column in the 340px deck. break-word breaks only a
+   word that would not fit on a line of its own, so ordinary wrapping is
+   unchanged. */
+.g-quadrant .q-cell { background: var(--surface-card); padding: var(--gutter-card); display: flex; flex-direction: column; gap: var(--space-2); overflow-wrap: break-word; }
 .g-quadrant .q-cell--key { background: var(--surface-hint); }
 .g-quadrant .q-name { font: var(--type-h3); color: var(--text-strong); }
 .g-quadrant .q-eg { font: var(--type-mono); color: var(--text-muted); }
 .g-quadrant .q-note { font: var(--type-body-sm); color: var(--text-body); }
-.g-quadrant .q-head--row { text-align: left; }
+/* No extra tracking on the row header: it is the one cell in a fixed 104px
+   column, and the tracking alone was enough to push CONTRACTIONARY past the
+   edge. Without it the word fits and the break above is never reached. */
+.g-quadrant .q-head--row { text-align: left; letter-spacing: normal; padding-inline: var(--space-2); }
 
 /* The T-account (G-A05). Same table treatment as the payoff matrix. */
 .g-balance { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
 @media (max-width: 700px) { .g-balance { grid-template-columns: 1fr; } }
 .g-t-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-3); }
+/* A table cannot shrink below its own min-content, so in the 340px deck the
+   bank's balance sheet ran 19px past the figure. Wide content scrolls inside
+   its own container - the same answer .g-pq and .g-steps already use. */
+.g-t { overflow-x: auto; }
 .g-t table { border-collapse: collapse; width: 100%; }
 .g-t th, .g-t td { border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; }
 .g-t th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
@@ -472,7 +497,15 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-t .v-accent { color: var(--orange-600); }
 
 .g-steps { list-style: none; margin: 0; padding: 0; }
-.g-steps li { display: flex; justify-content: space-between; gap: var(--space-4); align-items: baseline; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.g-steps li {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  align-items: baseline; padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  /* Same reason as .g-calc .c-work: in the 340px deck the working and its
+     result would not both fit on one line, and the pair ran 44 and 49 pixels
+     past the row. Let the result drop under its working instead. */
+  flex-wrap: wrap;
+}
 .g-steps li:last-child { border-bottom: 0; }
 .g-steps .s-k { font: var(--type-body-sm); color: var(--text-body); }
 .g-steps .s-v { font: var(--type-mono); color: var(--text-strong); white-space: nowrap; }
@@ -512,6 +545,10 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-calc .c-work {
   display: flex; justify-content: space-between; gap: var(--space-4);
   align-items: baseline; margin-top: var(--space-2);
+  /* The result is nowrap, so in a narrow column it cannot shrink and ran into
+     the substitution beside it. Let the pair wrap instead: the result drops
+     under its own working, which is how it would be written by hand. */
+  flex-wrap: wrap;
 }
 .g-calc .c-sub { font: var(--type-mono); color: var(--text-muted); }
 .g-calc .c-out { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); white-space: nowrap; }
@@ -542,14 +579,26 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-partition .p-row { display: flex; align-items: stretch; width: 100%; }
 .g-partition .p-seg {
   display: flex; flex-direction: column; justify-content: center; gap: var(--space-1);
-  padding: var(--space-3); min-width: 0; overflow: hidden;
+  padding: var(--space-3); overflow: hidden;
   border: 1px solid var(--border-subtle); background: var(--surface-card);
+  /* A segment's width is its SHARE, so a small share gets a narrow box - and
+     with min-width:0 the box could end up narrower than the number printed in
+     it, which `overflow: hidden` then cut. The measured gate found 15,000 nine
+     pixels short of its own segment and 8,000 five short. A figure about
+     numbers may not clip a number.
+
+     min-content here is the value's width and nothing else: .p-k is nowrap and
+     would otherwise contribute its whole string, so it is pinned to zero just
+     below and truncates with its ellipsis exactly as before. The cost is that a
+     very small share's segment is a few pixels wider than its share - which is
+     a smaller lie than a number with a digit missing. */
+  min-width: min-content;
 }
 .g-partition .p-row .p-seg + .p-seg { border-left: 0; }
 .g-partition .p-seg--in { background: var(--navy-050); border-color: var(--navy-200); }
 .g-partition .p-seg--out { background: var(--surface-sunken); }
 .g-partition .p-seg--sub { background: var(--orange-050); border-color: var(--orange-300); }
-.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-partition .p-k { font: var(--type-body-sm); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .g-partition .p-note { font: var(--type-body-sm); color: var(--text-body); margin: var(--space-2) 0 0; display: flex; align-items: baseline; gap: var(--space-2); }
 .g-partition .p-swatch { flex: 0 0 auto; width: 10px; height: 10px; border-radius: var(--radius-xs); background: var(--orange-050); border: 1px solid var(--orange-300); }
 .g-partition .p-v { font: var(--type-mono); color: var(--text-strong); }
@@ -722,7 +771,33 @@ p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
 /* ---- figures ------------------------------------------------------------- */
 .figs figure { margin: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); padding: 12px 12px 10px; display: flex; flex-direction: column; }
 .figs figure svg { display: block; width: 100%; height: auto; }
-.figs figcaption { margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* Running prose, not a row of parts. grammar.css makes .g-fig figcaption a
+   flex container, because on the ATLAS contact sheet a caption is three
+   labelled pieces - id, title, note - laid out side by side. A study page's
+   caption is a paragraph, and in a flex container every inline child becomes a
+   flex ITEM: a <sub> mid-sentence was thrown onto its own line with the
+   container's gap around it, so "Output RISES, from Q_M to Q_C" printed as four
+   lines. 37 captions across five published pages carry a subscript, and the
+   sub rule on the next line was written expecting them to work. No gate could
+   see it: it is not a label collision, and the figures measure clean either
+   way. */
+.figs figcaption { display: block; margin-top: 6px; font: var(--type-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+/* A two-column non-plot figure stacks in the DECK, and only there.
+
+   .g-cols is a fixed two-column grid, and the sticky figure column is 340-400px
+   wide, so each column lands at about 150px. At that width G-A66, G-A67, G-A68,
+   G-A69, G-A48 and G-A13 all read as clipped: a .g-calc row's mono result would
+   not shrink (white-space: nowrap) and ran into the substitution beside it, and
+   a column title wrapped to four lines. Six live pages looked like that.
+
+   Stacking is right rather than scrolling here. .g-pq and .g-steps get
+   overflow-x because they are TABLES, where the columns have to stay beside
+   each other to be read across; .g-cols is two independent panels, and one
+   above the other loses nothing. The expand dialog is a sibling of the deck,
+   not a child, so it keeps both columns at full width - which is what expand is
+   for. No gate could see this either: it is not a label collision and it does
+   not overflow the page. */
+.figs .g-cols, .figs .g-cols--wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 .figs figcaption .eg { display: block; margin-top: 8px; padding: 8px 11px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
 .figs figcaption sub { font-size: .75em; vertical-align: sub; }
 .figs figcaption .reads { list-style: none; margin: 8px 0 0; padding: 0 0 0 10px; border-left: 3px solid var(--navy-200); color: var(--text-body); font-size: var(--size-caption); line-height: var(--lh-body); }
@@ -1257,7 +1332,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
       </li>
     </ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Two routes to the natural rate, and the exam scores either. Route 1 subtracts cyclical unemployment from the actual rate; route 2 adds frictional and structural. They have to agree, because cyclical is defined as exactly the gap between the other two routes.<span class="eg"><b>Example.</b> A country reporting 8% actual unemployment where economists estimate 3 points of it is due to the current recession: the other 5 points are the natural rate, however it is computed.</span><ul class="reads"><li class="lab">In the figure</li><li>Route 1: actual unemployment rate (8%) minus cyclical unemployment (3%) equals 5%.</li><li>Route 2: frictional (4%) plus structural (1%) also equals 5%.</li><li>Both routes agree, because cyclical unemployment is defined as exactly the amount by which actual departs from natural - there is nowhere else for the difference to go.</li><li>The right panel reads the same 5% off two other graphs elsewhere in the atlas: the LRPC (vertical at the natural rate) and AD-AS (the LRAS, vertical at the output that goes with it) - one number, three pictures.</li></ul></figcaption></figure><figure class="g-fig illo motion move"><svg viewBox="0 0 340 270" role="img" aria-label="The natural rate of unemployment at three points in time, each with a different labor force" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">The natural rate is not fixed</text><text class="g-tick" x="170" y="44" text-anchor="middle">same definition, a different number each era</text><line x1="40" y1="190" x2="300" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><line x1="40" y1="70" x2="40" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><path class="g-after" data-at="0.3" d="M78 95.71428571428572 L189 82 L300 118" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.6" stroke-dasharray="5 4"/><circle class="g-after" data-at="0.5" cx="78" cy="95.71" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.5" x="78" y="77.71" text-anchor="middle" fill="var(--econ-change)">5.5%</text><text class="g-tick" x="78" y="210" text-anchor="middle">1960s</text><text class="g-tick g-after" data-at="0.9" x="78" y="226" text-anchor="middle" fill="var(--text-body)">fewer entrants</text><circle class="g-after" data-at="0.9" cx="189" cy="82" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.9" x="189" y="64" text-anchor="middle" fill="var(--econ-change)">6.3%</text><text class="g-tick" x="189" y="210" text-anchor="middle">1980s</text><text class="g-tick g-after" data-at="1.3" x="189" y="226" text-anchor="middle" fill="var(--text-body)">cohort surge</text><circle class="g-after" data-at="1.3" cx="300" cy="118" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="1.3" x="300" y="100" text-anchor="middle" fill="var(--econ-change)">4.2%</text><text class="g-tick" x="300" y="210" text-anchor="middle">Recent</text><text class="g-tick g-after" data-at="1.7000000000000002" x="300" y="226" text-anchor="middle" fill="var(--text-body)">online matching</text><text class="g-point-label g-after" data-at="2" x="170" y="252" text-anchor="middle" fill="var(--econ-change)">labor force characteristics changed each time - not the business cycle</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The natural rate is a sum of frictional and structural unemployment, and both of those can change as the labor force itself changes - who is looking for work, how they search, and what skills employers want. None of the three readings here is &ldquo;the&rdquo; natural rate; each is the natural rate FOR that decade&rsquo;s labor force.</figcaption></figure></div></aside>
+</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Two routes to the natural rate, and the exam scores either. Route 1 subtracts cyclical unemployment from the actual rate; route 2 adds frictional and structural. They have to agree, because cyclical is defined as exactly the gap between the other two routes.<span class="eg"><b>Example.</b> A country reporting 8% actual unemployment where economists estimate 3 points of it is due to the current recession: the other 5 points are the natural rate, however it is computed.</span><ul class="reads"><li class="lab">In the figure</li><li>Route 1: actual unemployment rate (8%) minus cyclical unemployment (3%) equals 5%.</li><li>Route 2: frictional (4%) plus structural (1%) also equals 5%.</li><li>Both routes agree, because cyclical unemployment is defined as exactly the amount by which actual departs from natural - there is nowhere else for the difference to go.</li><li>The right panel reads the same 5% off two other graphs elsewhere in the atlas: the LRPC (vertical at the natural rate) and AD-AS (the LRAS, vertical at the output that goes with it) - one number, three pictures.</li></ul></figcaption></figure><figure class="g-fig illo motion move"><svg viewBox="0 0 340 287" role="img" aria-label="The natural rate of unemployment at three points in time, each with a different labor force" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">The natural rate is not fixed</text><text class="g-tick" x="170" y="44" text-anchor="middle">same definition, a different number each era</text><line x1="40" y1="190" x2="286" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><line x1="40" y1="70" x2="40" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><path class="g-after" data-at="0.3" d="M78 95.71428571428572 L182 82 L286 118" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.6" stroke-dasharray="5 4"/><circle class="g-after" data-at="0.5" cx="78" cy="95.71" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.5" x="78" y="77.71" text-anchor="middle" fill="var(--econ-change)">5.5%</text><text class="g-tick" x="78" y="210" text-anchor="middle">1960s</text><text class="g-tick g-after" data-at="0.9" x="78" y="226" text-anchor="middle" fill="var(--text-body)">fewer entrants</text><circle class="g-after" data-at="0.9" cx="182" cy="82" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.9" x="182" y="64" text-anchor="middle" fill="var(--econ-change)">6.3%</text><text class="g-tick" x="182" y="210" text-anchor="middle">1980s</text><text class="g-tick g-after" data-at="1.3" x="182" y="226" text-anchor="middle" fill="var(--text-body)">cohort surge</text><circle class="g-after" data-at="1.3" cx="286" cy="118" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="1.3" x="286" y="100" text-anchor="middle" fill="var(--econ-change)">4.2%</text><text class="g-tick" x="286" y="210" text-anchor="middle">Recent</text><text class="g-tick g-after" data-at="1.7000000000000002" x="286" y="226" text-anchor="middle" fill="var(--text-body)">online matching</text><text class="g-point-label g-after" data-at="2" x="170" y="252" text-anchor="middle" fill="var(--econ-change)">labor force characteristics changed each time</text><text class="g-point-label g-after" data-at="2" x="170" y="269" text-anchor="middle" fill="var(--econ-change)">not the business cycle</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The natural rate is a sum of frictional and structural unemployment, and both of those can change as the labor force itself changes - who is looking for work, how they search, and what skills employers want. None of the three readings here is &ldquo;the&rdquo; natural rate; each is the natural rate FOR that decade&rsquo;s labor force.</figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.4">
