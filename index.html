@@ -308,21 +308,14 @@ header { border-bottom: 3px solid var(--navy-800); padding-bottom: 22px; margin-
 h1 {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(2rem, 1rem + 4vw, 3.4rem); line-height: 1.02;
-  letter-spacing: -0.02em; margin: 0 0 10px; color: var(--navy-800);
-}
-header p {
-  margin: 0; max-width: 62ch; font-size: 1.02rem; line-height: 1.55; color: var(--navy-700);
+  letter-spacing: -0.02em; margin: 0; color: var(--navy-800);
 }
 
 .course { margin-bottom: 52px; }
 .course h2 {
   font-family: var(--font-display); font-weight: 700; font-size: 1.06rem;
   letter-spacing: 0.09em; text-transform: uppercase; color: var(--navy-800);
-  margin: 0 0 2px;
-}
-.count {
-  font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.04em;
-  color: var(--navy-600); margin: 0 0 18px;
+  margin: 0 0 18px;
 }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr)); gap: 14px; }
@@ -330,7 +323,7 @@ header p {
 /* A unit is a link, and the whole card is the target. Flat, bordered, no
    shadow - the same structural language the study pages themselves use. */
 .u {
-  display: flex; gap: 16px; align-items: flex-start;
+  display: flex; gap: 16px; align-items: center; min-height: 92px;
   background: #fff; border: 1px solid var(--navy-200); border-left: 4px solid var(--navy-800);
   padding: 16px 18px; text-decoration: none; color: inherit;
   transition: border-left-color 140ms ease, transform 140ms ease, border-color 140ms ease;
@@ -341,31 +334,19 @@ header p {
 }
 .u:focus-visible { box-shadow: 0 0 0 3px var(--orange-100); }
 
+/* The numeral is a fixed column so every title in the grid starts on the same
+   x, and it is optically centred against the title rather than hung off its
+   first line - with the topic list gone there is no first line to hang from. */
 .n {
-  font-family: var(--font-display); font-weight: 900; font-size: 2.4rem; line-height: 0.86;
-  color: var(--navy-200); flex: 0 0 auto; min-width: 1.1em; text-align: right;
+  font-family: var(--font-display); font-weight: 900; font-size: 2.6rem; line-height: 1;
+  color: var(--navy-200); flex: 0 0 1.1em; text-align: center;
   transition: color 140ms ease;
 }
 .u:hover .n, .u:focus-visible .n { color: var(--orange-300); }
 
-.body { min-width: 0; }
 .subj {
-  display: block; font-family: var(--font-display); font-weight: 700;
-  font-size: 1.02rem; line-height: 1.25; color: var(--navy-800); margin-bottom: 8px;
-}
-.topics {
-  margin: 0; padding: 0; list-style: none;
-  font-family: var(--font-mono); font-size: 0.71rem; line-height: 1.65; color: var(--navy-600);
-}
-/* Wrap rather than truncate. Ellipsis kept the cards tidy and ate the half of
-   the topic that says what it is about - "1.6 Marginal Analysis and Consumer …"
-   is exactly the topic a reader is scanning for. A hanging indent keeps the
-   number column readable when a title runs to two lines. */
-.topics li { padding-left: 2.6em; text-indent: -2.6em; }
-
-footer {
-  margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--navy-200);
-  font-family: var(--font-mono); font-size: 0.72rem; color: var(--navy-600);
+  min-width: 0; font-family: var(--font-display); font-weight: 700;
+  font-size: 1.06rem; line-height: 1.3; color: var(--navy-800);
 }
 </style>
 </head>
@@ -373,90 +354,50 @@ footer {
 <div class="wrap">
 <header>
   <h1>AP Economics</h1>
-  <p>Study pages for the 2026 Course and Exam Description. Every Essential Knowledge statement in a listed unit is stated on its page, and every graph is the one the exam draws.</p>
 </header>
 <section class="course">
   <h2>AP Microeconomics</h2>
-  <p class="count">6 of 6 units</p>
   <div class="grid"><a class="u" href="micro-u1.html">
   <span class="n">1</span>
-  <span class="body">
-    <span class="subj">Basic Economic Concepts</span>
-    <ol class="topics"><li>1.1 Scarcity</li><li>1.2 Resource Allocation and Economic Systems</li><li>1.3 Production Possibilities Curve</li><li>1.4 Comparative Advantage and Trade</li><li>1.5 Cost-Benefit Analysis</li><li>1.6 Marginal Analysis and Consumer Choice</li></ol>
-  </span>
+  <span class="subj">Basic Economic Concepts</span>
 </a><a class="u" href="micro-u2.html">
   <span class="n">2</span>
-  <span class="body">
-    <span class="subj">Supply and Demand</span>
-    <ol class="topics"><li>2.1 Demand</li><li>2.2 Supply</li><li>2.3 Price Elasticity of Demand</li><li>2.4 Price Elasticity of Supply</li><li>2.5 Other Elasticities</li><li>2.6 Market Equilibrium and Surplus</li><li>2.7 Disequilibrium and Changes in Equilibrium</li><li>2.8 Government Intervention</li><li>2.9 International Trade and Public Policy</li></ol>
-  </span>
+  <span class="subj">Supply and Demand</span>
 </a><a class="u" href="micro-u3.html">
   <span class="n">3</span>
-  <span class="body">
-    <span class="subj">Production, Cost, and the Perfect Competition Model</span>
-    <ol class="topics"><li>3.1 The Production Function</li><li>3.2 Short-Run Production Costs</li><li>3.3 Long-Run Production Costs</li><li>3.4 Types of Profit</li><li>3.5 Profit Maximization</li><li>3.6 Firms&rsquo; Short-Run and Long-Run Decisions</li><li>3.7 Perfect Competition</li></ol>
-  </span>
+  <span class="subj">Production, Cost, and the Perfect Competition Model</span>
 </a><a class="u" href="micro-u4.html">
   <span class="n">4</span>
-  <span class="body">
-    <span class="subj">Imperfect Competition</span>
-    <ol class="topics"><li>4.1 Introduction to Imperfectly Competitive Markets</li><li>4.2 Monopoly</li><li>4.3 Price Discrimination</li><li>4.4 Monopolistic Competition</li><li>4.5 Oligopoly and Game Theory</li></ol>
-  </span>
+  <span class="subj">Imperfect Competition</span>
 </a><a class="u" href="micro-u5.html">
   <span class="n">5</span>
-  <span class="body">
-    <span class="subj">Factor Markets</span>
-    <ol class="topics"><li>5.1 Introduction to Factor Markets</li><li>5.2 Changes in Factor Demand and Factor Supply</li><li>5.3 Profit-Maximizing Behavior in Perfectly Competitive Factor Markets</li><li>5.4 Monopsonistic Markets</li></ol>
-  </span>
+  <span class="subj">Factor Markets</span>
 </a><a class="u" href="micro-u6.html">
   <span class="n">6</span>
-  <span class="body">
-    <span class="subj">Market Failure and the Role of Government</span>
-    <ol class="topics"><li>6.1 Socially Efficient and Inefficient Market Outcomes</li><li>6.2 Externalities</li><li>6.3 Public and Private Goods</li><li>6.4 The Effects of Government Intervention in Different Market Structures</li><li>6.5 Inequality</li></ol>
-  </span>
+  <span class="subj">Market Failure and the Role of Government</span>
 </a></div>
 </section>
 <section class="course">
   <h2>AP Macroeconomics</h2>
-  <p class="count">6 of 6 units</p>
   <div class="grid"><a class="u" href="macro-u1.html">
   <span class="n">1</span>
-  <span class="body">
-    <span class="subj">Basic Economic Concepts</span>
-    <ol class="topics"><li>1.1 Scarcity</li><li>1.2 Opportunity Cost and the Production Possibilities Curve (PPC)</li><li>1.3 Comparative Advantage and Gains from Trade</li><li>1.4 Demand</li><li>1.5 Supply</li><li>1.6 Market Equilibrium, Disequilibrium, and Changes in Equilibrium</li></ol>
-  </span>
+  <span class="subj">Basic Economic Concepts</span>
 </a><a class="u" href="macro-u2.html">
   <span class="n">2</span>
-  <span class="body">
-    <span class="subj">Economic Indicators and the Business Cycle</span>
-    <ol class="topics"><li>2.1 The Circular Flow and GDP</li><li>2.2 Limitations of GDP</li><li>2.3 Unemployment</li><li>2.4 Price Indices and Inflation</li><li>2.5 Costs of Inflation</li><li>2.6 Real Versus Nominal GDP</li><li>2.7 Business Cycles</li></ol>
-  </span>
+  <span class="subj">Economic Indicators and the Business Cycle</span>
 </a><a class="u" href="macro-u3.html">
   <span class="n">3</span>
-  <span class="body">
-    <span class="subj">National Income and Price Determination</span>
-    <ol class="topics"><li>3.1 Aggregate Demand</li><li>3.2 The Multiplier Effect</li><li>3.3 Short-Run Aggregate Supply</li><li>3.4 Long-Run Aggregate Supply</li><li>3.5 Equilibrium in the AD-AS Model</li><li>3.6 Changes in the AD-AS Model in the Short Run</li><li>3.7 Long-Run Self-Adjustment</li><li>3.8 Fiscal Policy</li><li>3.9 Automatic Stabilizers</li></ol>
-  </span>
+  <span class="subj">National Income and Price Determination</span>
 </a><a class="u" href="macro-u4.html">
   <span class="n">4</span>
-  <span class="body">
-    <span class="subj">Financial Sector</span>
-    <ol class="topics"><li>4.1 Financial Assets</li><li>4.2 Nominal v. Real Interest Rates</li><li>4.3 Definition, Measurement, and Functions of Money</li><li>4.4 Banking and the Expansion of the Money Supply</li><li>4.5 The Money Market</li><li>4.6 Monetary Policy</li><li>4.7 The Loanable Funds Market</li></ol>
-  </span>
+  <span class="subj">Financial Sector</span>
 </a><a class="u" href="macro-u5.html">
   <span class="n">5</span>
-  <span class="body">
-    <span class="subj">Long-Run Consequences of Stabilization Policies</span>
-    <ol class="topics"><li>5.1 Fiscal and Monetary Policy Actions in the Short Run</li><li>5.2 The Phillips Curve</li><li>5.3 Money Growth and Inflation</li><li>5.4 Government Deficits and the National Debt</li><li>5.5 Crowding Out</li><li>5.6 Economic Growth</li><li>5.7 Public Policy and Economic Growth</li></ol>
-  </span>
+  <span class="subj">Long-Run Consequences of Stabilization Policies</span>
 </a><a class="u" href="macro-u6.html">
   <span class="n">6</span>
-  <span class="body">
-    <span class="subj">Open Economy: International Trade and Finance</span>
-    <ol class="topics"><li>6.1 Balance of Payments Accounts</li><li>6.2 Exchange Rates</li><li>6.3 The Foreign Exchange Market</li><li>6.4 Effect of Changes in Policies and Economic Conditions on the Foreign Exchange Market</li><li>6.5 Changes in the Foreign Exchange Market and Net Exports</li><li>6.6 Real Interest Rates and International Capital Flows</li></ol>
-  </span>
+  <span class="subj">Open Economy: International Trade and Finance</span>
 </a></div>
 </section>
-<footer>Built from the College Board Course and Exam Description, Fall 2026. Wording is our own.</footer>
 </div>
 </body></html>
