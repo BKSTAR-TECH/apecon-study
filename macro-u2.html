@@ -298,9 +298,8 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 /* ============================================================================
    AP Economics — visual grammar
    ----------------------------------------------------------------------------
-   This is the econ layer ON TOP of BKSTAR (tokens.css). It does not replace any
-   BKSTAR token; it only names the roles an economics diagram needs and binds
-   each one to an existing brand primitive.
+   This is the econ layer ON TOP of BKSTAR (tokens.css). It names the roles an
+   economics diagram needs and binds each one to an existing brand primitive.
 
    The rule the whole course reads by:
 
@@ -313,6 +312,11 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
    Orange stays scarce inside a graph exactly as it is scarce inside a screen:
    one change at a time is marked. A graph showing two successive shifts marks
    the first in navy-600 and only the live one in orange.
+
+   THREE BKSTAR TOKENS ARE REDEFINED HERE, and nothing else is. tokens.css is
+   vendored and its own header says not to edit it, so the three legibility
+   overrides live in this layer instead — see "Reading roles" below for the
+   measurement that forced them. Everything else still only ADDS roles.
    ========================================================================== */
 
 :root {
@@ -323,8 +327,30 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
   --econ-change-soft: var(--orange-100);  /* its fill, when it needs one       */
   --econ-policy: var(--sky-700);          /* imposed lines: ceiling, floor, r  */
   --econ-policy-soft: var(--sky-050);
+  /* ---- The same role, as a STROKE and as INK ------------------------------
+     A role colour does two jobs: it draws a line and it writes a word. Those
+     have different floors. A 2px curve is a graphical object and 3:1 is enough;
+     a 10px mono tick is text and needs 4.5:1, and the brand orange gives 2.30:1
+     on white. `check-contrast.mjs` counted 663 SVG labels and 203 HTML spans
+     below the floor after the page text was fixed, and 106 of the 130 distinct
+     roles were this one colour.
+
+     So each role that is ever written as a word gets an -ink value: the same
+     hue, darkened until it can be read. The STROKE values are untouched, which
+     is the whole point - the curve, the arrow and the shaded area still carry
+     the brand orange, and GRAPHS.md section 2 still says what it says. Orange
+     still means what changed. It is only darker when it is a word.
+
+     Reverting is one line each: point the -ink at its stroke value again.   */
+  --econ-change-ink: #9c5600;             /* 4.67:1 worst ground; stroke 2.30  */
+  --econ-policy-ink: #12708a;             /* 4.71:1 worst ground; stroke 3.42  */
+  --econ-prior-ink: var(--navy-600);      /* 5.62:1 worst ground; navy-500 3.0 */
   --econ-detail: var(--gray-400);         /* dashed guides to the axes         */
-  --econ-detail-strong: var(--gray-500);
+  /* A LABEL, not a hairline. gray-500 put every axis tick and panel title at
+     4.29:1 — 29 of them on micro-u1 alone. Gray still means "supporting
+     detail"; a darker gray means the same thing and can be read. The guide
+     STROKE above is untouched: a 1px dashed line is not text. */
+  --econ-detail-strong: var(--read-muted);
   --econ-plot-rule: var(--gray-200);      /* the plot frame                    */
 
   /* ---- Outcome areas (welfare) ----
@@ -343,6 +369,86 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
   --econ-curve-w-strong: 2.5;
   --econ-guide-w: 1;
   --econ-axis-w: 1.5;
+
+  /* ---- Reading roles: the three BKSTAR text tokens, raised to AA ----------
+     `check-contrast.mjs` measures every element that paints a text node of its
+     own against the ground it is actually painted on. Before these three lines
+     it found 6,598 elements below WCAG AA across the twelve pages, and the
+     worst of them were not decoration:
+
+       .detail    4.29:1   the FULL statement of all 590 terms — the substance
+       figcaption 4.29:1   every figure's words, on 358 figures
+       .aka-note  1.96:1   "PPF is the name most college textbooks use" —
+                           the sentence that exists because not knowing two
+                           names are one thing costs marks (playbook 9)
+       .lab       1.82:1   every eyebrow on the page, at 10.5px uppercase
+
+     The ramp is kept, only shifted: body 9.1 : muted 6.8 : subtle 5.5 against
+     white. Three steps a reader can still tell apart, all of them legible. The
+     old subtle (gray-400 #a9b6c4) survives as a HAIRLINE colour and nothing
+     else — it is a fine rule and an unreadable letter.
+
+     These are read through --read-* as well as through the BKSTAR names, so a
+     rule that wants "the muted one" can say so without depending on which
+     layer won.                                                             */
+  --read-body: var(--gray-700);           /* 9.09:1 on white                  */
+  --read-muted: #4d5d6d;                  /* 6.77:1 — quieter, still readable */
+  --read-subtle: #5b6b7d;                 /* 5.46:1 — quietest that is legible*/
+  --text-muted: var(--read-muted);
+  --text-subtle: var(--read-subtle);
+  --text-accent: var(--econ-change-ink);  /* 4.67:1; orange-600 was 2.94:1    */
+
+  /* ---- Block roles: what KIND of thing a block is -------------------------
+     Every block in the reading column carries a MARGINAL RULE, and the rule's
+     colour says what kind of block it is before a word of it is read. Six
+     kinds, six colours, and each colour means exactly one thing:
+
+       theory    navy    what is true — the rule, the three questions, the one
+                         line that separates two terms, the figure's readings
+       life      amber   an instance from outside the classroom
+       trap      red     where the marks are actually lost
+       exam      sky     the exam's own question, or its own wording
+       worked    green   the rule applied to numbers
+       excluded  gray    the CED rules it out; permission to stop reading
+
+     Two things this fixed. Orange had FOUR jobs in the reading column — the
+     real-life example on all 848 term cards, the trap, the comparison's
+     difference band, the checklist — while the exam item and the worked
+     example, the two blocks a student most wants to find, had no colour at
+     all. And 848 orange blocks a page is the exact opposite of the "orange
+     stays scarce inside a screen" rule this file opens with. Orange now means
+     one thing on a study page: what changed, inside a figure.
+
+     Rule and label are the same hue at two depths — the brand value draws the
+     3px rule, the darkened value sets the label text, because a rule has no
+     contrast floor to meet and a word does. Every -ink value below clears 4.5:1
+     on its own -soft ground AND on white.                                   */
+  --blk-theory: var(--navy-700);
+  --blk-theory-ink: var(--navy-700);      /* 9.20 on navy-050                 */
+  --blk-theory-soft: var(--navy-050);
+  --blk-theory-hair: var(--navy-200);
+
+  --blk-life: var(--amber-500);
+  --blk-life-ink: #8a5a06;                /* 5.53 on orange-050               */
+  --blk-life-soft: var(--orange-050);
+
+  --blk-trap: var(--red-500);
+  --blk-trap-ink: var(--red-600);         /* 5.84 on gray-050                 */
+  --blk-trap-soft: var(--surface-card);
+
+  --blk-exam: var(--sky-700);
+  --blk-exam-ink: #12708a;                /* 5.28 on sky-050                  */
+  --blk-exam-soft: var(--gray-050);
+
+  --blk-worked: var(--green-500);
+  --blk-worked-ink: #0f6e4a;              /* 5.43 on green-100                */
+  --blk-worked-soft: var(--gray-050);
+
+  --blk-excluded: var(--gray-300);
+  --blk-excluded-ink: var(--read-muted);
+  --blk-excluded-soft: var(--gray-100);
+
+  --blk-rule-w: 3px;                      /* the marginal rule, one width     */
 }
 
 /* ---------------------------------------------------------------------------
@@ -394,10 +500,41 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
    In-SVG type. Every label in a graph is mono, because in this system every
    label and every number is mono.
    ------------------------------------------------------------------------ */
-.g-axis-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; fill: var(--text-strong); letter-spacing: 0.02em; }
+.g-axis-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
 .g-curve-label { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; }
-.g-tick { font-family: var(--font-mono); font-size: 10px; font-weight: 500; fill: var(--text-muted); }
-.g-point-label { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; fill: var(--text-strong); }
+.g-tick { font-family: var(--font-mono); font-size: 10px; font-weight: 500; }
+.g-point-label { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; }
+/* The class carries the TYPE; the colour is a default, and a default has to
+   lose to an author who named one. A CSS declaration beats a presentation
+   attribute, so `.g-tick { fill: ... }` silently discarded every fill= a module
+   had written on a classed label: measured across the twelve built pages, 993
+   labels rendered in a colour their author did not choose. Colour is semantic
+   here - navy is what was already true, orange is what changed - so the ones
+   that asked for --econ-change were saying "this reading is the NEW one" and
+   coming out the same muted grey as the old one. macro-u6's e1 and e2 are that
+   figure; micro-u3's bar label asked for --text-inverse and rendered grey on
+   mid-blue, which is why it could barely be read at all. .g-curve-label sets no
+   fill, which is exactly why curve labels were the only ones that obeyed the
+   colour rule. No gate could see it: nothing collides and nothing overflows. */
+.g-axis-label:not([fill]) { fill: var(--text-strong); }
+.g-tick:not([fill]) { fill: var(--text-muted); }
+.g-point-label:not([fill]) { fill: var(--text-strong); }
+/* And where an author DID name a role, a text element takes that role's ink
+   rather than its stroke. This is the deliberate other half of the rule above,
+   and the two do not fight: `:not([fill])` supplies a default to a label whose
+   author named nothing, and this remaps a label whose author named a role -
+   only on <text> and <tspan>, only for the four role values a module can write,
+   and never on the line the label belongs to. A curve keeps the brand orange;
+   its label is a darker orange, because one is a stroke and the other is a
+   word. Do not "fix" this back to :not([fill]) - it is not the 993-label bug,
+   it is the answer to the 663-label one. */
+text[fill="var(--econ-change)"], tspan[fill="var(--econ-change)"] { fill: var(--econ-change-ink); }
+text[fill="var(--econ-policy)"], tspan[fill="var(--econ-policy)"] { fill: var(--econ-policy-ink); }
+text[fill="var(--econ-initial-soft)"], tspan[fill="var(--econ-initial-soft)"] { fill: var(--econ-prior-ink); }
+/* --econ-detail is the GUIDE STROKE, a gray-400 hairline. A module that hands
+   it to a label is asking for a 2.06:1 word; detailStrong is the label value
+   and is what that author meant. */
+text[fill="var(--econ-detail)"], tspan[fill="var(--econ-detail)"] { fill: var(--econ-detail-strong); }
 /* A point that TRAVELS on the study page, and its two attendants. All three
    are drawn at their finished state and put back by script when the figure
    plays, so a still rendering - print, no script, reduced motion - is
@@ -407,8 +544,10 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-comet { stroke: var(--surface-card); stroke-width: 1.5; }
 .g-trail { pointer-events: none; }
 .g-pulse { pointer-events: none; transform-box: fill-box; transform-origin: 50% 50%; }
-.g-area-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; fill: var(--navy-700); letter-spacing: 0.04em; }
-.g-panel-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; fill: var(--text-muted); letter-spacing: var(--track-eyebrow); text-transform: uppercase; }
+.g-area-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.04em; }
+.g-panel-title { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: var(--track-eyebrow); text-transform: uppercase; }
+.g-area-label:not([fill]) { fill: var(--navy-700); }
+.g-panel-title:not([fill]) { fill: var(--text-muted); }
 
 /* ---------------------------------------------------------------------------
    The two atlas objects that are not plots (G-M16, G-M17).
@@ -434,13 +573,13 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-matrix .corner .who-a { left: var(--space-3); bottom: var(--space-2); }
 .g-matrix .corner .who-b { right: var(--space-3); top: var(--space-2); }
 .g-matrix .pa { color: var(--navy-800); }
-.g-matrix .pb { color: var(--orange-600); }
+.g-matrix .pb { color: var(--econ-change-ink); }
 .g-matrix .sep { color: var(--text-subtle); margin: 0 2px; }
 .g-matrix .g-best { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .g-matrix .g-nash { background: var(--surface-hint); }
 .g-matrix .g-nash-tag {
   display: block; margin-top: var(--space-2); font: var(--type-eyebrow);
-  letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--sky-700);
+  letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--econ-policy-ink);
 }
 .g-matrix-key { font: var(--type-body-sm); color: var(--text-muted); margin-top: var(--space-4); }
 .g-matrix-key .pa, .g-matrix-key .pb { font: var(--type-mono); }
@@ -489,12 +628,29 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
    bank's balance sheet ran 19px past the figure. Wide content scrolls inside
    its own container - the same answer .g-pq and .g-steps already use. */
 .g-t { overflow-x: auto; }
-.g-t table { border-collapse: collapse; width: 100%; }
-.g-t th, .g-t td { border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; }
-.g-t th { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); background: var(--surface-sunken); }
-.g-t .k { display: block; font: var(--type-body-sm); color: var(--text-body); }
-.g-t .v { display: block; font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); margin-top: var(--space-1); }
-.g-t .v-accent { color: var(--orange-600); }
+.g-t table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+/* The T. A rule under the headings and a rule down the middle - the two
+   strokes an accountant draws - instead of a border on every cell. Boxes made
+   it read as a grid of six unrelated facts; the T says the left column and the
+   right column are two views of one quantity, which is the whole idea. */
+.g-t th, .g-t td { border: 0; padding: var(--space-2) var(--space-3); text-align: left; vertical-align: baseline; }
+.g-t th { font: var(--type-label); letter-spacing: 0; text-transform: uppercase; color: var(--text-muted);
+          border-bottom: 1.5px solid var(--navy-800); padding-bottom: var(--space-3); }
+.g-t th + th, .g-t td + td { border-left: 1.5px solid var(--navy-800); }
+.g-t tbody tr:first-child td { padding-top: var(--space-3); }
+/* Label left, figure right, on ONE line. Stacked, each account ran two lines
+   and the sheet ran ten to say six things. The flex goes on the line INSIDE
+   the cell: on the <td> it takes the cell out of the table's formatting
+   context and both columns collapse into the left half. */
+.g-t .acct { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+.g-t .k { font: var(--type-body-sm); color: var(--text-body); }
+.g-t .v { font: var(--type-mono); font-size: var(--size-body-sm); color: var(--text-strong); white-space: nowrap; }
+.g-t .v-accent { color: var(--econ-change-ink); }
+/* The foot carries the claim the sheet is FOR: the two sides are the same
+   number. The rule above it is the accountant's single underline. */
+.g-t tfoot td { border-top: 1px solid var(--border-default); padding-top: var(--space-3); }
+.g-t tfoot .k { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-subtle); }
+.g-t tfoot .v { font-weight: var(--weight-bold); }
 
 .g-steps { list-style: none; margin: 0; padding: 0; }
 .g-steps li {
@@ -509,7 +665,7 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 .g-steps li:last-child { border-bottom: 0; }
 .g-steps .s-k { font: var(--type-body-sm); color: var(--text-body); }
 .g-steps .s-v { font: var(--type-mono); color: var(--text-strong); white-space: nowrap; }
-.g-steps .v-accent { color: var(--orange-600); }
+.g-steps .v-accent { color: var(--econ-change-ink); }
 .g-steps .s-warn { border-top: 1.5px solid var(--navy-800); margin-top: var(--space-3); padding-top: var(--space-4); }
 .g-steps .s-warn .s-k { color: var(--text-subtle); text-decoration: line-through; font: var(--type-mono); }
 .g-steps .s-warn .s-v { font: var(--type-body-sm); color: var(--text-muted); white-space: normal; text-align: right; }
@@ -552,7 +708,7 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
 }
 .g-calc .c-sub { font: var(--type-mono); color: var(--text-muted); }
 .g-calc .c-out { font: var(--type-mono); font-size: var(--size-h4); color: var(--text-strong); white-space: nowrap; }
-.g-calc .c-out--accent { color: var(--orange-600); }
+.g-calc .c-out--accent { color: var(--econ-change-ink); }
 .g-calc li.c-lead { border-bottom: 1.5px solid var(--navy-800); }
 /* When the concluding row is followed immediately by a trap, its rule and the
    trap's own rule stacked into a visible double line. One rule is enough. */
@@ -568,7 +724,7 @@ a:hover { color: var(--text-link-hover); border-bottom-color: var(--orange-500);
   border-radius: var(--radius-chip); padding: var(--space-2) var(--space-3);
 }
 .g-chain .ch-step--policy { background: var(--sky-050); border-color: var(--sky-200); color: var(--navy-700); }
-.g-chain .ch-step--end { background: var(--orange-050); border-color: var(--orange-300); color: var(--orange-700); font-weight: var(--weight-bold); }
+.g-chain .ch-step--end { background: var(--orange-050); border-color: var(--orange-300); color: var(--econ-change-ink); font-weight: var(--weight-bold); }
 .g-chain .ch-arrow { color: var(--text-subtle); font: var(--type-mono); }
 .g-chain-title { font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-muted); margin: var(--space-5) 0 var(--space-3); }
 
@@ -708,13 +864,34 @@ a:hover { color: var(--text-link-hover); }
 .chips a:hover { background: rgba(255,255,255,.2); }
 .hero .tag { font: var(--type-label); font-weight: var(--weight-regular); color: var(--text-inverse); opacity: .75; }
 /* How to read the page: three facts about the page, stated on the page. */
-.howto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 22px; border-top: 1px solid rgba(255,255,255,.18); }
+/* Four panels, not three: a page whose blocks carry a colour code has to say
+   what the code is, and the band is the one place on the page every reader
+   passes. The graph legend and the margin legend are kept apart on purpose -
+   they are two systems, one inside a figure and one down the side of the
+   reading column, and the only hue they share is navy, which means the same
+   thing in both ("what is true"). */
+.howto { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 22px; border-top: 1px solid rgba(255,255,255,.18); }
 .howto > div { padding: 12px 18px 14px 0; font: var(--type-body-sm); line-height: var(--lh-snug); opacity: .92; }
 .howto > div + div { padding-left: 18px; border-left: 1px solid rgba(255,255,255,.18); }
 .howto .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; opacity: .7; margin-bottom: 4px; }
 .howto .sw { display: inline-block; width: 18px; height: 3px; border-radius: 2px; vertical-align: middle; margin: 0 5px 0 1px; }
 .howto .sw.now { background: #fff; }
 .howto .sw.changed { background: var(--orange-500); }
+/* The key's swatches are the marginal rules turned on their side: same 3px,
+   same six hues, in the LIGHTER tint of each. A legend sits on the navy band
+   and the blocks sit on white, so the values cannot be the same ones: navy-700
+   and red-500 measure 1.4:1 and 3.0:1 against the band. Each tint here clears
+   4:1 on it, and hue is what carries the mapping. */
+.howto .keys { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 12px; margin: 0; padding: 0; }
+.howto .keys li { white-space: nowrap; }
+.howto .keys .sw { width: 14px; }
+.howto .keys .k-theory { background: var(--navy-200); }
+.howto .keys .k-life { background: var(--amber-500); }
+.howto .keys .k-trap { background: #ef7a74; }
+.howto .keys .k-exam { background: var(--sky-500); }
+.howto .keys .k-worked { background: #35c78c; }
+.howto .keys .k-excl { background: var(--gray-300); }
+@media (max-width: 1100px) { .howto { grid-template-columns: repeat(2, minmax(0, 1fr)); } .howto > div:nth-child(odd) { padding-left: 0; border-left: 0; } .howto > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.18); } }
 @media (max-width: 760px) { .howto { grid-template-columns: 1fr; } .howto > div + div { padding-left: 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.18); } }
 
 /* ---- page grid ---------------------------------------------------------- */
@@ -726,6 +903,21 @@ a:hover { color: var(--text-link-hover); }
 .rail .lab { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin: 0 0 10px; }
 .rail a { display: block; padding: 6px 10px 6px 12px; border-left: 2px solid var(--border-subtle); color: var(--text-muted); font: var(--type-body-sm); }
 .rail a.on { color: var(--text-strong); border-left-color: var(--orange-500); background: var(--surface-card); }
+
+/* The foot of the page. Flat, bordered, the same grammar as everything else:
+   the eyebrow is mono, the destination is reading type, and the border does the
+   structural work. Two links wide on a laptop, stacked under it. */
+.pagefoot { border-top: 1px solid var(--border-subtle); background: var(--surface-card); padding: 26px 0 40px; }
+.pagefoot .wrap { display: grid; gap: 16px; }
+.pagefoot .up { justify-self: start; font: var(--type-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--text-accent); border-bottom: 1px solid var(--border-accent); padding-bottom: 2px; }
+.pagefoot .up:hover { color: var(--text-strong); border-bottom-color: var(--navy-800); }
+.pagefoot .pn { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.pagefoot .pn a { display: block; padding: 12px 14px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--surface-page, transparent); color: var(--text-strong); }
+.pagefoot .pn a:hover { border-color: var(--border-accent); }
+.pagefoot .pn .next { text-align: right; }
+.pagefoot .pn .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 3px; }
+.pagefoot .pn .t { font: var(--weight-medium) var(--size-body-sm) / var(--lh-snug) var(--font-reading); }
+@media (max-width: 700px) { .pagefoot .pn { grid-template-columns: minmax(0, 1fr); } .pagefoot .pn .next { text-align: left; } }
 
 section.sec { padding: 8px 0 28px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); scroll-margin-top: 20px; }
 section.sec:last-child { border-bottom: 0; }
@@ -757,15 +949,128 @@ p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
 /* Outranks .figs figure below, which sets display: flex. */
 .figs .figdeck > figure:not(.on) { display: none; }
 .figs .figdeck > figure { flex: 1 1 auto; min-height: 0; }
-.figs figure svg { flex: 0 0 auto; }
-.figs figcaption { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+/* The figure's own content sits in a body that can scroll, so the bar and the
+   caption are always reachable.
+
+   The settled rule is that the column is capped to the viewport, the graph
+   stays put and the CAPTION scrolls, and it was written against a rejected
+   design where nothing inside scrolled and a sticky element taller than the
+   screen simply hung off the bottom. That is exactly what tall HTML figures
+   were doing: measured across the twelve pages, 46 of 358 deck figures had
+   their expand bar pushed past the bottom of the column, macro-u6 6.4's by
+   1028px, and 44 of them had a caption box of 8px. On those figures expand -
+   the one way out the settled design provides - could not be clicked at all,
+   and no gate could see it because nothing collides and nothing overflows the
+   page.
+
+   So the body takes the space that is left and scrolls when its content is
+   taller, and the caption keeps a floor it cannot be shrunk below. A plot is
+   shorter than the column and neither rule does anything to it. */
+/* overflow-y: auto WITHOUT overscroll-behavior: contain.
+
+   contain stops scroll CHAINING, and on a sticky column that is a page that
+   will not move. Measured on macro-u6 6.1 figure 2: with the pointer anywhere
+   over the figure column, the first wheel scrolls the body to its end and the
+   next six move nothing at all - not the body, which is finished, and not the
+   page, which contain has cut off. The reader has to find the edge of the
+   column with the mouse before the page will scroll again. That is what "the
+   table is overflown and unscrollable" is: not a clipped box, a frozen page.
+
+   contain is right for a modal or a chat pane, where the page behind must NOT
+   move. It is wrong for a panel the reader is scrolling PAST. Chaining is the
+   default and the expectation: the body takes the wheel until it is done, and
+   then the page carries on.
+
+   No geometric gate could see this. Nothing collides, nothing leaves its box,
+   nothing is clipped, the bar is reachable and the caption has its floor -
+   every measured gate in the repo was green through it. check-page-layout now
+   carries deck-scroll-chains, which drives a real wheel and asserts the page
+   still moves. */
+.figs .figbody { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.figs .figbody > svg { flex: 0 0 auto; }
+/* And it says when there is more.
+
+   A body that scrolls with no cue is a figure that looks finished halfway
+   through a record. The four-layer background-attachment trick is the usual
+   answer and it does not work here: it needs transparent children, and a
+   record row paints its own card background straight over the shadow. So the
+   cue is a sticky fade at the foot of the scroller, shown only on a body that
+   actually overflows: the data-more attribute, set by the page script on load
+   resize. Script-off loses the fade and nothing else: every word is still
+   there and still reachable, which is the rule the motion layer already keeps. */
+.figs .figbody { position: relative; }
+.figs .figbody[data-more]::after {
+  content: ""; display: block; position: sticky; bottom: 0; height: 26px;
+  margin-top: -26px; pointer-events: none;
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--surface-card) 78%);
+}
+.figs .figbody[data-more="end"]::after { display: none; }
+/* The caption gives up space BEFORE the figure does - shrink 3 against the
+   body's 1 - down to a floor it cannot go below. Sharing the squeeze evenly
+   left a 1400px table with 500px and its caption with 250px, when the figure
+   is the thing the reader came to the column for and the caption is what
+   scrolls by design. */
+/* A plain floor, not min(112px, 40%): a percentage min-height on a flex item
+   whose containing block has no definite height resolves to nothing, the
+   whole declaration goes with it, and the caption came out 8px. The new
+   deck-caption-starved gate caught that within a minute of being written,
+   which is the first thing it did. */
+/* The floor was 104px, which is five lines. Measured across the twelve pages
+   that left 71 captions scrolling and 35 of them showing 30% or less of their
+   own text: macro-u6 6.4 gave 103px to 466px - 1,127 characters - and what sat
+   below the fold was the Example and the whole IN THE FIGURE list, which is to
+   say the part rule 15 exists to make an author write.
+
+   Nine lines instead of five. It costs the BODY nothing that matters, because
+   the body scrolls by design and a plot is shorter than the column anyway, so
+   the squeeze only ever lands on the tall HTML figures - which are exactly the
+   ones that were starving. It cannot push the bar out of reach either: the bar
+   is the caption's SIBLING and sits above it, so a taller caption moves the bar
+   up. deck-bar-unreachable measures that and stays green. */
+.figs figcaption { flex: 0 3 auto; overflow-y: auto; position: relative; }
+/* The floor is on the BODY, as a cap, not on the caption as a min-height.
+
+   A min-height on the caption is unconditional: it floors a caption that is
+   being squeezed, which is what it was for, and it also inflates one that is
+   not. Measured at 1440, six of micro-u1's eight visible captions came out as a
+   196px box holding 76px of text - 112px of empty bordered white, on a figure
+   whose caption was never in trouble. _capfloor.mjs is the probe, and note
+   that scrollHeight cannot answer this question: it is never less than
+   clientHeight, so it reports 196 for 76px of text in a 196px box and a first
+   version of that probe read "0 padded" through the whole regression.
+
+   Capping the body says the same thing from the other side and only bites when
+   there is something to bite on. The vh is safe where a percentage is not - the
+   column itself is calc(100vh - 32px), a definite length - which is the min()
+   trap in section 10 avoided rather than repeated. The subtrahend is the
+   column's own chrome plus the caption's share. */
+.figs .figbody { max-height: calc(100vh - 330px); }
+/* And it says when there is more, the same way the body does.
+
+   The body has had a foot fade since the scroller was added; the caption never
+   did, so it simply stopped mid-line and 78% of the words behind it had nothing
+   to announce them. Same mechanism, same data-more attribute, same script: a
+   sticky fade shown only on a caption that actually overflows, and dropped at
+   the end of the scroll. Script off loses the fade and nothing else. */
+.figs figcaption[data-more]::after {
+  content: ""; display: block; position: sticky; bottom: 0; height: 24px;
+  margin-top: -24px; pointer-events: none;
+  background: linear-gradient(rgba(255, 255, 255, 0), var(--surface-card) 78%);
+}
+.figs figcaption[data-more="end"]::after { display: none; }
 @media (max-width: 1023px) {
   .spread.has-figs { grid-template-columns: minmax(0, 1fr); }
   .figs { position: static; order: -1; max-height: none; display: block; }
   .figtabs { display: none; }
   .figdeck { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 14px; }
   .figs .figdeck > figure:not(.on) { display: flex; }
-  .figs figcaption { overflow: visible; }
+  /* Below 1024px the column is not capped and nothing inside it scrolls, so
+     neither the caption's floor nor its fade has anything to do. The floor
+     would pad a two-line caption out to nine lines of white, and the fade would
+     sit over text that is not going anywhere - both invisible to
+     check-responsive, which measures horizontal scrolling. */
+  .figs figcaption { overflow: visible; min-height: 0; }
+  .figs figcaption[data-more]::after { display: none; }
 }
 
 /* ---- figures ------------------------------------------------------------- */
@@ -798,17 +1103,192 @@ p { margin: 0 0 10px; max-width: var(--measure-reading, 68ch); }
    for. No gate could see this either: it is not a label collision and it does
    not overflow the page. */
 .figs .g-cols, .figs .g-cols--wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
-.figs figcaption .eg { display: block; margin-top: 8px; padding: 8px 11px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
+/* .g-balance is the same shape and the same argument: it puts G-A05's
+   T-account beside its calculation, and in the deck that halves an already
+   narrow column to 177px a side, which is where the balance sheet's three-line
+   headings and two-line accounts came from. grammar.css's own note says the
+   sticky column "which .g-balance then splits in two again" and stops short of
+   this. The two halves are independent, so one above the other loses nothing;
+   the expand dialog keeps them side by side. */
+.figs .g-balance { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+
+/* A rule list keeps ONE shape per list in the deck.
+
+   .g-calc and .g-steps both lay a row out as working-left, result-right with
+   flex-wrap, so the result drops under its own working when the pair will not
+   fit. That is right at 340px and the comments on both say why. What neither
+   anticipated is that the decision is taken PER ROW, on a width that differs by
+   the length of one word: macro-u6 6.4 is the direction rule, four cases whose
+   entire teaching point is that they are parallel, and it renders as two rows
+   with the verdict right-aligned on the line and two with the verdict dropped
+   to the left underneath. Same list, same figure, two shapes. Measured across
+   the twelve pages: 15 figures where some rows wrap and others do not.
+
+   So in the deck they all stack, which is the shape the wrapped rows were
+   already taking and the one both comments call "how it would be written by
+   hand". The dialog is a sibling of the deck and keeps the row, which is what
+   expand is for; every one of these lists is parallel again at full width. */
+.figs .g-calc .c-work, .figs .g-steps li { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
+.figs .g-steps .s-warn .s-v { text-align: left; }
+
+/* And a two-PANEL plot stacks in the deck for the same reason.
+
+   Seventeen figures draw two plots side by side in one .g-panels grid -
+   micro-u3 and micro-u4's market-and-firm pair, micro-u5's labour market,
+   macro-u6's dollars-and-euros mirror, macro-u1 and macro-u5 one each. At
+   374px each panel lands at about 165px, and at that size the axis readings,
+   the curve names and the shaded rectangle are ink rather than text: macro-u6
+   6.4 is the central figure of the largest topic in that unit by exam volume
+   and could not be read at all without pressing expand. Nothing on the page
+   said to press it.
+
+   Two panels drawn side by side are a MIRROR - one event, read twice - and
+   the comparison is the point, so this is a weaker case for stacking than
+   .g-cols above, where the panels are independent. Stacked they are still
+   both on screen, one above the other, at 340px each and fully legible; side
+   by side at 165px they are neither. Expand keeps them beside each other,
+   which is where the comparison is made properly, and the dialog is outside
+   aside.figs so it is untouched by this. The hairline that separates them
+   turns from a left border into a top one, or the second panel loses its rule
+   entirely and the two run together. */
+.figs .g-panels { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+.figs .g-panels > svg + svg {
+  border-left: 0; padding-left: 0;
+  border-top: 1px solid var(--border-subtle); padding-top: var(--space-4);
+}
+/* Stacked at the column's full 374px the pair is 810px tall, which is the
+   whole capped column: the caption's scroller came out 8px high, so the figure
+   arrived with no words at all and the settled rule that the caption scrolls
+   under a graph that stays put stopped meaning anything. Capping each panel's
+   WIDTH rather than its height keeps the drawing proportional instead of
+   letterboxing it, and 278px leaves the caption 192px - about six lines, which
+   is where its scroller starts being usable rather than notional. 278 is still
+   two-thirds again the 165px the side-by-side grid was giving each panel. */
+.figs .g-panels > svg { max-width: 278px; margin-inline: auto; }
+
+/* A table in the figure column FITS. It does not scroll.
+
+   .g-pq, .g-steps and .g-t carry overflow-x: auto, and on a page you can drag
+   sideways that is the right answer - the playbook's own rule is that wide
+   content scrolls inside its own container. The figure column is not that
+   page. It is 374px, it is sticky, and the graph the table belongs to stays
+   put while you swipe: the reader is shown four of six columns and has to
+   scrub back and forth to read one row across. Ten tables on four pages were
+   doing exactly that, the worst of them 39px over.
+
+   Stacking is not available here the way it is for .g-cols above - a table's
+   columns have to stay beside each other to be read across, which is the
+   distinction that comment already draws. So the width has to come out of the
+   CHROME rather than the content: the cell padding and the header tracking are
+   page-scale values that were never re-judged for a 374px box. Dropping them
+   inside .figs only - the drill sheets and the atlas contact sheet keep
+   theirs - buys 40-83px and leaves every table at least 16px of slack.
+
+   The overflow-x stays, as a floor. Without it a wide table pushes the whole
+   page sideways and check-responsive blocks at every laptop width, which is
+   the defect the macro-u2 note in grammar.css records.
+   check-layout's deck-table-scrolls now fails if the floor is reached again. */
+.figs .g-pq th, .figs .g-pq td { padding: var(--space-2) var(--space-2); }
+.figs .g-t th, .figs .g-t td { padding: var(--space-3) var(--space-3); }
+.figs .g-pq th, .figs .g-t th { letter-spacing: 0; }
+/* And the data cells take the figure's type scale rather than the page's. The
+   headers were already --size-caption; the cells were --size-body-sm, two
+   steps up from the 10-11px a label inside the graph beside them is set in. On
+   the padding alone macro-u4's M1/M2/MB totals and macro-u6's policy table
+   were still 12px and 4px over: three mono money values under two-character
+   headers is real content width, and the playbook's rule is that density is a
+   layout problem and no text is removed to fix it. Matching the cells to the
+   headers is the layout answer, and it leaves every .g-pq at least 51px of
+   slack instead of 16. */
+.figs .g-pq td { font-size: var(--size-caption); }
+/* A cell of sentences reads left, a cell of money reads right. */
+.g-pq td[data-prose] { text-align: left; }
+
+/* A prose table becomes RECORDS in the deck.
+
+   Fitting is not reading. Measured across the twelve pages: 44 tables in the
+   figure column and 23 with a cell wrapped three or more lines deep, the worst
+   at eight. macro-u6 6.1's eight-transaction table is four columns of which
+   two hold sentences, so all 36 cells wrapped and the reader met a wall of
+   two-word lines with the values right-aligned away from their own labels.
+
+   What a table is FOR decides the layout. A numeric table is read ACROSS a row
+   to compare values, so its columns must stay beside each other: the CPI
+   basket and the money-growth table are those, they are not stamped, and they
+   keep the grid. A prose table is read one ROW at a time - what the
+   transaction was, which account, which side, why - and a grid buys that
+   reader nothing while costing them every cell.
+
+   The row's first cell is the record's heading; the rest are label and value,
+   the label from the column head the builder stamped on. Values are left
+   aligned, because a sentence right-aligned in a 250px column is ragged down
+   its reading edge. The expand dialog clones the figure OUTSIDE aside.figs, so
+   it keeps the real table at 1100px - the seam .g-cols and .g-panels use. */
+.figs .g-pq table[data-deck^="records"] { display: block; }
+.figs .g-pq table[data-deck^="records"] thead { display: none; }
+.figs .g-pq table[data-deck^="records"] caption { display: block; }
+.figs .g-pq table[data-deck^="records"] tbody,
+.figs .g-pq table[data-deck^="records"] tfoot { display: block; }
+.figs .g-pq table[data-deck^="records"] tr {
+  display: block; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+  padding: 7px 9px; margin-bottom: 6px; background: var(--surface-card);
+}
+.figs .g-pq table[data-deck^="records"] tfoot tr { background: var(--surface-sunken); }
+.figs .g-pq table[data-deck^="records"] tr.col-base { background: var(--navy-050); }
+/* The row is a column of fields, so the heading can be ordered to the top
+   whichever column it came from. */
+.figs .g-pq table[data-deck^="records"] tr { display: flex; flex-direction: column; }
+.figs .g-pq table[data-deck^="records"] th[scope="row"],
+.figs .g-pq table[data-deck^="records"] td {
+  display: block; border: 0; padding: 0; text-align: left;
+}
+/* The heading: the row's own subject, in reading type, above its own hairline. */
+.figs .g-pq table[data-deck^="records"] th[scope="row"],
+.figs .g-pq table[data-deck^="records"] td[data-head] {
+  order: -1;
+  font: var(--weight-semibold) var(--size-body-sm) / var(--lh-snug) var(--font-reading);
+  color: var(--text-strong); background: none; text-transform: none; letter-spacing: normal;
+  padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid var(--border-subtle);
+}
+/* Every other cell: its column's name, then its value. */
+.figs .g-pq table[data-deck^="records"] td:not([data-head]) {
+  display: grid; grid-template-columns: var(--rec-label, 74px) minmax(0, 1fr); gap: 8px; margin-top: 3px;
+}
+/* Labels too long to be a column go above their value instead. */
+.figs .g-pq table[data-deck="records-stacked"] td:not([data-head]) {
+  display: block; margin-top: 6px;
+}
+.figs .g-pq table[data-deck="records-stacked"] td:not([data-head])::before {
+  display: block; margin-bottom: 1px; padding-top: 0;
+}
+.figs .g-pq table[data-deck^="records"] td:not([data-head])::before {
+  content: attr(data-label); font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase; color: var(--text-subtle); padding-top: 2px;
+}
+/* An empty cell in a record is a row with nothing to say, not a blank line. */
+.figs .g-pq table[data-deck^="records"] td:not([data-head]):empty { display: none; }
+.figs figcaption .eg { display: block; margin-top: 8px; padding: 8px 11px; background: var(--blk-life-soft); border-left: var(--blk-rule-w) solid var(--blk-life); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
 .figs figcaption sub { font-size: .75em; vertical-align: sub; }
-.figs figcaption .reads { list-style: none; margin: 8px 0 0; padding: 0 0 0 10px; border-left: 3px solid var(--navy-200); color: var(--text-body); font-size: var(--size-caption); line-height: var(--lh-body); }
+.figs figcaption .reads { list-style: none; margin: 8px 0 0; padding: 0 0 0 10px; border-left: var(--blk-rule-w) solid var(--blk-theory-hair); color: var(--text-body); font-size: var(--size-caption); line-height: var(--lh-body); }
 .figs figcaption .reads .lab { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 3px; }
 .figs figcaption .reads li + li { margin-top: 4px; }
 .figs figcaption .reads li:not(.lab)::before { content: "\2192"; color: var(--navy-500); margin-right: 6px; }
+/* PROVENANCE, not a block role: this bar says the figure was drawn by hand
+   rather than plotted from the atlas, which is not one of the six kinds the
+   margin key names. It is deliberately left at the light orange it has always
+   been rather than borrowed from a role it does not mean. */
 .figs figure.illo { border-top: 3px solid var(--orange-300); }
 .figs figure.motion svg { cursor: pointer; }
 .figbar { flex: 0 0 auto; display: flex; gap: 8px; margin: 8px 0 2px; }
-.figbar button, .dlgbar button { font: var(--type-label); color: var(--text-subtle); background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 3px 11px; cursor: pointer; }
-.figbar button:hover, .dlgbar button:hover { color: var(--text-accent); border-color: var(--border-accent); }
+/* The bar is under the graph and above the caption precisely so that expand
+   stays reachable when the caption is long - that is the settled decision, and
+   deck-bar-unreachable enforces it in pixels. It was drawn at 2.06:1 all the
+   same, which made the one way out of a 340px column read as disabled. A
+   control is not a label: it takes the link colour and a border a reader can
+   see, and it says so on hover and on focus. */
+.figbar button, .dlgbar button { font: var(--type-label); color: var(--text-link); background: var(--surface-card); border: 1px solid var(--navy-200); border-radius: var(--radius-pill); padding: 3px 11px; cursor: pointer; transition: var(--transition-control); }
+.figbar button:hover, .dlgbar button:hover { color: var(--text-inverse); background: var(--navy-700); border-color: var(--navy-700); }
+.figbar button:focus-visible, .dlgbar button:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 
 /* Expanded: the graph and the whole of its text, side by side, at a size that
    does not ask the reader to scroll between the two. */
@@ -819,12 +1299,29 @@ dialog.figmax::backdrop { background: rgba(7, 28, 46, .55); }
 .figmax figure svg { width: 100%; height: auto; }
 /* Clear of the close and replay buttons, which sit over this column. */
 .figmax figcaption { margin: 0; padding-top: 30px; font: var(--type-body); color: var(--text-muted); line-height: var(--lh-reading); overflow: visible; }
-.figmax figcaption .eg { display: block; margin-top: 12px; padding: 11px 14px; background: var(--surface-accent-soft); border-left: 3px solid var(--orange-500); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
-.figmax figcaption .reads { list-style: none; margin: 12px 0 0; padding: 0 0 0 12px; border-left: 3px solid var(--navy-200); color: var(--text-body); font-size: var(--size-body-sm); }
+.figmax figcaption .eg { display: block; margin-top: 12px; padding: 11px 14px; background: var(--blk-life-soft); border-left: var(--blk-rule-w) solid var(--blk-life); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-body); }
+.figmax figcaption .reads { list-style: none; margin: 12px 0 0; padding: 0 0 0 12px; border-left: var(--blk-rule-w) solid var(--blk-theory-hair); color: var(--text-body); font-size: var(--size-body-sm); }
 .figmax figcaption .reads .lab { font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 4px; }
 .figmax figcaption .reads li + li { margin-top: 6px; }
 .figmax figcaption .reads li:not(.lab)::before { content: "\2192"; color: var(--navy-500); margin-right: 7px; }
 .dlgbar { position: absolute; top: 12px; right: 14px; display: flex; gap: 8px; }
+/* An HTML object gets more of the dialog than a plot does, and its own
+   two-column layout stacks inside it.
+
+   The dialog is the way out for a figure the 374px deck cannot show properly,
+   and for the ledger it was not one. .figmax splits 1.08fr to 1fr, so the
+   content pane is about 600px; macro-u6 6.1's ledger is a .g-cols--wide with
+   the sorting chain beside the table, which halved that again and left the
+   table 250px - narrower than the deck it was expanded to escape. Every cell
+   wrapped and the last column was cut off by the pane's edge.
+
+   So an object figure takes 1.7fr, and .g-cols stacks there the way it does in
+   the deck, which gives the table the whole 700px pane. The caption keeps a
+   430px column beside it, and the settled decision - graph and caption side by
+   side, never one scrolled away from the other - is untouched. A plot's
+   dialog does not change at all. */
+.figmax figure.obj { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); }
+.figmax figure.obj .g-cols, .figmax figure.obj .g-cols--wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 @media (max-width: 860px) { .figmax figure { grid-template-columns: minmax(0, 1fr); gap: 16px; } }
 
 /* motion states - only ever applied by script, and only when motion is welcome */
@@ -850,7 +1347,14 @@ figure.play.move .g-after { animation-delay: .5s; }
 .aka em { font-style: normal; font-weight: var(--weight-medium); color: var(--text-muted); }
 .aka-note { display: block; margin-top: 2px; }
 td .aka, th .aka { margin-top: 4px; }
-table.q-tbl.aka-tbl { width: 100%; }
+/* The names table sits in a section with no figures, so it had the page's
+   full 1150px, and its second column - the alternative names plus a grey note
+   explaining what a stem using them is really asking - was running lines of
+   about 150 characters in the smallest type on the page, directly under a lede
+   capped at 60. That is the longest sweep on the page set in the least
+   readable size. The table is prose in two columns, not data, so it takes a
+   reading measure like prose. */
+table.q-tbl.aka-tbl { width: 100%; max-width: 96ch; }
 table.q-tbl.aka-tbl th, table.q-tbl.aka-tbl td { text-align: left; vertical-align: top; }
 table.q-tbl.aka-tbl td:first-child { font-weight: var(--weight-semibold); color: var(--text-strong); }
 table.q-tbl.aka-tbl em { font-style: normal; font-weight: var(--weight-medium); color: var(--text-muted); }
@@ -862,14 +1366,32 @@ table.q-tbl th, table.q-tbl td { border: 1px solid var(--border-default); paddin
 table.q-tbl th { background: var(--surface-sunken); font-weight: var(--weight-semibold); }
 table.q-tbl td:first-child, table.q-tbl th:first-child { text-align: left; }
 
-/* ---- boxes ---------------------------------------------------------------- */
+/* ---- boxes ----------------------------------------------------------------
+   Each block kind carries a marginal rule in its own colour, and the eyebrow
+   above it is that same colour darkened to a readable ink. The roles are
+   declared in grammar.css: theory navy, life amber, trap red, exam sky, worked
+   green, excluded gray. Nothing here picks a colour; it names a role. */
 .rule-box, .trap-box, .work-box, .excl-box { padding: 14px 18px; margin: 16px 0; border-radius: var(--radius-md); line-height: var(--lh-reading); max-width: 80ch; }
-.excl-box { background: var(--surface-sunken); border: 1px dashed var(--border-default); color: var(--text-muted); }
+.rule-box, .trap-box, .work-box { border: 1px solid var(--border-subtle); border-left-width: var(--blk-rule-w); border-left-style: solid; }
+/* THEORY - what is true. */
+.rule-box { background: var(--blk-theory-soft); border-left-color: var(--blk-theory); }
+.rule-box > .lab { color: var(--blk-theory-ink); }
+/* TRAP - where the marks are actually lost. Red is the one signal on the page
+   a reader should never have to decode, and it is scarce: 102 blocks across
+   the twelve units against 848 real-life examples. */
+.trap-box { background: var(--blk-trap-soft); border-left-color: var(--blk-trap); }
+.trap-box > .lab { color: var(--blk-trap-ink); }
+/* WORKED - the rule applied to numbers. It had no rule of its own at all,
+   which put a worked calculation and a grey aside in the same visual class. */
+.work-box { background: var(--blk-worked-soft); border-left-color: var(--blk-worked); }
+.work-box > .lab { color: var(--blk-worked-ink); }
+/* EXCLUDED - the CED rules it out. Dashed, and deliberately the quietest of
+   the six: playbook 9 says an exclusion is permission to stop reading, so it
+   is neutral rather than alarming. */
+.excl-box { background: var(--blk-excluded-soft); border: 1px dashed var(--border-default); border-left: var(--blk-rule-w) dashed var(--blk-excluded); color: var(--text-muted); }
+.excl-box > .lab { color: var(--blk-excluded-ink); }
 .excl-box b { color: var(--text-strong); }
-.rule-box { background: var(--navy-050); border-left: 4px solid var(--navy-700); }
-.trap-box { background: var(--surface-card); border: 1px solid var(--border-subtle); border-left: 4px solid var(--orange-500); }
-.work-box { background: var(--surface-sunken); border: 1px solid var(--border-subtle); }
-.rule-box .lab, .trap-box .lab, .work-box .lab, .excl-box .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 6px; }
+.rule-box .lab, .trap-box .lab, .work-box .lab, .excl-box .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; margin-bottom: 6px; }
 .rule-box .big { display: block; margin-bottom: 5px; font-size: var(--size-body-lg); }
 .work-box p { max-width: none; }
 
@@ -881,23 +1403,40 @@ table.q-tbl td:first-child, table.q-tbl th:first-child { text-align: left; }
    headings rather than paragraphs. Nothing is folded away. */
 dl.defs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; margin: 4px 0 18px; }
 .spread.has-figs dl.defs { grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
-dl.defs .def { background: var(--surface-card); border: 1px solid var(--border-subtle); border-top: 3px solid var(--navy-200); border-radius: var(--radius-sm); padding: 12px 14px 13px; min-width: 0; }
+/* Cards are as tall as what is in them. The grid stretched every card in a
+   row to the tallest one, and a row where one card carries an exam item and
+   its neighbour carries three sentences left 300-400px of empty bordered box
+   - micro-u1 1.4, micro-u3 3.4 and macro-u6 6.4 are the worst. The white
+   space is a fact about the row and cannot go without reordering the terms,
+   which would break a teaching sequence; what it must not do is sit INSIDE a
+   card's border, where it reads as a card with something missing from it. */
+dl.defs { align-items: start; }
+/* A term card is THEORY, and its top rule says so in the theory hue's hairline
+   weight - the card is the container the roles sit inside, so it states the
+   family without competing with the marginal rules within it. */
+dl.defs .def { background: var(--surface-card); border: 1px solid var(--border-subtle); border-top: 3px solid var(--blk-theory-hair); border-radius: var(--radius-sm); padding: 12px 14px 13px; min-width: 0; }
 /* The term is a heading in the display face with a rule under it; the brief
    is a sentence in the reading face at regular weight. They used to be two
    bold navy lines a point apart, which is one heading twice. */
-dl.defs dt { font: var(--weight-bold) 17px / var(--lh-heading) var(--font-display); letter-spacing: var(--track-tight); color: var(--text-strong); margin: 0; padding-bottom: 7px; border-bottom: 1px solid var(--navy-200); }
+dl.defs dt { font: var(--weight-bold) 17px / var(--lh-heading) var(--font-display); letter-spacing: var(--track-tight); color: var(--text-strong); margin: 0; padding-bottom: 7px; border-bottom: 1px solid var(--blk-theory-hair); }
 dl.defs dd { margin: 9px 0 0; color: var(--text-body); font-size: var(--size-body-sm); line-height: var(--lh-body); }
 dl.defs dd .brief { display: block; font: var(--weight-medium) var(--size-body-lg) / var(--lh-snug) var(--font-reading); color: var(--text-body); }
-dl.defs dd .eg { display: block; margin: 8px 0 0; padding: 6px 10px; border-left: 3px solid var(--orange-300); background: var(--surface-accent-soft); color: var(--text-body); }
-dl.defs dd .eg .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-accent); margin-bottom: 2px; }
+/* LIFE - the instance from outside the classroom, on all 848 term cards. It is
+   the most repeated block on the page, so it takes the warmest and quietest of
+   the six roles rather than the loudest, which is what it had. */
+dl.defs dd .eg { display: block; margin: 8px 0 0; padding: 6px 10px; border-left: var(--blk-rule-w) solid var(--blk-life); background: var(--blk-life-soft); color: var(--text-body); }
+dl.defs dd .eg .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--blk-life-ink); margin-bottom: 2px; }
 dl.defs dd .detail { display: block; margin-top: 8px; color: var(--text-muted); }
 dl.defs dt .pay { margin-left: 8px; font: var(--type-label); font-weight: var(--weight-regular);
                   color: var(--text-subtle); text-transform: none; letter-spacing: normal; }
 dl.defs dt .aka { padding-left: 0; font-size: var(--size-caption); font-family: var(--font-ui); letter-spacing: normal; }
 /* An exam item on a card. Options in mono with their letters; the answer
    behind the page's one disclosure. */
-dl.defs dd .exam { display: block; margin-top: 10px; padding: 8px 10px 6px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--surface-sunken); }
-dl.defs dd .exam .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--text-subtle); margin-bottom: 4px; }
+/* EXAM - the exam's own question. It carried no colour at all, which is
+   backwards: of every block on a card this is the one a student scanning for
+   practice is looking for. */
+dl.defs dd .exam { display: block; margin-top: 10px; padding: 8px 10px 6px; border: 1px solid var(--border-subtle); border-left: var(--blk-rule-w) solid var(--blk-exam); border-radius: var(--radius-sm); background: var(--blk-exam-soft); }
+dl.defs dd .exam .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--blk-exam-ink); margin-bottom: 4px; }
 dl.defs dd .exam .stem { margin: 0 0 6px; max-width: none; color: var(--text-strong); }
 dl.defs dd .exam .exam-fig { margin: 2px 0 8px; padding: 6px 4px 2px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); }
 dl.defs dd .exam .exam-fig svg { display: block; width: 100%; height: auto; }
@@ -907,7 +1446,7 @@ dl.defs dd .exam .opts { list-style: none; margin: 0; padding: 0; }
 dl.defs dd .exam .opts li { display: flex; gap: 8px; margin: 2px 0; }
 dl.defs dd .exam .opts .ltr { flex: 0 0 1.2em; font: var(--type-label); color: var(--text-muted); padding-top: 2px; }
 dl.defs dd .exam details { margin-top: 6px; }
-dl.defs dd .exam summary { cursor: pointer; font: var(--type-label); color: var(--text-accent); }
+dl.defs dd .exam summary { cursor: pointer; font: var(--type-label); color: var(--blk-exam-ink); }
 dl.defs dd .exam .ans { margin: 6px 0 2px; max-width: none; }
 @media print { dl.defs dd .exam details > * { display: block; } }
 
@@ -919,7 +1458,7 @@ dl.defs dd .exam .ans { margin: 6px 0 2px; max-width: none; }
    genuine dichotomy, and on a three-column grid it left an empty third column
    with the base bar running out past both pillars. */
 .pillars { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 10px; margin: 8px 0 12px; max-width: 60ch; }
-.pillar { background: var(--surface-card); border: 1px solid var(--border-subtle); border-top: 4px solid var(--navy-700); border-radius: var(--radius-sm) var(--radius-sm) 0 0; padding: 12px 10px 14px; text-align: center; display: grid; gap: 4px; }
+.pillar { background: var(--surface-card); border: 1px solid var(--border-subtle); border-top: 4px solid var(--blk-theory); border-radius: var(--radius-sm) var(--radius-sm) 0 0; padding: 12px 10px 14px; text-align: center; display: grid; gap: 4px; }
 .pillar .k { font: var(--weight-bold) 20px / 1.1 var(--font-display); color: var(--text-strong); letter-spacing: var(--track-tight); }
 .pillar .q { font: var(--type-body-sm); color: var(--text-muted); }
 .pillars .base { grid-column: 1 / -1; background: var(--navy-800); color: var(--text-inverse); font: var(--type-label); text-align: center; padding: 8px 12px; border-radius: 0 0 var(--radius-sm) var(--radius-sm); margin-top: -10px; }
@@ -948,11 +1487,15 @@ table.q-tbl.cmp-tbl { width: 100%; margin: 0; }
 table.q-tbl.cmp-tbl th, table.q-tbl.cmp-tbl td { text-align: left; vertical-align: top; }
 table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--text-strong);
                                font-weight: var(--weight-semibold); white-space: nowrap; }
-.cmp-diff { margin-top: -1px; padding: 12px 16px; background: var(--surface-accent-soft);
-            border: 1px solid var(--border-subtle); border-left: 4px solid var(--orange-500);
+/* THEORY - the one line that separates two terms is a rule, not an example, and
+   it is the single most repeated block in the reading column after the term
+   card itself: 197 of them across the twelve units, every one of which used to
+   be orange. */
+.cmp-diff { margin-top: -1px; padding: 12px 16px; background: var(--blk-theory-soft);
+            border: 1px solid var(--border-subtle); border-left: var(--blk-rule-w) solid var(--blk-theory);
             border-radius: 0 0 var(--radius-md) var(--radius-md); line-height: var(--lh-reading); }
 .cmp-diff .lab { display: block; font: var(--type-eyebrow); letter-spacing: var(--track-eyebrow);
-                 text-transform: uppercase; color: var(--text-accent); margin-bottom: 5px; }
+                 text-transform: uppercase; color: var(--blk-theory-ink); margin-bottom: 5px; }
 /* A CED statement id cited in the prose. Markdown backticks do not render in
    an HTML page - they showed up as literal backticks on the built page. */
 .cedref { font-family: var(--font-mono, monospace); font-size: .92em; color: var(--text-subtle);
@@ -964,9 +1507,10 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <h1>Unit 2 &mdash; Economic Indicators and the Business Cycle</h1>
   <div class="row"><div class="chips"><a href="#s-2.1">2.1</a><a href="#s-2.2">2.2</a><a href="#s-2.3">2.3</a><a href="#s-2.4">2.4</a><a href="#s-2.5">2.5</a><a href="#s-2.6">2.6</a><a href="#s-2.7">2.7</a></div><span class="tag">Unit 2 is 12&ndash;17% of the AP Macroeconomics exam &mdash; the unit that hands every later unit its vocabulary of measurement: GDP, the price level, and the unemployment rate are read off a graph in every unit that follows this one.</span></div>
   <div class="howto">
-    <div><span class="lab">Reading it</span>Each term is a card: the bold line is the flashcard, the orange line is where you have already met it, the grey text is the full definition.</div>
+    <div><span class="lab">Reading it</span>Each term is a card: the bold line is the flashcard, then where you have already met it, then the full definition.</div>
     <div><span class="lab">The graphs</span>They sit beside the words about them and stay in view while you read. Each plays its change once as it arrives; click one to replay.</div>
-    <div><span class="lab">The colours</span><span class="sw now"></span>what was already true. <span class="sw changed"></span>what changed. Dashed guides mark a value you can read off an axis.</div>
+    <div><span class="lab">In a graph</span><span class="sw now"></span>what was already true. <span class="sw changed"></span>what changed. Dashed guides mark a value you can read off an axis.</div>
+    <div><span class="lab">In the margin</span><ul class="keys"><li><span class="sw k-theory"></span>a rule</li><li><span class="sw k-life"></span>real life</li><li><span class="sw k-trap"></span>a trap</li><li><span class="sw k-exam"></span>the exam</li><li><span class="sw k-worked"></span>worked</li><li><span class="sw k-excl"></span>not examined</li></ul></div>
   </div>
 </div></header>
 <div class="wrap layout">
@@ -1001,7 +1545,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Expenditures approach total:</b> 420 + 110 + 80 + (40 &minus; 50) = 420 + 110 + 80 &minus; 10 = <b>$600</b>.<br>
   <b>The check.</b> Both routes land on $600, because they are the same circular flow measured going opposite directions. A discrepancy is a sign of an arithmetic slip, not a sign that the two approaches disagree in principle.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig"><div class="g-flow">
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-flow">
   <div class="cf-loop cf-loop--real">
     <span class="cf-loop-title">The real loop</span>
     <p><strong>Goods and services</strong> &rarr; from firms to households</p>
@@ -1015,7 +1559,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <p><strong>Consumption expenditure</strong> &rarr; from households to firms</p>
     <p><strong>Wages, rent, interest, profit</strong> &rarr; from firms to households</p>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The circular flow. MEA-1.A.2 says GDP can be represented this way, and this is the picture: two loops running opposite directions between the same two sectors, and every dollar in the money loop is matched by a good, a service or a factor of production moving the other way in the real loop.<span class="eg"><b>Example.</b> A paycheck a household spends at a shop becomes the wage the shop pays its own staff - the same dollars, moving in a ring between the same two kinds of actor.</span><ul class="reads"><li class="lab">In the figure</li><li>The real loop: goods and services flow from firms to households, and factors of production flow from households to firms.</li><li>The money loop: consumption spending flows from households to firms, and wages, rent, interest and profit flow back from firms to households.</li><li>Two sectors, drawn once each: households own the factors and buy the goods; firms hire the factors and produce the goods.</li><li>Every arrow in one loop is matched by an arrow running the opposite way. That pairing is what makes it a circular FLOW rather than a one-way transfer, and it is why the expenditure and income totals below have to agree.</li></ul></figcaption></figure><figure class="g-fig"><div class="g-cols g-cols--wide">
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The circular flow. MEA-1.A.2 says GDP can be represented this way, and this is the picture: two loops running opposite directions between the same two sectors, and every dollar in the money loop is matched by a good, a service or a factor of production moving the other way in the real loop.<span class="eg"><b>Example.</b> A paycheck a household spends at a shop becomes the wage the shop pays its own staff - the same dollars, moving in a ring between the same two kinds of actor.</span><ul class="reads"><li class="lab">In the figure</li><li>The real loop: goods and services flow from firms to households, and factors of production flow from households to firms.</li><li>The money loop: consumption spending flows from households to firms, and wages, rent, interest and profit flow back from firms to households.</li><li>Two sectors, drawn once each: households own the factors and buy the goods; firms hire the factors and produce the goods.</li><li>Every arrow in one loop is matched by an arrow running the opposite way. That pairing is what makes it a circular FLOW rather than a one-way transfer, and it is why the expenditure and income totals below have to agree.</li></ul></figcaption></figure><figure class="g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">The four terms, and only the four</p>
     <ul class="g-calc"><li>
@@ -1068,7 +1612,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <span class="c-work"><span class="c-sub">only because net exports are NEGATIVE</span><span class="c-out c-out--accent">IMPORTS</span></span>
   </li></ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The expenditures approach: GDP = C + I + G + (X &minus; M). This is the version taught first, and the one the exam most often hands back as C, I and G on their own - which is where the released item asking how spending can exceed GDP lives.<span class="eg"><b>Example.</b> A government statistics office adding up every dollar households, firms, government and foreign buyers spent on the country&rsquo;s final output this quarter.</span><ul class="reads"><li class="lab">In the figure</li><li>Five terms sum to GDP: consumption, investment, government purchases, exports, and imports - the last one SUBTRACTED, not added.</li><li>A second block lists numbers that sit in the same government report and belong in none of the four terms: transfer payments, personal income taxes, and sales of used cars.</li><li>The worked line at the bottom shows C + I + G on their own coming out LARGER than GDP - not an error, just what happens when net exports are negative.</li><li>Net exports being negative is the entire explanation. Nothing about the accounting is broken; imports are simply spending on someone else&rsquo;s output.</li></ul></figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The expenditures approach: GDP = C + I + G + (X &minus; M). This is the version taught first, and the one the exam most often hands back as C, I and G on their own - which is where the released item asking how spending can exceed GDP lives.<span class="eg"><b>Example.</b> A government statistics office adding up every dollar households, firms, government and foreign buyers spent on the country&rsquo;s final output this quarter.</span><ul class="reads"><li class="lab">In the figure</li><li>Five terms sum to GDP: consumption, investment, government purchases, exports, and imports - the last one SUBTRACTED, not added.</li><li>A second block lists numbers that sit in the same government report and belong in none of the four terms: transfer payments, personal income taxes, and sales of used cars.</li><li>The worked line at the bottom shows C + I + G on their own coming out LARGER than GDP - not an error, just what happens when net exports are negative.</li><li>Net exports being negative is the entire explanation. Nothing about the accounting is broken; imports are simply spending on someone else&rsquo;s output.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.2">
@@ -1097,7 +1641,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   </div>
   None of these make GDP the wrong number to track. They make it a number that answers one specific question and is silent on several others a policymaker still has to ask.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig illo motion move"><svg viewBox="0 0 340 320" role="img" aria-label="Four paired activities: which reach GDP and which do not" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">Does this reach GDP?</text><text class="g-tick" x="224" y="42" text-anchor="middle" fill="var(--econ-initial)">counted</text><text class="g-tick" x="300" y="42" text-anchor="middle" fill="var(--econ-detail-strong)">missed</text><line x1="8" y1="48" x2="332" y2="48" stroke="var(--econ-detail)" stroke-width="1"/><text class="g-tick" x="8" y="66" text-anchor="start" fill="var(--text-body)">A nanny, paid to mind children</text><circle class="g-after" data-at="0" cx="224" cy="62" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="90" text-anchor="start" fill="var(--text-body)">A parent minding their own children, unpaid</text><circle class="g-after" data-at="0.2" cx="300" cy="86" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="114" text-anchor="start" fill="var(--text-body)">A shop&rsquo;s sale, on the books</text><circle class="g-after" data-at="0.4" cx="224" cy="110" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="138" text-anchor="start" fill="var(--text-body)">The same sale, made for cash and unreported</text><circle class="g-after" data-at="0.6000000000000001" cx="300" cy="134" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="162" text-anchor="start" fill="var(--text-body)">Output a factory sells</text><circle class="g-after" data-at="0.8" cx="224" cy="158" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="186" text-anchor="start" fill="var(--text-body)">Pollution that same factory leaves behind</text><circle class="g-after" data-at="1" cx="300" cy="182" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="210" text-anchor="start" fill="var(--text-body)">Hours actually worked</text><circle class="g-after" data-at="1.2000000000000002" cx="224" cy="206" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="234" text-anchor="start" fill="var(--text-body)">Hours of leisure the worker gave up to work them</text><circle class="g-after" data-at="1.4000000000000001" cx="300" cy="230" r="5" fill="var(--econ-change)"/><rect class="g-after" data-at="2" x="8" y="266" width="324" height="42" fill="var(--econ-change-soft)" rx="3"/><text class="g-point-label g-after" data-at="2" x="170" y="284" text-anchor="middle" fill="var(--econ-change)">nonmarket, hidden, and unpriced production</text><text class="g-tick g-after" data-at="2" x="170" y="301" text-anchor="middle">is real output GDP is structurally unable to see</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Four pairs, one activity each side. The paid half of each pair passes through a market with a price attached and reaches GDP; the unpaid, unreported or unpriced half does exactly the same real work and GDP cannot see it at all. MEA-1.B.1 names nonmarket transactions; the underground economy, externalities and leisure are the same blind spot for three different reasons.</figcaption></figure><figure class="g-fig"><div class="g-cols g-cols--wide">
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig illo motion move"><div class="figbody"><svg viewBox="0 0 340 320" role="img" aria-label="Four paired activities: which reach GDP and which do not" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">Does this reach GDP?</text><text class="g-tick" x="224" y="42" text-anchor="middle" fill="var(--econ-initial)">counted</text><text class="g-tick" x="300" y="42" text-anchor="middle" fill="var(--econ-detail-strong)">missed</text><line x1="8" y1="48" x2="332" y2="48" stroke="var(--econ-detail)" stroke-width="1"/><text class="g-tick" x="8" y="66" text-anchor="start" fill="var(--text-body)">A nanny, paid to mind children</text><circle class="g-after" data-at="0" cx="224" cy="62" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="90" text-anchor="start" fill="var(--text-body)">A parent minding their own children, unpaid</text><circle class="g-after" data-at="0.2" cx="300" cy="86" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="114" text-anchor="start" fill="var(--text-body)">A shop&rsquo;s sale, on the books</text><circle class="g-after" data-at="0.4" cx="224" cy="110" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="138" text-anchor="start" fill="var(--text-body)">The same sale, made for cash and unreported</text><circle class="g-after" data-at="0.6000000000000001" cx="300" cy="134" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="162" text-anchor="start" fill="var(--text-body)">Output a factory sells</text><circle class="g-after" data-at="0.8" cx="224" cy="158" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="186" text-anchor="start" fill="var(--text-body)">Pollution that same factory leaves behind</text><circle class="g-after" data-at="1" cx="300" cy="182" r="5" fill="var(--econ-change)"/><text class="g-tick" x="8" y="210" text-anchor="start" fill="var(--text-body)">Hours actually worked</text><circle class="g-after" data-at="1.2000000000000002" cx="224" cy="206" r="5" fill="var(--econ-initial)"/><text class="g-tick" x="8" y="234" text-anchor="start" fill="var(--text-body)">Hours of leisure the worker gave up to work them</text><circle class="g-after" data-at="1.4000000000000001" cx="300" cy="230" r="5" fill="var(--econ-change)"/><rect class="g-after" data-at="2" x="8" y="266" width="324" height="42" fill="var(--econ-change-soft)" rx="3"/><text class="g-point-label g-after" data-at="2" x="170" y="284" text-anchor="middle" fill="var(--econ-change)">nonmarket, hidden, and unpriced production</text><text class="g-tick g-after" data-at="2" x="170" y="301" text-anchor="middle">is real output GDP is structurally unable to see</text></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Four pairs, one activity each side. The paid half of each pair passes through a market with a price attached and reaches GDP; the unpaid, unreported or unpriced half does exactly the same real work and GDP cannot see it at all. MEA-1.B.1 names nonmarket transactions; the underground economy, externalities and leisure are the same blind spot for three different reasons.</figcaption></figure><figure class="g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">Out of the total, and why</p>
     <ul class="g-calc"><li>
@@ -1151,7 +1695,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <span class="s-k">Not &ldquo;government spending is in G&rdquo;</span><span class="s-v">only government PURCHASES of goods and services are; a transfer payment buys nothing, so it never reaches the expenditure total</span>
 </li></ol>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Six transactions that never enter the total, and the reason in each case. Every reason is one of three sentences: not produced this year, not produced inside the country&rsquo;s borders, or nothing was produced at all.<span class="eg"><b>Example.</b> A household that sells its five-year-old car privately: no new car was built, so nothing is added to this year&rsquo;s output, whatever price changes hands.</span><ul class="reads"><li class="lab">In the figure</li><li>The left column lists what is out: a used car, shares and bonds, a pension, an intermediate good, unpaid housework, a foreign-built car from a domestic firm.</li><li>The right column names the half of each pair that IS counted - a dealer&rsquo;s fee, a broker&rsquo;s commission, what a transfer payment&rsquo;s recipient later spends.</li><li>The closing list collapses every reason into three sentences, and every excluded item on the page matches exactly one of them.</li><li>The trap box below is the released item in miniature: adding transfer payments to G is the single most common way this topic loses a mark.</li></ul></figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Six transactions that never enter the total, and the reason in each case. Every reason is one of three sentences: not produced this year, not produced inside the country&rsquo;s borders, or nothing was produced at all.<span class="eg"><b>Example.</b> A household that sells its five-year-old car privately: no new car was built, so nothing is added to this year&rsquo;s output, whatever price changes hands.</span><ul class="reads"><li class="lab">In the figure</li><li>The left column lists what is out: a used car, shares and bonds, a pension, an intermediate good, unpaid housework, a foreign-built car from a domestic firm.</li><li>The right column names the half of each pair that IS counted - a dealer&rsquo;s fee, a broker&rsquo;s commission, what a transfer payment&rsquo;s recipient later spends.</li><li>The closing list collapses every reason into three sentences, and every excluded item on the page matches exactly one of them.</li><li>The trap box below is the released item in miniature: adding transfer payments to G is the single most common way this topic loses a mark.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.3">
@@ -1190,7 +1734,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Labor force participation rate</b> = 300,000 &divide; 500,000 = <b>60%</b>.<br>
   <b>The check.</b> The two rates use the SAME labor-force figure of 300,000 in two different roles: numerator for one rate, denominator for the other. If your two answers used two different labor-force numbers, one of them is wrong.
 </div></div>
-    <aside class="figs"><div class="figdeck"><figure class="on g-fig"><div class="g-cols g-cols--wide">
+    <aside class="figs"><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">Who counts, and who does not</p>
     <div class="g-partition">
@@ -1253,7 +1797,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <span class="s-k">Not &ldquo;the labour market improved&rdquo;</span><span class="s-v">employment did not change by one person; both rates fell because the denominator shrank</span>
 </li></ol>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The labor force, partitioned twice. First the adult population splits into the labor force and everyone outside it; then the labor force splits into employed and unemployed. The width of the unemployed slice against the labor-force bar IS the unemployment rate - nothing is asserted that the picture does not show.<span class="eg"><b>Example.</b> A national labor survey sorting every working-age adult into exactly one box: working, actively looking, or neither.</span><ul class="reads"><li class="lab">In the figure</li><li>Top bar: the whole adult population, split into the labor force and those not in it.</li><li>Second bar: the labor force itself, split into employed and unemployed - and the unemployed slice&rsquo;s share of THIS bar is the unemployment rate by definition.</li><li>Third bar: everyone outside the labor force, split into discouraged workers and everyone else (retirees, students, carers).</li><li>The right-hand panel moves 5,000 workers from unemployed to discouraged and reruns both rates - both FALL, because the labor force shrank along with the unemployed count.</li></ul></figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The labor force, partitioned twice. First the adult population splits into the labor force and everyone outside it; then the labor force splits into employed and unemployed. The width of the unemployed slice against the labor-force bar IS the unemployment rate - nothing is asserted that the picture does not show.<span class="eg"><b>Example.</b> A national labor survey sorting every working-age adult into exactly one box: working, actively looking, or neither.</span><ul class="reads"><li class="lab">In the figure</li><li>Top bar: the whole adult population, split into the labor force and those not in it.</li><li>Second bar: the labor force itself, split into employed and unemployed - and the unemployed slice&rsquo;s share of THIS bar is the unemployment rate by definition.</li><li>Third bar: everyone outside the labor force, split into discouraged workers and everyone else (retirees, students, carers).</li><li>The right-hand panel moves 5,000 workers from unemployed to discouraged and reruns both rates - both FALL, because the labor force shrank along with the unemployed count.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.3a">
@@ -1286,7 +1830,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Worker C</b>&rsquo;s factory-floor role was automated and the skills do not transfer to the software jobs that replaced it. <b>Structural</b> &mdash; a lasting mismatch between skills and available work.<br>
   Only Worker A&rsquo;s unemployment falls when the economy recovers. Workers B and C are exactly the reason the natural rate is not zero even in a strong economy.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig"><div class="g-cols g-cols--wide">
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">Two routes CB scores equally</p>
     <ul class="g-calc"><li>
@@ -1332,7 +1876,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
       </li>
     </ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Two routes to the natural rate, and the exam scores either. Route 1 subtracts cyclical unemployment from the actual rate; route 2 adds frictional and structural. They have to agree, because cyclical is defined as exactly the gap between the other two routes.<span class="eg"><b>Example.</b> A country reporting 8% actual unemployment where economists estimate 3 points of it is due to the current recession: the other 5 points are the natural rate, however it is computed.</span><ul class="reads"><li class="lab">In the figure</li><li>Route 1: actual unemployment rate (8%) minus cyclical unemployment (3%) equals 5%.</li><li>Route 2: frictional (4%) plus structural (1%) also equals 5%.</li><li>Both routes agree, because cyclical unemployment is defined as exactly the amount by which actual departs from natural - there is nowhere else for the difference to go.</li><li>The right panel reads the same 5% off two other graphs elsewhere in the atlas: the LRPC (vertical at the natural rate) and AD-AS (the LRAS, vertical at the output that goes with it) - one number, three pictures.</li></ul></figcaption></figure><figure class="g-fig illo motion move"><svg viewBox="0 0 340 287" role="img" aria-label="The natural rate of unemployment at three points in time, each with a different labor force" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">The natural rate is not fixed</text><text class="g-tick" x="170" y="44" text-anchor="middle">same definition, a different number each era</text><line x1="40" y1="190" x2="286" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><line x1="40" y1="70" x2="40" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><path class="g-after" data-at="0.3" d="M78 95.71428571428572 L182 82 L286 118" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.6" stroke-dasharray="5 4"/><circle class="g-after" data-at="0.5" cx="78" cy="95.71" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.5" x="78" y="77.71" text-anchor="middle" fill="var(--econ-change)">5.5%</text><text class="g-tick" x="78" y="210" text-anchor="middle">1960s</text><text class="g-tick g-after" data-at="0.9" x="78" y="226" text-anchor="middle" fill="var(--text-body)">fewer entrants</text><circle class="g-after" data-at="0.9" cx="182" cy="82" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.9" x="182" y="64" text-anchor="middle" fill="var(--econ-change)">6.3%</text><text class="g-tick" x="182" y="210" text-anchor="middle">1980s</text><text class="g-tick g-after" data-at="1.3" x="182" y="226" text-anchor="middle" fill="var(--text-body)">cohort surge</text><circle class="g-after" data-at="1.3" cx="286" cy="118" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="1.3" x="286" y="100" text-anchor="middle" fill="var(--econ-change)">4.2%</text><text class="g-tick" x="286" y="210" text-anchor="middle">Recent</text><text class="g-tick g-after" data-at="1.7000000000000002" x="286" y="226" text-anchor="middle" fill="var(--text-body)">online matching</text><text class="g-point-label g-after" data-at="2" x="170" y="252" text-anchor="middle" fill="var(--econ-change)">labor force characteristics changed each time</text><text class="g-point-label g-after" data-at="2" x="170" y="269" text-anchor="middle" fill="var(--econ-change)">not the business cycle</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The natural rate is a sum of frictional and structural unemployment, and both of those can change as the labor force itself changes - who is looking for work, how they search, and what skills employers want. None of the three readings here is &ldquo;the&rdquo; natural rate; each is the natural rate FOR that decade&rsquo;s labor force.</figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Two routes to the natural rate, and the exam scores either. Route 1 subtracts cyclical unemployment from the actual rate; route 2 adds frictional and structural. They have to agree, because cyclical is defined as exactly the gap between the other two routes.<span class="eg"><b>Example.</b> A country reporting 8% actual unemployment where economists estimate 3 points of it is due to the current recession: the other 5 points are the natural rate, however it is computed.</span><ul class="reads"><li class="lab">In the figure</li><li>Route 1: actual unemployment rate (8%) minus cyclical unemployment (3%) equals 5%.</li><li>Route 2: frictional (4%) plus structural (1%) also equals 5%.</li><li>Both routes agree, because cyclical unemployment is defined as exactly the amount by which actual departs from natural - there is nowhere else for the difference to go.</li><li>The right panel reads the same 5% off two other graphs elsewhere in the atlas: the LRPC (vertical at the natural rate) and AD-AS (the LRAS, vertical at the output that goes with it) - one number, three pictures.</li></ul></figcaption></figure><figure class="g-fig illo motion move"><div class="figbody"><svg viewBox="0 0 340 287" role="img" aria-label="The natural rate of unemployment at three points in time, each with a different labor force" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">The natural rate is not fixed</text><text class="g-tick" x="170" y="44" text-anchor="middle">same definition, a different number each era</text><line x1="40" y1="190" x2="286" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><line x1="40" y1="70" x2="40" y2="190" stroke="var(--econ-initial)" stroke-width="1.4"/><path class="g-after" data-at="0.3" d="M78 95.71428571428572 L182 82 L286 118" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.6" stroke-dasharray="5 4"/><circle class="g-after" data-at="0.5" cx="78" cy="95.71" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.5" x="78" y="77.71" text-anchor="middle" fill="var(--econ-change)">5.5%</text><text class="g-tick" x="78" y="210" text-anchor="middle">1960s</text><text class="g-tick g-after" data-at="0.9" x="78" y="226" text-anchor="middle" fill="var(--text-body)">fewer entrants</text><circle class="g-after" data-at="0.9" cx="182" cy="82" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="0.9" x="182" y="64" text-anchor="middle" fill="var(--econ-change)">6.3%</text><text class="g-tick" x="182" y="210" text-anchor="middle">1980s</text><text class="g-tick g-after" data-at="1.3" x="182" y="226" text-anchor="middle" fill="var(--text-body)">cohort surge</text><circle class="g-after" data-at="1.3" cx="286" cy="118" r="4.5" fill="var(--econ-change)"/><text class="g-tick g-after" data-at="1.3" x="286" y="100" text-anchor="middle" fill="var(--econ-change)">4.2%</text><text class="g-tick" x="286" y="210" text-anchor="middle">Recent</text><text class="g-tick g-after" data-at="1.7000000000000002" x="286" y="226" text-anchor="middle" fill="var(--text-body)">online matching</text><text class="g-point-label g-after" data-at="2" x="170" y="252" text-anchor="middle" fill="var(--econ-change)">labor force characteristics changed each time</text><text class="g-point-label g-after" data-at="2" x="170" y="269" text-anchor="middle" fill="var(--econ-change)">not the business cycle</text></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The natural rate is a sum of frictional and structural unemployment, and both of those can change as the labor force itself changes - who is looking for work, how they search, and what skills employers want. None of the three readings here is &ldquo;the&rdquo; natural rate; each is the natural rate FOR that decade&rsquo;s labor force.</figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.4">
@@ -1341,7 +1885,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <div class="prose">
 <p class="lede">One index, one basket, and a bias whose direction is worth memorizing cold: high, always high, never the other way.</p>
 
-<dl class="defs"><div class="def"><dt>The consumer price index (CPI)<span class="aka">also called <em>the cost-of-living index</em> or <em>the retail price index (used outside the US)</em><span class="aka-note">Whatever it is called, it is the fixed-basket index - the one that holds quantities still and lets only prices move.</span></span></dt><dd><b class="brief">A single number tracking the cost of a typical household&rsquo;s shopping basket over time.</b><span class="eg"><span class="lab">In real life</span>A statistics agency pricing the same list of groceries, rent, and gasoline every month and publishing how much more (or less) it costs than it did a year ago.</span><span class="detail">The consumer price index (CPI) measures the change in income a consumer would need in order to maintain the same standard of living over time under a new set of prices as under the original set of prices. It is a LEVEL, expressed as an index number against a base year, and it is the most common measure of the cost of living used in the United States.</span></dd></div><div class="def"><dt>The fixed basket</dt><dd><b class="brief">The same quantities of goods, priced in two different years.</b><span class="eg"><span class="lab">In real life</span>Pricing the exact same shopping cart - five loaves of bread, three gallons of milk, one tank of gas - at this year&rsquo;s prices and at the prices from a chosen base year.</span><span class="detail">The CPI measures the cost of a fixed basket of goods and services in a given year relative to the base year. The quantities in that basket are fixed at the base year&rsquo;s levels and used again, unchanged, when pricing every later year - only the PRICES are allowed to move. That single design choice is what makes the base year read exactly 100 and is also the source of the bias examined below.</span></dd></div><div class="def"><dt>The inflation rate</dt><dd><b class="brief">The percentage change in a price index from one period to the next.</b><span class="eg"><span class="lab">In real life</span>A CPI moving from 200 to 210 over a year is 5% inflation - the CHANGE in the number, never the number itself.</span><span class="detail">The inflation rate is determined by calculating the percentage change in a price index, such as CPI or the GDP deflator. An index is a level; the inflation rate is that level&rsquo;s rate of change. A CPI reading of 125 is not &ldquo;125% inflation&rdquo; - it says the basket costs 25% more than in the base year, which is a 25% CUMULATIVE rise, not an annual rate unless the base year was exactly one year earlier.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">The consumer price index rises from 150 to 165 over one year. What is the inflation rate for that year?</p><ol class="opts"><li><span class="ltr">A</span>1.5%</li><li><span class="ltr">B</span>10%</li><li><span class="ltr">C</span>15%</li><li><span class="ltr">D</span>150%</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> (165 &minus; 150) &divide; 150 = 10%. The index level, 165, is not the inflation rate; the inflation rate is the percentage CHANGE between the two levels.</p></details></div></dd></div><div class="def"><dt>A real variable</dt><dd><b class="brief">A nominal amount with the effect of price changes stripped out.</b><span class="eg"><span class="lab">In real life</span>A worker whose paycheck rose 3% this year while prices rose 5%. In dollars, the raise looks like a gain; in real terms, that worker can buy less than before.</span><span class="detail">Real variables, such as real wages, are the nominal variables deflated by the price level. Dividing a nominal figure by a price index (and rescaling) converts a dollar amount at one point in time into a quantity comparable across years - what the money would actually buy, rather than how many dollars it is.</span></dd></div><div class="def"><dt>Substitution bias</dt><dd><b class="brief">The CPI cannot substitute away from a good that got dearer, so it overstates inflation.</b><span class="eg"><span class="lab">In real life</span>Beef doubles in price and a household quietly shifts its shopping toward chicken instead. The fixed CPI basket still buys the same amount of beef it always did, and reports a bigger increase in the cost of living than the household actually experienced.</span><span class="detail">The CPI as a measure of inflation has some shortcomings, such as substitution bias, causing it to overstate the true inflation rate. Because the basket&rsquo;s quantities are locked at the base year, the CPI cannot capture households buying less of whatever got relatively more expensive - it prices out a shopping trip nobody actually takes anymore, and that trip is always at least as costly as the one the household really made.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">Which of the following best explains why the CPI tends to overstate the true inflation rate?</p><ol class="opts"><li><span class="ltr">A</span>It only measures the prices of goods produced domestically</li><li><span class="ltr">B</span>Its fixed basket cannot reflect consumers substituting toward goods whose prices rose less</li><li><span class="ltr">C</span>It excludes the prices of imported goods entirely</li><li><span class="ltr">D</span>It is calculated using current-year quantities rather than base-year quantities</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> The CPI as a measure of inflation has some shortcomings, such as substitution bias, causing it to overstate the true inflation rate: real households shift spending away from goods that got relatively dearer, but the fixed basket keeps pricing the base year&rsquo;s exact quantities regardless. The direction of the error - HIGH - is the examinable half of the statement.</p></details></div></dd></div></dl>
+<dl class="defs"><div class="def"><dt>The consumer price index (CPI)<span class="aka">also called <em>the cost-of-living index</em> or <em>the retail price index (used outside the US)</em><span class="aka-note">Whatever it is called, it is the fixed-basket index - the one that holds quantities still and lets only prices move.</span></span></dt><dd><b class="brief">A single number tracking the cost of a typical household&rsquo;s shopping basket over time.</b><span class="eg"><span class="lab">In real life</span>A statistics agency pricing the same list of groceries, rent, and gasoline every month and publishing how much more (or less) it costs than it did a year ago.</span><span class="detail">The consumer price index (CPI) measures the change in income a consumer would need to maintain the same standard of living over time under a new set of prices as under the original set of prices. It is a LEVEL, expressed as an index number against a base year, and it is the most common measure of the cost of living used in the United States.</span></dd></div><div class="def"><dt>The fixed basket</dt><dd><b class="brief">The same quantities of goods, priced in two different years.</b><span class="eg"><span class="lab">In real life</span>Pricing the exact same shopping cart - five loaves of bread, three gallons of milk, one tank of gas - at this year&rsquo;s prices and at the prices from a chosen base year.</span><span class="detail">The CPI measures the cost of a fixed basket of goods and services in a given year relative to the base year. The quantities in that basket are fixed at the base year&rsquo;s levels and used again, unchanged, when pricing every later year - only the PRICES are allowed to move. That single design choice is what makes the base year read exactly 100 and is also the source of the bias examined below.</span></dd></div><div class="def"><dt>The inflation rate</dt><dd><b class="brief">The percentage change in a price index from one period to the next.</b><span class="eg"><span class="lab">In real life</span>A CPI moving from 200 to 210 over a year is 5% inflation - the CHANGE in the number, never the number itself.</span><span class="detail">The inflation rate is determined by calculating the percentage change in a price index, such as CPI or the GDP deflator. An index is a level; the inflation rate is that level&rsquo;s rate of change. A CPI reading of 125 is not &ldquo;125% inflation&rdquo; - it says the basket costs 25% more than in the base year, which is a 25% CUMULATIVE rise, not an annual rate unless the base year was exactly one year earlier.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">The consumer price index rises from 150 to 165 over one year. What is the inflation rate for that year?</p><ol class="opts"><li><span class="ltr">A</span>1.5%</li><li><span class="ltr">B</span>10%</li><li><span class="ltr">C</span>15%</li><li><span class="ltr">D</span>150%</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> (165 &minus; 150) &divide; 150 = 10%. The index level, 165, is not the inflation rate; the inflation rate is the percentage CHANGE between the two levels.</p></details></div></dd></div><div class="def"><dt>A real variable</dt><dd><b class="brief">A nominal amount with the effect of price changes stripped out.</b><span class="eg"><span class="lab">In real life</span>A worker whose paycheck rose 3% this year while prices rose 5%. In dollars, the raise looks like a gain; in real terms, that worker can buy less than before.</span><span class="detail">Real variables, such as real wages, are the nominal variables deflated by the price level. Dividing a nominal figure by a price index (and rescaling) converts a dollar amount at one point in time into a quantity comparable across years - what the money would actually buy, rather than how many dollars it is.</span></dd></div><div class="def"><dt>Substitution bias</dt><dd><b class="brief">The CPI cannot substitute away from a good that got dearer, so it overstates inflation.</b><span class="eg"><span class="lab">In real life</span>Beef doubles in price and a household quietly shifts its shopping toward chicken instead. The fixed CPI basket still buys the same amount of beef it always did, and reports a bigger increase in the cost of living than the household actually experienced.</span><span class="detail">The CPI as a measure of inflation has some shortcomings, such as substitution bias, causing it to overstate the true inflation rate. Because the basket&rsquo;s quantities are locked at the base year, the CPI cannot capture households buying less of whatever got relatively more expensive - it prices out a shopping trip nobody actually takes anymore, and that trip is always at least as costly as the one the household really made.</span><div class="exam"><span class="lab">On the exam</span><p class="stem">Which of the following best explains why the CPI tends to overstate the true inflation rate?</p><ol class="opts"><li><span class="ltr">A</span>It only measures the prices of goods produced domestically</li><li><span class="ltr">B</span>Its fixed basket cannot reflect consumers substituting toward goods whose prices rose less</li><li><span class="ltr">C</span>It excludes the prices of imported goods entirely</li><li><span class="ltr">D</span>It is calculated using current-year quantities rather than base-year quantities</li></ol><details><summary>Answer</summary><p class="ans"><b>B.</b> The CPI as a measure of inflation has some shortcomings, such as substitution bias, causing it to overstate the true inflation rate: real households shift spending away from goods that got relatively dearer, but the fixed basket keeps pricing the base year&rsquo;s exact quantities regardless. The direction of the error - HIGH - is the examinable half of the statement.</p></details></div></dd></div></dl>
 
 <div class="excl-box">
   <span class="lab">MEA-1.F.2, exclusion</span>
@@ -1361,7 +1905,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Inflation rate</b> = (125 &minus; 100) &divide; 100 = <b>25%</b>.<br>
   <b>The check.</b> The quantities (5 kg, 10 kg) are IDENTICAL in both cost lines. If you priced year 2&rsquo;s basket with year 2&rsquo;s quantities, you have computed something else - not the CPI.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig"><div class="g-cols g-cols--wide">
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">The basket</p>
     <div class="g-pq">
@@ -1423,7 +1967,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
       <li><span class="ch-step ch-step--end">a ratio of one, times 100</span></li>
     </ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>A fixed basket, priced twice. The quantities are the base year&rsquo;s in BOTH price columns - only the prices are allowed to move - which is what makes the base year read exactly 100 and is the whole definition of the index.<span class="eg"><b>Example.</b> A statistics office pricing the identical shopping list - the same five kilos of beef, the same ten of chicken - at this year&rsquo;s prices and at a chosen base year&rsquo;s prices.</span><ul class="reads"><li class="lab">In the figure</li><li>The basket table: one quantity column, used for both years, and two price columns.</li><li>Cost of the basket in year 1 (the base year) and in year 2, each a sum of quantity times price.</li><li>CPI in year 1 is exactly 100 by construction - the basket priced against itself.</li><li>CPI in year 2 is the cost ratio times 100, and the inflation rate below it is the PERCENTAGE CHANGE between the two index numbers, not the index number itself.</li></ul></figcaption></figure><figure class="g-fig"><div class="g-cols g-cols--wide">
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>A fixed basket, priced twice. The quantities are the base year&rsquo;s in BOTH price columns - only the prices are allowed to move - which is what makes the base year read exactly 100 and is the whole definition of the index.<span class="eg"><b>Example.</b> A statistics office pricing the identical shopping list - the same five kilos of beef, the same ten of chicken - at this year&rsquo;s prices and at a chosen base year&rsquo;s prices.</span><ul class="reads"><li class="lab">In the figure</li><li>The basket table: one quantity column, used for both years, and two price columns.</li><li>Cost of the basket in year 1 (the base year) and in year 2, each a sum of quantity times price.</li><li>CPI in year 1 is exactly 100 by construction - the basket priced against itself.</li><li>CPI in year 2 is the cost ratio times 100, and the inflation rate below it is the PERCENTAGE CHANGE between the two index numbers, not the index number itself.</li></ul></figcaption></figure><figure class="g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">What the index prices</p>
     <ul class="g-calc"><li>
@@ -1492,7 +2036,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
       <li><span class="ch-step ch-step--end">the index reads HIGH</span></li>
     </ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Why the fixed basket reads high. Beef doubles in price, so a real household buys less of it - but the fixed basket cannot substitute, and keeps pricing exactly the same five kilos it always did. The household&rsquo;s own rise in living costs is smaller than what the CPI reports.<span class="eg"><b>Example.</b> A household that shifts toward chicken and away from beef once beef doubles in price still spends more than before - just not as much more as the fixed basket implies.</span><ul class="reads"><li class="lab">In the figure</li><li>Left: the fixed basket cannot switch, so it prices the same five kilos of beef the household no longer buys as much of.</li><li>The switched-basket table shows what the household ACTUALLY bought - three kilos of beef, twelve of chicken - after the price change.</li><li>Right: two index readings from the same event. The CPI&rsquo;s reading is higher than the household&rsquo;s own rise in cost of living.</li><li>The direction is the examinable half: the CPI OVERSTATES inflation. It never understates it through this particular mechanism.</li></ul></figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Why the fixed basket reads high. Beef doubles in price, so a real household buys less of it - but the fixed basket cannot substitute, and keeps pricing exactly the same five kilos it always did. The household&rsquo;s own rise in living costs is smaller than what the CPI reports.<span class="eg"><b>Example.</b> A household that shifts toward chicken and away from beef once beef doubles in price still spends more than before - just not as much more as the fixed basket implies.</span><ul class="reads"><li class="lab">In the figure</li><li>Left: the fixed basket cannot switch, so it prices the same five kilos of beef the household no longer buys as much of.</li><li>The switched-basket table shows what the household ACTUALLY bought - three kilos of beef, twelve of chicken - after the price change.</li><li>Right: two index readings from the same event. The CPI&rsquo;s reading is higher than the household&rsquo;s own rise in cost of living.</li><li>The direction is the examinable half: the CPI OVERSTATES inflation. It never understates it through this particular mechanism.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.5">
@@ -1524,10 +2068,10 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Real return</b> &asymp; nominal rate &minus; inflation rate = 4% &minus; 7% = <b>&minus;3%</b>.<br>
   The saver is repaid MORE dollars than they lent, and can still buy LESS with them than when they lent it. The borrower who issued that bond is the one who gained the 3 percentage points the saver lost.
 </div></div>
-    <aside class="figs"><div class="figdeck"><figure class="on g-fig illo motion move"><svg viewBox="0 0 340 310" role="img" aria-label="A fixed loan repaid after five years of inflation, in nominal and real dollars" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">One fixed loan, five years of inflation</text><text class="g-tick" x="170" y="36" text-anchor="middle">$10,000 lent, $10,000 repaid - in different dollars</text><rect x="8" y="52" width="132" height="34" fill="none" stroke="var(--econ-initial)" stroke-width="1.4" rx="4"/><text class="g-curve-label" x="74" y="73" text-anchor="middle" fill="var(--econ-initial)">Lender</text><rect x="200" y="52" width="132" height="34" fill="none" stroke="var(--econ-initial)" stroke-width="1.4" rx="4"/><text class="g-curve-label" x="266" y="73" text-anchor="middle" fill="var(--econ-initial)">Borrower</text><path class="g-after" data-at="0.4" d="M140 108 L200 108" stroke="var(--econ-detail-strong)" stroke-width="1.4" marker-end="url(#ill2-ah)"/><text class="g-tick g-after" data-at="0.4" x="170" y="100" text-anchor="middle">$10,000 lent</text><path class="g-after" data-at="1.6" d="M200 142 L140 142" stroke="var(--econ-change)" stroke-width="1.4" marker-end="url(#ill2-ah-o)"/><text class="g-tick g-after" data-at="1.6" x="170" y="134" text-anchor="middle" fill="var(--econ-change)">$10,000 repaid, 5 years later</text><text class="g-col-title" x="170" y="168" text-anchor="middle">What that repayment is actually worth</text><line x1="20" y1="234" x2="320" y2="234" stroke="var(--econ-initial)" stroke-width="1.4"/><rect x="60" y="164" width="56" height="70" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="234" to="164" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2"/><animate attributeName="height" from="0" to="70" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2"/></rect><text class="g-tick g-after" data-at="2" x="88" y="250" text-anchor="middle">nominal: 10000</text><rect x="204" y="178" width="56" height="56" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="234" to="178" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2.5"/><animate attributeName="height" from="0" to="56" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2.5"/></rect><text class="g-tick g-after" data-at="2.5" x="232" y="250" text-anchor="middle" fill="var(--econ-change)">real: 8000</text><defs>
+    <aside class="figs"><div class="figdeck"><figure class="on g-fig illo motion move"><div class="figbody"><svg viewBox="0 0 340 310" role="img" aria-label="A fixed loan repaid after five years of inflation, in nominal and real dollars" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">One fixed loan, five years of inflation</text><text class="g-tick" x="170" y="36" text-anchor="middle">$10,000 lent, $10,000 repaid - in different dollars</text><rect x="8" y="52" width="132" height="34" fill="none" stroke="var(--econ-initial)" stroke-width="1.4" rx="4"/><text class="g-curve-label" x="74" y="73" text-anchor="middle" fill="var(--econ-initial)">Lender</text><rect x="200" y="52" width="132" height="34" fill="none" stroke="var(--econ-initial)" stroke-width="1.4" rx="4"/><text class="g-curve-label" x="266" y="73" text-anchor="middle" fill="var(--econ-initial)">Borrower</text><path class="g-after" data-at="0.4" d="M140 108 L200 108" stroke="var(--econ-detail-strong)" stroke-width="1.4" marker-end="url(#ill2-ah)"/><text class="g-tick g-after" data-at="0.4" x="170" y="100" text-anchor="middle">$10,000 lent</text><path class="g-after" data-at="1.6" d="M200 142 L140 142" stroke="var(--econ-change)" stroke-width="1.4" marker-end="url(#ill2-ah-o)"/><text class="g-tick g-after" data-at="1.6" x="170" y="134" text-anchor="middle" fill="var(--econ-change)">$10,000 repaid, 5 years later</text><text class="g-col-title" x="170" y="168" text-anchor="middle">What that repayment is actually worth</text><line x1="20" y1="234" x2="320" y2="234" stroke="var(--econ-initial)" stroke-width="1.4"/><rect x="60" y="164" width="56" height="70" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="234" to="164" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2"/><animate attributeName="height" from="0" to="70" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2"/></rect><text class="g-tick g-after" data-at="2" x="88" y="250" text-anchor="middle">nominal: 10000</text><rect x="204" y="178" width="56" height="56" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="234" to="178" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2.5"/><animate attributeName="height" from="0" to="56" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="2.5"/></rect><text class="g-tick g-after" data-at="2.5" x="232" y="250" text-anchor="middle" fill="var(--econ-change)">real: 8000</text><defs>
     <marker id="ill2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker>
     <marker id="ill2-ah-o" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker>
-  </defs><text class="g-point-label g-after" data-at="3" x="170" y="274" text-anchor="middle" fill="var(--econ-change)">the lender loses about $2000 of real value</text><text class="g-tick g-after" data-at="3" x="170" y="291" text-anchor="middle">the borrower keeps exactly that much</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The $10,000 that comes back is the same number of dollars that went out - and after five years of 25% cumulative inflation, it buys what about $8,000 used to. The lender is $2,000 worse off in real terms and the borrower is exactly that much better off, without either of them doing anything after the loan was signed.</figcaption></figure></div></aside>
+  </defs><text class="g-point-label g-after" data-at="3" x="170" y="274" text-anchor="middle" fill="var(--econ-change)">the lender loses about $2000 of real value</text><text class="g-tick g-after" data-at="3" x="170" y="291" text-anchor="middle">the borrower keeps exactly that much</text></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The $10,000 that comes back is the same number of dollars that went out - and after five years of 25% cumulative inflation, it buys what about $8,000 used to. The lender is $2,000 worse off in real terms and the borrower is exactly that much better off, without either of them doing anything after the loan was signed.</figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.6">
@@ -1557,7 +2101,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <b>Real GDP per capita:</b> year 1 = $200 &divide; 30 &asymp; $6.67; year 2 = $240 &divide; 40 = $6.00 &mdash; per-capita output <b>fell</b> even though real GDP rose from $200 to $240.<br>
   <b>The check.</b> Real GDP used $2 (the base-year price) in BOTH years&rsquo; calculations. The moment a $3 appears in a real-GDP line, the arithmetic has drifted into nominal GDP.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig"><div class="g-cols g-cols--wide">
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 2">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 2">2</button></div><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">The basket</p>
     <div class="g-pq">
@@ -1626,7 +2170,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <span class="c-work"><span class="c-sub">real GDP rose 20%, per capita fell 10%</span><span class="c-out c-out--accent">FELL</span></span>
   </li></ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Nominal GDP, real GDP, and real GDP per capita from one price-and-quantity table. Real GDP uses BASE-year prices on the CURRENT year&rsquo;s quantities - the one substitution that removes the effect of price changes and leaves only the change in actual production.<span class="eg"><b>Example.</b> A country whose harvest grows while its population grows even faster: the total crop is bigger, but the amount per person is not.</span><ul class="reads"><li class="lab">In the figure</li><li>The table: two goods, base-year (year 1) prices and quantities, and year-2 prices and quantities.</li><li>Nominal GDP, year 2, uses year-2 prices on year-2 quantities.</li><li>Real GDP, year 2, uses the shaded BASE-year prices on year-2 quantities - the only column that changes between the nominal and real calculations.</li><li>The right panel shows real GDP rising 20% while real GDP PER CAPITA falls 10% in the same two years - separate claims, scored separately, because population grew faster than output did.</li></ul></figcaption></figure><figure class="g-fig"><div class="g-cols g-cols--wide">
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Nominal GDP, real GDP, and real GDP per capita from one price-and-quantity table. Real GDP uses BASE-year prices on the CURRENT year&rsquo;s quantities - the one substitution that removes the effect of price changes and leaves only the change in actual production.<span class="eg"><b>Example.</b> A country whose harvest grows while its population grows even faster: the total crop is bigger, but the amount per person is not.</span><ul class="reads"><li class="lab">In the figure</li><li>The table: two goods, base-year (year 1) prices and quantities, and year-2 prices and quantities.</li><li>Nominal GDP, year 2, uses year-2 prices on year-2 quantities.</li><li>Real GDP, year 2, uses the shaded BASE-year prices on year-2 quantities - the only column that changes between the nominal and real calculations.</li><li>The right panel shows real GDP rising 20% while real GDP PER CAPITA falls 10% in the same two years - separate claims, scored separately, because population grew faster than output did.</li></ul></figcaption></figure><figure class="g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide">
   <div>
     <p class="g-col-title">From index to rate</p>
     <ul class="g-calc"><li>
@@ -1687,7 +2231,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
       <li><span class="ch-step ch-step--end">borrowers gain</span></li>
     </ul>
   </div>
-</div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The GDP deflator, the inflation rate it implies, and what that inflation rate does to a nominal wage. Three calculations off the same nominal-and-real GDP figures, ending in a real wage that FELL even though the nominal wage rose.<span class="eg"><b>Example.</b> A worker who gets a 10% raise in a year when prices rise 15% is paid more in dollars and can buy less than before.</span><ul class="reads"><li class="lab">In the figure</li><li>The GDP deflator, year 2, is (nominal GDP &divide; real GDP) &times; 100 - always exactly 100 in the base year.</li><li>The inflation rate is the deflator&rsquo;s percentage change, not the deflator itself.</li><li>A short comparison names the deflator against the CPI: everything produced domestically with a basket that changes every year, against a fixed household basket that includes imports.</li><li>The right panel runs a real wage two ways - as a growth-rate comparison and as an actual dollar figure - and both land on the same verdict: the real wage fell.</li></ul></figcaption></figure></div></aside>
+</div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The GDP deflator, the inflation rate it implies, and what that inflation rate does to a nominal wage. Three calculations off the same nominal-and-real GDP figures, ending in a real wage that FELL even though the nominal wage rose.<span class="eg"><b>Example.</b> A worker who gets a 10% raise in a year when prices rise 15% is paid more in dollars and can buy less than before.</span><ul class="reads"><li class="lab">In the figure</li><li>The GDP deflator, year 2, is (nominal GDP &divide; real GDP) &times; 100 - always exactly 100 in the base year.</li><li>The inflation rate is the deflator&rsquo;s percentage change, not the deflator itself.</li><li>A short comparison names the deflator against the CPI: everything produced domestically with a basket that changes every year, against a fixed household basket that includes imports.</li><li>The right panel runs a real wage two ways - as a growth-rate comparison and as an actual dollar figure - and both land on the same verdict: the real wage fell.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-2.7">
@@ -1712,7 +2256,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <span class="big">Peak = inflationary gap = actual unemployment BELOW natural. Trough = recessionary gap = actual unemployment ABOVE natural.</span>
   The business cycle, the output gap, and the gap between actual and natural unemployment are three names for the same state of the economy, read off three different figures. A stem can hand you any one of the three and expect you to supply either of the other two.
 </div></div>
-    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 3">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 3">2</button><button type="button" class="chip" data-i="2" aria-label="figure 3 of 3">3</button></div><div class="figdeck"><figure class="on g-fig illo motion move"><svg viewBox="0 0 340 318" role="img" aria-label="Unsold inventories rising before the business cycle peak, as a leading indicator" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">An indicator that moves before the turn</text><text class="g-tick" x="170" y="36" text-anchor="middle">unsold inventories build up before output turns over</text><line x1="30" y1="220" x2="296" y2="220" stroke="var(--econ-initial)" stroke-width="1.4"/><rect x="20" y="196" width="20" height="24" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="196" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0"/><animate attributeName="height" from="0" to="24" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0"/></rect><rect x="86.5" y="184" width="20" height="36" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="184" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.4"/><animate attributeName="height" from="0" to="36" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.4"/></rect><rect x="153" y="160" width="20" height="60" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="160" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.8"/><animate attributeName="height" from="0" to="60" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.8"/></rect><rect x="219.5" y="124" width="20" height="96" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="220" to="124" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.2000000000000002"/><animate attributeName="height" from="0" to="96" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.2000000000000002"/></rect><rect x="286" y="148" width="20" height="72" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="220" to="148" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.6"/><animate attributeName="height" from="0" to="72" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.6"/></rect><path class="g-after" data-at="2.2" d="M229.5 92 L229.5 220" stroke="var(--econ-detail-strong)" stroke-width="1.2" stroke-dasharray="3 3"/><text class="g-tick g-after" data-at="2.2" x="229.5" y="58" text-anchor="middle" fill="var(--econ-change)">inventories</text><text class="g-tick g-after" data-at="2.2" x="229.5" y="74" text-anchor="middle" fill="var(--econ-change)">rise first</text><circle class="g-after" data-at="2.6" cx="296" cy="122" r="4.5" fill="var(--econ-initial)"/><text class="g-tick g-after" data-at="2.6" x="296" y="144" text-anchor="end" fill="var(--econ-initial)">output</text><text class="g-tick g-after" data-at="2.6" x="296" y="158" text-anchor="end" fill="var(--econ-initial)">peaks here</text><text class="g-point-label g-after" data-at="3" x="170" y="246" text-anchor="middle" fill="var(--econ-change)">the inventory build-up came first</text><text class="g-point-label g-after" data-at="3" x="170" y="262" text-anchor="middle" fill="var(--econ-change)">that is what makes it a LEADING indicator</text><text class="g-tick g-after" data-at="3" x="170" y="282" text-anchor="middle">a lagging indicator (like the unemployment rate)</text><text class="g-tick g-after" data-at="3" x="170" y="298" text-anchor="middle">confirms the turn only after it happens</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Unsold inventories climb while output is still rising, because firms keep producing at the old pace even as demand is quietly cooling. By the time the headline output number turns over, the inventory build-up has already been visible for a while - which is the whole difference between a leading indicator and a lagging one like the unemployment rate.</figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Business cycle — base" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Real GDP</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Time</text><path d="M52 162 C52.85 161.63 55.41 160.53 57.12 159.8 C58.83 159.07 60.53 158.33 62.24 157.6 C63.95 156.87 65.65 156.13 67.36 155.4 C69.07 154.67 70.77 153.93 72.48 153.2 C74.19 152.47 75.89 151.73 77.6 151 C79.31 150.27 81.01 149.53 82.72 148.8 C84.43 148.07 86.13 147.33 87.84 146.6 C89.55 145.87 91.25 145.13 92.96 144.4 C94.67 143.67 96.37 142.93 98.08 142.2 C99.79 141.47 101.49 140.73 103.2 140 C104.91 139.27 106.61 138.53 108.32 137.8 C110.03 137.07 111.73 136.33 113.44 135.6 C115.15 134.87 116.85 134.13 118.56 133.4 C120.27 132.67 121.97 131.93 123.68 131.2 C125.39 130.47 127.09 129.73 128.8 129 C130.51 128.27 132.21 127.53 133.92 126.8 C135.63 126.07 137.33 125.33 139.04 124.6 C140.75 123.87 142.45 123.13 144.16 122.4 C145.87 121.67 147.57 120.93 149.28 120.2 C150.99 119.47 152.69 118.73 154.4 118 C156.11 117.27 157.81 116.53 159.52 115.8 C161.23 115.07 162.93 114.33 164.64 113.6 C166.35 112.87 168.05 112.13 169.76 111.4 C171.47 110.67 173.17 109.93 174.88 109.2 C176.59 108.47 178.29 107.73 180 107 C181.71 106.27 183.41 105.53 185.12 104.8 C186.83 104.07 188.53 103.33 190.24 102.6 C191.95 101.87 193.65 101.13 195.36 100.4 C197.07 99.67 198.77 98.93 200.48 98.2 C202.19 97.47 203.89 96.73 205.6 96 C207.31 95.27 209.01 94.53 210.72 93.8 C212.43 93.07 214.13 92.33 215.84 91.6 C217.55 90.87 219.25 90.13 220.96 89.4 C222.67 88.67 224.37 87.93 226.08 87.2 C227.79 86.47 229.49 85.73 231.2 85 C232.91 84.27 234.61 83.53 236.32 82.8 C238.03 82.07 239.73 81.33 241.44 80.6 C243.15 79.87 244.85 79.13 246.56 78.4 C248.27 77.67 249.97 76.93 251.68 76.2 C253.39 75.47 255.09 74.73 256.8 74 C258.51 73.27 260.21 72.53 261.92 71.8 C263.63 71.07 265.33 70.33 267.04 69.6 C268.75 68.87 270.45 68.13 272.16 67.4 C273.87 66.67 275.57 65.93 277.28 65.2 C278.99 64.47 280.69 63.73 282.4 63 C284.11 62.27 285.81 61.53 287.52 60.8 C289.23 60.07 290.93 59.33 292.64 58.6 C294.35 57.87 296.91 56.77 297.76 56.4" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.4" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="68.4" fill="var(--econ-detail-strong)" text-anchor="start">trend</text><path d="M52 174.47 C52.85 173.43 55.41 170.35 57.12 168.26 C58.83 166.16 60.53 164.01 62.24 161.87 C63.95 159.73 65.65 157.56 67.36 155.4 C69.07 153.24 70.77 151.07 72.48 148.93 C74.19 146.79 75.89 144.64 77.6 142.54 C79.31 140.45 81.01 138.36 82.72 136.33 C84.43 134.3 86.13 132.31 87.84 130.37 C89.55 128.44 91.25 126.56 92.96 124.75 C94.67 122.94 96.37 121.19 98.08 119.52 C99.79 117.86 101.49 116.26 103.2 114.76 C104.91 113.25 106.61 111.83 108.32 110.51 C110.03 109.18 111.73 107.94 113.44 106.81 C115.15 105.68 116.85 104.64 118.56 103.7 C120.27 102.77 121.97 101.93 123.68 101.2 C125.39 100.47 127.09 99.84 128.8 99.31 C130.51 98.78 132.21 98.35 133.92 98.02 C135.63 97.69 137.33 97.46 139.04 97.32 C140.75 97.18 142.45 97.14 144.16 97.18 C145.87 97.21 147.57 97.35 149.28 97.55 C150.99 97.75 152.69 98.03 154.4 98.38 C156.11 98.72 157.81 99.14 159.52 99.61 C161.23 100.07 162.93 100.6 164.64 101.17 C166.35 101.73 168.05 102.35 169.76 102.98 C171.47 103.61 173.17 104.29 174.88 104.97 C176.59 105.64 178.29 106.35 180 107.04 C181.71 107.73 183.41 108.43 185.12 109.11 C186.83 109.78 188.53 110.46 190.24 111.09 C191.95 111.72 193.65 112.34 195.36 112.9 C197.07 113.46 198.77 113.99 200.48 114.46 C202.19 114.92 203.89 115.34 205.6 115.68 C207.31 116.02 209.01 116.31 210.72 116.5 C212.43 116.7 214.13 116.83 215.84 116.86 C217.55 116.9 219.25 116.85 220.96 116.71 C222.67 116.57 224.37 116.33 226.08 116 C227.79 115.67 229.49 115.24 231.2 114.7 C232.91 114.17 234.61 113.54 236.32 112.8 C238.03 112.06 239.73 111.22 241.44 110.29 C243.15 109.35 244.85 108.3 246.56 107.17 C248.27 106.03 249.97 104.79 251.68 103.46 C253.39 102.14 255.09 100.71 256.8 99.2 C258.51 97.7 260.21 96.1 261.92 94.43 C263.63 92.76 265.33 91.01 267.04 89.19 C268.75 87.38 270.45 85.49 272.16 83.56 C273.87 81.63 275.57 79.63 277.28 77.6 C278.99 75.57 280.69 73.48 282.4 71.38 C284.11 69.28 285.81 67.14 287.52 65 C289.23 62.85 290.93 60.68 292.64 58.52 C294.35 56.37 296.91 53.13 297.76 52.05" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="46.05" fill="var(--econ-initial)" text-anchor="start">GDP</text><circle cx="123.66" cy="101.21" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="117.66" y="93.21" fill="var(--econ-change)" text-anchor="end">peak</text><circle cx="236.25" cy="112.83" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="240.25" y="128.83" fill="var(--econ-change)" text-anchor="start">trough</text><path d="M123.66 206 L236.25 206 M123.66 202 L123.66 210 M236.25 202 L236.25 210" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><text class="g-point-label" x="179.95" y="198" text-anchor="middle" fill="var(--econ-policy)">contraction</text><path d="M236.25 206 L292.64 206 M236.25 202 L236.25 210 M292.64 202 L292.64 210" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><text class="g-point-label" x="264.45" y="198" text-anchor="middle" fill="var(--econ-policy)">expansion</text></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The business cycle. The one graph in either course whose horizontal axis is TIME - say that out loud, because reading it as a supply-and-demand diagram gets everything after it wrong. The dashed line is the long-run trend; the wavy line is actual output, swinging above and below it.<span class="eg"><b>Example.</b> A national output series plotted year by year: not a straight climb, but a wave that rises for a few years, turns over, falls for a shorter stretch, and turns up again.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: time. Vertical axis: real GDP. There is no price axis anywhere in this figure.</li><li>The dashed line is the long-run trend - where the economy would sit if output grew smoothly with no cycle at all.</li><li>The solid wavy line is actual output, oscillating around that trend.</li><li>Contraction runs from the peak to the trough; expansion runs from the trough to the next peak - phases are the braces UNDER the curve, spanning a stretch of time, not a single point on it.</li></ul></figcaption></figure><figure class="g-fig"><svg viewBox="0 0 340 268" role="img" aria-label="Business cycle — gaps" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Real GDP</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Time</text><path d="M52 162 C52.85 161.63 55.41 160.53 57.12 159.8 C58.83 159.07 60.53 158.33 62.24 157.6 C63.95 156.87 65.65 156.13 67.36 155.4 C69.07 154.67 70.77 153.93 72.48 153.2 C74.19 152.47 75.89 151.73 77.6 151 C79.31 150.27 81.01 149.53 82.72 148.8 C84.43 148.07 86.13 147.33 87.84 146.6 C89.55 145.87 91.25 145.13 92.96 144.4 C94.67 143.67 96.37 142.93 98.08 142.2 C99.79 141.47 101.49 140.73 103.2 140 C104.91 139.27 106.61 138.53 108.32 137.8 C110.03 137.07 111.73 136.33 113.44 135.6 C115.15 134.87 116.85 134.13 118.56 133.4 C120.27 132.67 121.97 131.93 123.68 131.2 C125.39 130.47 127.09 129.73 128.8 129 C130.51 128.27 132.21 127.53 133.92 126.8 C135.63 126.07 137.33 125.33 139.04 124.6 C140.75 123.87 142.45 123.13 144.16 122.4 C145.87 121.67 147.57 120.93 149.28 120.2 C150.99 119.47 152.69 118.73 154.4 118 C156.11 117.27 157.81 116.53 159.52 115.8 C161.23 115.07 162.93 114.33 164.64 113.6 C166.35 112.87 168.05 112.13 169.76 111.4 C171.47 110.67 173.17 109.93 174.88 109.2 C176.59 108.47 178.29 107.73 180 107 C181.71 106.27 183.41 105.53 185.12 104.8 C186.83 104.07 188.53 103.33 190.24 102.6 C191.95 101.87 193.65 101.13 195.36 100.4 C197.07 99.67 198.77 98.93 200.48 98.2 C202.19 97.47 203.89 96.73 205.6 96 C207.31 95.27 209.01 94.53 210.72 93.8 C212.43 93.07 214.13 92.33 215.84 91.6 C217.55 90.87 219.25 90.13 220.96 89.4 C222.67 88.67 224.37 87.93 226.08 87.2 C227.79 86.47 229.49 85.73 231.2 85 C232.91 84.27 234.61 83.53 236.32 82.8 C238.03 82.07 239.73 81.33 241.44 80.6 C243.15 79.87 244.85 79.13 246.56 78.4 C248.27 77.67 249.97 76.93 251.68 76.2 C253.39 75.47 255.09 74.73 256.8 74 C258.51 73.27 260.21 72.53 261.92 71.8 C263.63 71.07 265.33 70.33 267.04 69.6 C268.75 68.87 270.45 68.13 272.16 67.4 C273.87 66.67 275.57 65.93 277.28 65.2 C278.99 64.47 280.69 63.73 282.4 63 C284.11 62.27 285.81 61.53 287.52 60.8 C289.23 60.07 290.93 59.33 292.64 58.6 C294.35 57.87 296.91 56.77 297.76 56.4" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.4" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="68.4" fill="var(--econ-detail-strong)" text-anchor="start">trend</text><path d="M52 174.47 C52.85 173.43 55.41 170.35 57.12 168.26 C58.83 166.16 60.53 164.01 62.24 161.87 C63.95 159.73 65.65 157.56 67.36 155.4 C69.07 153.24 70.77 151.07 72.48 148.93 C74.19 146.79 75.89 144.64 77.6 142.54 C79.31 140.45 81.01 138.36 82.72 136.33 C84.43 134.3 86.13 132.31 87.84 130.37 C89.55 128.44 91.25 126.56 92.96 124.75 C94.67 122.94 96.37 121.19 98.08 119.52 C99.79 117.86 101.49 116.26 103.2 114.76 C104.91 113.25 106.61 111.83 108.32 110.51 C110.03 109.18 111.73 107.94 113.44 106.81 C115.15 105.68 116.85 104.64 118.56 103.7 C120.27 102.77 121.97 101.93 123.68 101.2 C125.39 100.47 127.09 99.84 128.8 99.31 C130.51 98.78 132.21 98.35 133.92 98.02 C135.63 97.69 137.33 97.46 139.04 97.32 C140.75 97.18 142.45 97.14 144.16 97.18 C145.87 97.21 147.57 97.35 149.28 97.55 C150.99 97.75 152.69 98.03 154.4 98.38 C156.11 98.72 157.81 99.14 159.52 99.61 C161.23 100.07 162.93 100.6 164.64 101.17 C166.35 101.73 168.05 102.35 169.76 102.98 C171.47 103.61 173.17 104.29 174.88 104.97 C176.59 105.64 178.29 106.35 180 107.04 C181.71 107.73 183.41 108.43 185.12 109.11 C186.83 109.78 188.53 110.46 190.24 111.09 C191.95 111.72 193.65 112.34 195.36 112.9 C197.07 113.46 198.77 113.99 200.48 114.46 C202.19 114.92 203.89 115.34 205.6 115.68 C207.31 116.02 209.01 116.31 210.72 116.5 C212.43 116.7 214.13 116.83 215.84 116.86 C217.55 116.9 219.25 116.85 220.96 116.71 C222.67 116.57 224.37 116.33 226.08 116 C227.79 115.67 229.49 115.24 231.2 114.7 C232.91 114.17 234.61 113.54 236.32 112.8 C238.03 112.06 239.73 111.22 241.44 110.29 C243.15 109.35 244.85 108.3 246.56 107.17 C248.27 106.03 249.97 104.79 251.68 103.46 C253.39 102.14 255.09 100.71 256.8 99.2 C258.51 97.7 260.21 96.1 261.92 94.43 C263.63 92.76 265.33 91.01 267.04 89.19 C268.75 87.38 270.45 85.49 272.16 83.56 C273.87 81.63 275.57 79.63 277.28 77.6 C278.99 75.57 280.69 73.48 282.4 71.38 C284.11 69.28 285.81 67.14 287.52 65 C289.23 62.85 290.93 60.68 292.64 58.52 C294.35 56.37 296.91 53.13 297.76 52.05" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="46.05" fill="var(--econ-initial)" text-anchor="start">GDP</text><circle cx="123.66" cy="101.21" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="117.66" y="93.21" fill="var(--econ-change)" text-anchor="end">peak</text><circle cx="236.25" cy="112.83" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="240.25" y="128.83" fill="var(--econ-change)" text-anchor="start">trough</text><text class="g-area-label" x="128.08" y="76.21" text-anchor="middle">inflationary gap</text><text class="g-area-label" x="240.67" y="145.83" text-anchor="middle">recessionary gap</text><path d="M123.66 131.21 L123.66 101.21" fill="none" stroke="var(--econ-policy)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M236.25 82.83 L236.25 112.83" fill="none" stroke="var(--econ-policy)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The same cycle, read for output gaps instead of phases. Above the trend is an inflationary gap; below it is a recessionary gap - the same two states Unit 3&rsquo;s AD-AS graph draws on a price-and-output axis instead of a time axis.<span class="eg"><b>Example.</b> The same national output series, with the peak and trough years labeled by how far actual output strayed from what the economy could sustain.</span><ul class="reads"><li class="lab">In the figure</li><li>At the peak, actual output sits ABOVE the trend line: an inflationary gap.</li><li>At the trough, actual output sits BELOW the trend line: a recessionary gap.</li><li>The vertical dashed segments at the peak and trough measure exactly that distance - the gap is a vertical distance on THIS graph, unlike the horizontal gap you will read off AD-AS in Unit 3.</li><li>This is the same information as the AD-AS graph&rsquo;s output gap, plotted against time instead of the price level - one fact, two axes.</li></ul></figcaption></figure></div></aside>
+    <aside class="figs"><div class="figtabs"><span class="lab">figures</span><button type="button" class="chip on" data-i="0" aria-label="figure 1 of 3">1</button><button type="button" class="chip" data-i="1" aria-label="figure 2 of 3">2</button><button type="button" class="chip" data-i="2" aria-label="figure 3 of 3">3</button></div><div class="figdeck"><figure class="on g-fig illo motion move"><div class="figbody"><svg viewBox="0 0 340 318" role="img" aria-label="Unsold inventories rising before the business cycle peak, as a leading indicator" xmlns="http://www.w3.org/2000/svg"><text class="g-panel-title" x="170" y="18" text-anchor="middle">An indicator that moves before the turn</text><text class="g-tick" x="170" y="36" text-anchor="middle">unsold inventories build up before output turns over</text><line x1="30" y1="220" x2="296" y2="220" stroke="var(--econ-initial)" stroke-width="1.4"/><rect x="20" y="196" width="20" height="24" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="196" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0"/><animate attributeName="height" from="0" to="24" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0"/></rect><rect x="86.5" y="184" width="20" height="36" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="184" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.4"/><animate attributeName="height" from="0" to="36" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.4"/></rect><rect x="153" y="160" width="20" height="60" fill="var(--econ-initial-soft)" rx="2"><animate attributeName="y" from="220" to="160" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.8"/><animate attributeName="height" from="0" to="60" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="0.8"/></rect><rect x="219.5" y="124" width="20" height="96" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="220" to="124" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.2000000000000002"/><animate attributeName="height" from="0" to="96" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.2000000000000002"/></rect><rect x="286" y="148" width="20" height="72" fill="var(--econ-change)" rx="2"><animate attributeName="y" from="220" to="148" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.6"/><animate attributeName="height" from="0" to="72" dur="0.8s" begin="indefinite" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1" data-at="1.6"/></rect><path class="g-after" data-at="2.2" d="M229.5 92 L229.5 220" stroke="var(--econ-detail-strong)" stroke-width="1.2" stroke-dasharray="3 3"/><text class="g-tick g-after" data-at="2.2" x="229.5" y="58" text-anchor="middle" fill="var(--econ-change)">inventories</text><text class="g-tick g-after" data-at="2.2" x="229.5" y="74" text-anchor="middle" fill="var(--econ-change)">rise first</text><circle class="g-after" data-at="2.6" cx="296" cy="122" r="4.5" fill="var(--econ-initial)"/><text class="g-tick g-after" data-at="2.6" x="296" y="144" text-anchor="end" fill="var(--econ-initial)">output</text><text class="g-tick g-after" data-at="2.6" x="296" y="158" text-anchor="end" fill="var(--econ-initial)">peaks here</text><text class="g-point-label g-after" data-at="3" x="170" y="246" text-anchor="middle" fill="var(--econ-change)">the inventory build-up came first</text><text class="g-point-label g-after" data-at="3" x="170" y="262" text-anchor="middle" fill="var(--econ-change)">that is what makes it a LEADING indicator</text><text class="g-tick g-after" data-at="3" x="170" y="282" text-anchor="middle">a lagging indicator (like the unemployment rate)</text><text class="g-tick g-after" data-at="3" x="170" y="298" text-anchor="middle">confirms the turn only after it happens</text></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>Unsold inventories climb while output is still rising, because firms keep producing at the old pace even as demand is quietly cooling. By the time the headline output number turns over, the inventory build-up has already been visible for a while - which is the whole difference between a leading indicator and a lagging one like the unemployment rate.</figcaption></figure><figure class="g-fig obj"><div class="figbody"><svg viewBox="0 0 340 268" role="img" aria-label="Business cycle — base" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Real GDP</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Time</text><path d="M52 162 C52.85 161.63 55.41 160.53 57.12 159.8 C58.83 159.07 60.53 158.33 62.24 157.6 C63.95 156.87 65.65 156.13 67.36 155.4 C69.07 154.67 70.77 153.93 72.48 153.2 C74.19 152.47 75.89 151.73 77.6 151 C79.31 150.27 81.01 149.53 82.72 148.8 C84.43 148.07 86.13 147.33 87.84 146.6 C89.55 145.87 91.25 145.13 92.96 144.4 C94.67 143.67 96.37 142.93 98.08 142.2 C99.79 141.47 101.49 140.73 103.2 140 C104.91 139.27 106.61 138.53 108.32 137.8 C110.03 137.07 111.73 136.33 113.44 135.6 C115.15 134.87 116.85 134.13 118.56 133.4 C120.27 132.67 121.97 131.93 123.68 131.2 C125.39 130.47 127.09 129.73 128.8 129 C130.51 128.27 132.21 127.53 133.92 126.8 C135.63 126.07 137.33 125.33 139.04 124.6 C140.75 123.87 142.45 123.13 144.16 122.4 C145.87 121.67 147.57 120.93 149.28 120.2 C150.99 119.47 152.69 118.73 154.4 118 C156.11 117.27 157.81 116.53 159.52 115.8 C161.23 115.07 162.93 114.33 164.64 113.6 C166.35 112.87 168.05 112.13 169.76 111.4 C171.47 110.67 173.17 109.93 174.88 109.2 C176.59 108.47 178.29 107.73 180 107 C181.71 106.27 183.41 105.53 185.12 104.8 C186.83 104.07 188.53 103.33 190.24 102.6 C191.95 101.87 193.65 101.13 195.36 100.4 C197.07 99.67 198.77 98.93 200.48 98.2 C202.19 97.47 203.89 96.73 205.6 96 C207.31 95.27 209.01 94.53 210.72 93.8 C212.43 93.07 214.13 92.33 215.84 91.6 C217.55 90.87 219.25 90.13 220.96 89.4 C222.67 88.67 224.37 87.93 226.08 87.2 C227.79 86.47 229.49 85.73 231.2 85 C232.91 84.27 234.61 83.53 236.32 82.8 C238.03 82.07 239.73 81.33 241.44 80.6 C243.15 79.87 244.85 79.13 246.56 78.4 C248.27 77.67 249.97 76.93 251.68 76.2 C253.39 75.47 255.09 74.73 256.8 74 C258.51 73.27 260.21 72.53 261.92 71.8 C263.63 71.07 265.33 70.33 267.04 69.6 C268.75 68.87 270.45 68.13 272.16 67.4 C273.87 66.67 275.57 65.93 277.28 65.2 C278.99 64.47 280.69 63.73 282.4 63 C284.11 62.27 285.81 61.53 287.52 60.8 C289.23 60.07 290.93 59.33 292.64 58.6 C294.35 57.87 296.91 56.77 297.76 56.4" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.4" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="68.4" fill="var(--econ-detail-strong)" text-anchor="start">trend</text><path d="M52 174.47 C52.85 173.43 55.41 170.35 57.12 168.26 C58.83 166.16 60.53 164.01 62.24 161.87 C63.95 159.73 65.65 157.56 67.36 155.4 C69.07 153.24 70.77 151.07 72.48 148.93 C74.19 146.79 75.89 144.64 77.6 142.54 C79.31 140.45 81.01 138.36 82.72 136.33 C84.43 134.3 86.13 132.31 87.84 130.37 C89.55 128.44 91.25 126.56 92.96 124.75 C94.67 122.94 96.37 121.19 98.08 119.52 C99.79 117.86 101.49 116.26 103.2 114.76 C104.91 113.25 106.61 111.83 108.32 110.51 C110.03 109.18 111.73 107.94 113.44 106.81 C115.15 105.68 116.85 104.64 118.56 103.7 C120.27 102.77 121.97 101.93 123.68 101.2 C125.39 100.47 127.09 99.84 128.8 99.31 C130.51 98.78 132.21 98.35 133.92 98.02 C135.63 97.69 137.33 97.46 139.04 97.32 C140.75 97.18 142.45 97.14 144.16 97.18 C145.87 97.21 147.57 97.35 149.28 97.55 C150.99 97.75 152.69 98.03 154.4 98.38 C156.11 98.72 157.81 99.14 159.52 99.61 C161.23 100.07 162.93 100.6 164.64 101.17 C166.35 101.73 168.05 102.35 169.76 102.98 C171.47 103.61 173.17 104.29 174.88 104.97 C176.59 105.64 178.29 106.35 180 107.04 C181.71 107.73 183.41 108.43 185.12 109.11 C186.83 109.78 188.53 110.46 190.24 111.09 C191.95 111.72 193.65 112.34 195.36 112.9 C197.07 113.46 198.77 113.99 200.48 114.46 C202.19 114.92 203.89 115.34 205.6 115.68 C207.31 116.02 209.01 116.31 210.72 116.5 C212.43 116.7 214.13 116.83 215.84 116.86 C217.55 116.9 219.25 116.85 220.96 116.71 C222.67 116.57 224.37 116.33 226.08 116 C227.79 115.67 229.49 115.24 231.2 114.7 C232.91 114.17 234.61 113.54 236.32 112.8 C238.03 112.06 239.73 111.22 241.44 110.29 C243.15 109.35 244.85 108.3 246.56 107.17 C248.27 106.03 249.97 104.79 251.68 103.46 C253.39 102.14 255.09 100.71 256.8 99.2 C258.51 97.7 260.21 96.1 261.92 94.43 C263.63 92.76 265.33 91.01 267.04 89.19 C268.75 87.38 270.45 85.49 272.16 83.56 C273.87 81.63 275.57 79.63 277.28 77.6 C278.99 75.57 280.69 73.48 282.4 71.38 C284.11 69.28 285.81 67.14 287.52 65 C289.23 62.85 290.93 60.68 292.64 58.52 C294.35 56.37 296.91 53.13 297.76 52.05" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="46.05" fill="var(--econ-initial)" text-anchor="start">GDP</text><circle cx="123.66" cy="101.21" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="117.66" y="93.21" fill="var(--econ-change)" text-anchor="end">peak</text><circle cx="236.25" cy="112.83" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="240.25" y="128.83" fill="var(--econ-change)" text-anchor="start">trough</text><path d="M123.66 206 L236.25 206 M123.66 202 L123.66 210 M236.25 202 L236.25 210" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><text class="g-point-label" x="179.95" y="198" text-anchor="middle" fill="var(--econ-policy)">contraction</text><path d="M236.25 206 L292.64 206 M236.25 202 L236.25 210 M292.64 202 L292.64 210" fill="none" stroke="var(--econ-policy)" stroke-width="1.2"/><text class="g-point-label" x="264.45" y="198" text-anchor="middle" fill="var(--econ-policy)">expansion</text></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The business cycle. The one graph in either course whose horizontal axis is TIME - say that out loud, because reading it as a supply-and-demand diagram gets everything after it wrong. The dashed line is the long-run trend; the wavy line is actual output, swinging above and below it.<span class="eg"><b>Example.</b> A national output series plotted year by year: not a straight climb, but a wave that rises for a few years, turns over, falls for a shorter stretch, and turns up again.</span><ul class="reads"><li class="lab">In the figure</li><li>Horizontal axis: time. Vertical axis: real GDP. There is no price axis anywhere in this figure.</li><li>The dashed line is the long-run trend - where the economy would sit if output grew smoothly with no cycle at all.</li><li>The solid wavy line is actual output, oscillating around that trend.</li><li>Contraction runs from the peak to the trough; expansion runs from the trough to the next peak - phases are the braces UNDER the curve, spanning a stretch of time, not a single point on it.</li></ul></figcaption></figure><figure class="g-fig obj"><div class="figbody"><svg viewBox="0 0 340 268" role="img" aria-label="Business cycle — gaps" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-ah-initial" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-initial)"/></marker><marker id="g-ah-change" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-change)"/></marker><marker id="g-ah-policy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-policy)"/></marker><marker id="g-ah-detail" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--econ-detail-strong)"/></marker><pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--econ-dwl-ink)" stroke-width="1.4" opacity="0.55"/></pattern></defs><line x1="52" y1="222" x2="52" y2="16" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><line x1="52" y1="222" x2="314" y2="222" stroke="var(--econ-initial)" stroke-width="var(--econ-axis-w)" marker-end="url(#g-ah-initial)"/><text class="g-axis-label" x="52" y="11" text-anchor="middle">Real GDP</text><text class="g-axis-label" x="180" y="255" text-anchor="middle">Time</text><path d="M52 162 C52.85 161.63 55.41 160.53 57.12 159.8 C58.83 159.07 60.53 158.33 62.24 157.6 C63.95 156.87 65.65 156.13 67.36 155.4 C69.07 154.67 70.77 153.93 72.48 153.2 C74.19 152.47 75.89 151.73 77.6 151 C79.31 150.27 81.01 149.53 82.72 148.8 C84.43 148.07 86.13 147.33 87.84 146.6 C89.55 145.87 91.25 145.13 92.96 144.4 C94.67 143.67 96.37 142.93 98.08 142.2 C99.79 141.47 101.49 140.73 103.2 140 C104.91 139.27 106.61 138.53 108.32 137.8 C110.03 137.07 111.73 136.33 113.44 135.6 C115.15 134.87 116.85 134.13 118.56 133.4 C120.27 132.67 121.97 131.93 123.68 131.2 C125.39 130.47 127.09 129.73 128.8 129 C130.51 128.27 132.21 127.53 133.92 126.8 C135.63 126.07 137.33 125.33 139.04 124.6 C140.75 123.87 142.45 123.13 144.16 122.4 C145.87 121.67 147.57 120.93 149.28 120.2 C150.99 119.47 152.69 118.73 154.4 118 C156.11 117.27 157.81 116.53 159.52 115.8 C161.23 115.07 162.93 114.33 164.64 113.6 C166.35 112.87 168.05 112.13 169.76 111.4 C171.47 110.67 173.17 109.93 174.88 109.2 C176.59 108.47 178.29 107.73 180 107 C181.71 106.27 183.41 105.53 185.12 104.8 C186.83 104.07 188.53 103.33 190.24 102.6 C191.95 101.87 193.65 101.13 195.36 100.4 C197.07 99.67 198.77 98.93 200.48 98.2 C202.19 97.47 203.89 96.73 205.6 96 C207.31 95.27 209.01 94.53 210.72 93.8 C212.43 93.07 214.13 92.33 215.84 91.6 C217.55 90.87 219.25 90.13 220.96 89.4 C222.67 88.67 224.37 87.93 226.08 87.2 C227.79 86.47 229.49 85.73 231.2 85 C232.91 84.27 234.61 83.53 236.32 82.8 C238.03 82.07 239.73 81.33 241.44 80.6 C243.15 79.87 244.85 79.13 246.56 78.4 C248.27 77.67 249.97 76.93 251.68 76.2 C253.39 75.47 255.09 74.73 256.8 74 C258.51 73.27 260.21 72.53 261.92 71.8 C263.63 71.07 265.33 70.33 267.04 69.6 C268.75 68.87 270.45 68.13 272.16 67.4 C273.87 66.67 275.57 65.93 277.28 65.2 C278.99 64.47 280.69 63.73 282.4 63 C284.11 62.27 285.81 61.53 287.52 60.8 C289.23 60.07 290.93 59.33 292.64 58.6 C294.35 57.87 296.91 56.77 297.76 56.4" fill="none" stroke="var(--econ-detail-strong)" stroke-width="1.4" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="68.4" fill="var(--econ-detail-strong)" text-anchor="start">trend</text><path d="M52 174.47 C52.85 173.43 55.41 170.35 57.12 168.26 C58.83 166.16 60.53 164.01 62.24 161.87 C63.95 159.73 65.65 157.56 67.36 155.4 C69.07 153.24 70.77 151.07 72.48 148.93 C74.19 146.79 75.89 144.64 77.6 142.54 C79.31 140.45 81.01 138.36 82.72 136.33 C84.43 134.3 86.13 132.31 87.84 130.37 C89.55 128.44 91.25 126.56 92.96 124.75 C94.67 122.94 96.37 121.19 98.08 119.52 C99.79 117.86 101.49 116.26 103.2 114.76 C104.91 113.25 106.61 111.83 108.32 110.51 C110.03 109.18 111.73 107.94 113.44 106.81 C115.15 105.68 116.85 104.64 118.56 103.7 C120.27 102.77 121.97 101.93 123.68 101.2 C125.39 100.47 127.09 99.84 128.8 99.31 C130.51 98.78 132.21 98.35 133.92 98.02 C135.63 97.69 137.33 97.46 139.04 97.32 C140.75 97.18 142.45 97.14 144.16 97.18 C145.87 97.21 147.57 97.35 149.28 97.55 C150.99 97.75 152.69 98.03 154.4 98.38 C156.11 98.72 157.81 99.14 159.52 99.61 C161.23 100.07 162.93 100.6 164.64 101.17 C166.35 101.73 168.05 102.35 169.76 102.98 C171.47 103.61 173.17 104.29 174.88 104.97 C176.59 105.64 178.29 106.35 180 107.04 C181.71 107.73 183.41 108.43 185.12 109.11 C186.83 109.78 188.53 110.46 190.24 111.09 C191.95 111.72 193.65 112.34 195.36 112.9 C197.07 113.46 198.77 113.99 200.48 114.46 C202.19 114.92 203.89 115.34 205.6 115.68 C207.31 116.02 209.01 116.31 210.72 116.5 C212.43 116.7 214.13 116.83 215.84 116.86 C217.55 116.9 219.25 116.85 220.96 116.71 C222.67 116.57 224.37 116.33 226.08 116 C227.79 115.67 229.49 115.24 231.2 114.7 C232.91 114.17 234.61 113.54 236.32 112.8 C238.03 112.06 239.73 111.22 241.44 110.29 C243.15 109.35 244.85 108.3 246.56 107.17 C248.27 106.03 249.97 104.79 251.68 103.46 C253.39 102.14 255.09 100.71 256.8 99.2 C258.51 97.7 260.21 96.1 261.92 94.43 C263.63 92.76 265.33 91.01 267.04 89.19 C268.75 87.38 270.45 85.49 272.16 83.56 C273.87 81.63 275.57 79.63 277.28 77.6 C278.99 75.57 280.69 73.48 282.4 71.38 C284.11 69.28 285.81 67.14 287.52 65 C289.23 62.85 290.93 60.68 292.64 58.52 C294.35 56.37 296.91 53.13 297.76 52.05" fill="none" stroke="var(--econ-initial)" stroke-width="var(--econ-curve-w)" stroke-linecap="round" stroke-linejoin="round"/><text class="g-curve-label" x="302.76" y="46.05" fill="var(--econ-initial)" text-anchor="start">GDP</text><circle cx="123.66" cy="101.21" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="117.66" y="93.21" fill="var(--econ-change)" text-anchor="end">peak</text><circle cx="236.25" cy="112.83" r="3.2" fill="var(--econ-change)" stroke="var(--econ-change)" stroke-width="0"/><text class="g-point-label" x="240.25" y="128.83" fill="var(--econ-change)" text-anchor="start">trough</text><text class="g-area-label" x="128.08" y="76.21" text-anchor="middle">inflationary gap</text><text class="g-area-label" x="240.67" y="145.83" text-anchor="middle">recessionary gap</text><path d="M123.66 131.21 L123.66 101.21" fill="none" stroke="var(--econ-policy)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M236.25 82.83 L236.25 112.83" fill="none" stroke="var(--econ-policy)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The same cycle, read for output gaps instead of phases. Above the trend is an inflationary gap; below it is a recessionary gap - the same two states Unit 3&rsquo;s AD-AS graph draws on a price-and-output axis instead of a time axis.<span class="eg"><b>Example.</b> The same national output series, with the peak and trough years labeled by how far actual output strayed from what the economy could sustain.</span><ul class="reads"><li class="lab">In the figure</li><li>At the peak, actual output sits ABOVE the trend line: an inflationary gap.</li><li>At the trough, actual output sits BELOW the trend line: a recessionary gap.</li><li>The vertical dashed segments at the peak and trough measure exactly that distance - the gap is a vertical distance on THIS graph, unlike the horizontal gap you will read off AD-AS in Unit 3.</li><li>This is the same information as the AD-AS graph&rsquo;s output gap, plotted against time instead of the price level - one fact, two axes.</li></ul></figcaption></figure></div></aside>
   </div>
 </section>
 <section class="sec" id="s-names">
@@ -1742,7 +2286,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
 </div>
 
 <p>The circular flow itself is worth one more look before leaving this unit, because it is the only figure in the course that says where all six numbers actually live.</p></div>
-    <aside class="figs"><div class="figdeck"><figure class="on g-fig"><div class="g-cols g-cols--wide"><div><div class="g-flow">
+    <aside class="figs"><div class="figdeck"><figure class="on g-fig obj"><div class="figbody"><div class="g-cols g-cols--wide"><div><div class="g-flow">
   <div class="cf-loop cf-loop--real">
     <span class="cf-loop-title">The real loop</span>
     <p><strong>Goods and services</strong> &rarr; from firms to households</p>
@@ -1757,17 +2301,17 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
     <p><strong>Wages, rent, interest, profit</strong> &rarr; from firms to households</p>
   </div>
 </div></div><div><div class="g-pq">
-  <table>
+  <table data-deck="records" data-cols="3" style="--rec-label: 104px">
     <caption>Every leakage has a matching injection, and every pair is modelled somewhere in this atlas.</caption>
     <thead><tr>
       <th scope="col">Leaks out as</th><th scope="col">Comes back as</th><th scope="col">Modelled by</th>
     </tr></thead>
     <tbody><tr>
-      <td>Savings</td><td>Investment</td><td>G-A04 loanable funds</td>
+      <td data-head data-label="Leaks out as">Savings</td><td data-label="Comes back as">Investment</td><td data-label="Modelled by" data-prose>G-A04 loanable funds</td>
     </tr><tr>
-      <td>Taxes</td><td>Government purchases</td><td>G-A02 AD-AS, G-A10 the multiplier</td>
+      <td data-head data-label="Leaks out as">Taxes</td><td data-label="Comes back as">Government purchases</td><td data-label="Modelled by" data-prose>G-A02 AD-AS, G-A10 the multiplier</td>
     </tr><tr>
-      <td>Imports</td><td>Exports</td><td>G-A06 foreign exchange</td>
+      <td data-head data-label="Leaks out as">Imports</td><td data-label="Comes back as">Exports</td><td data-label="Modelled by" data-prose>G-A06 foreign exchange</td>
     </tr></tbody>
   </table>
 </div>
@@ -1780,16 +2324,44 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
 </li><li>
   <span class="c-name">Imports &harr; Exports</span>
   <span class="c-work"><span class="c-sub">Spending on imports leaves the domestic flow; export earnings return to it. Net exports is one of the four components of AD.</span><span class="c-out">&nbsp;</span></span>
-</li></ul></div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The circular flow again, read for what this unit measures rather than for what it draws. GDP is the size of the whole flow; the labor force is the households supplying factors; the price indices track what a dollar buys as it moves around the loop. Every leakage-injection pair here is a market this course draws elsewhere.<span class="eg"><b>Example.</b> A single number from a national accounts report - GDP, the unemployment rate, or the CPI - always describes some specific piece of this one diagram, even when the report never mentions the diagram at all.</span><ul class="reads"><li class="lab">In the figure</li><li>Savings leaks out of the flow; investment is the injection that answers it, cleared in the loanable funds market of Unit 4.</li><li>Taxes leak out; government purchases are the injection, and whether the two match decides the budget picture Unit 3 draws.</li><li>Imports leak out; exports are the injection, cleared in the foreign exchange market of Unit 6.</li><li>This unit&rsquo;s six numbers - GDP, unemployment, the CPI, the deflator, the natural rate, the output gap - all describe THIS diagram. Nothing later in the course introduces a seventh loop; it draws pieces of this one in more detail.</li></ul></figcaption></figure></div></aside>
+</li></ul></div></div></div><div class="figbar"><button type="button" class="zoom">expand</button></div><figcaption>The circular flow again, read for what this unit measures rather than for what it draws. GDP is the size of the whole flow; the labor force is the households supplying factors; the price indices track what a dollar buys as it moves around the loop. Every leakage-injection pair here is a market this course draws elsewhere.<span class="eg"><b>Example.</b> A single number from a national accounts report - GDP, the unemployment rate, or the CPI - always describes some specific piece of this one diagram, even when the report never mentions the diagram at all.</span><ul class="reads"><li class="lab">In the figure</li><li>Savings leaks out of the flow; investment is the injection that answers it, cleared in the loanable funds market of Unit 4.</li><li>Taxes leak out; government purchases are the injection, and whether the two match decides the budget picture Unit 3 draws.</li><li>Imports leak out; exports are the injection, cleared in the foreign exchange market of Unit 6.</li><li>This unit&rsquo;s six numbers - GDP, unemployment, the CPI, the deflator, the natural rate, the output gap - all describe THIS diagram. Nothing later in the course introduces a seventh loop; it draws pieces of this one in more detail.</li></ul></figcaption></figure></div></aside>
   </div>
 </section></main>
 </div>
+<footer class="pagefoot"><div class="wrap">
+  <a class="up" href="./">All twelve units</a>
+  <nav class="pn"><a class="prev" href="macro-u1.html"><span class="lab">Previous</span><span class="t">Unit 1 — Basic Economic Concepts</span></a><a class="next" href="macro-u3.html"><span class="lab">Next</span><span class="t">Unit 3 — National Income and Price Determination</span></a></nav>
+</div></footer>
 <dialog class="figmax" aria-label="Figure, enlarged">
   <div class="body"></div>
   <div class="dlgbar"><button type="button" class="rp" hidden>replay</button><button type="button" class="close">close</button></div>
 </dialog>
 <script>
 (function () {
+  // A figure body taller than the space it has gets a fade at its foot, and
+  // loses it at the end of the scroll. Nothing here is content: with the
+  // script off the body still scrolls and every word is still reachable.
+  function marks() {
+    // The body and the caption are both scrollers and both need the cue. The
+    // caption is the one that was missing it, and it is the one that hides the
+    // most: 35 of the deck's captions show 30% or less of their own text.
+    document.querySelectorAll('.figs .figbody, .figs figcaption').forEach(function (b) {
+      var over = b.scrollHeight - b.clientHeight;
+      if (over < 3) { b.removeAttribute('data-more'); return; }
+      b.setAttribute('data-more', b.scrollTop >= over - 2 ? 'end' : '1');
+    });
+  }
+  document.addEventListener('scroll', function (e) {
+    var t = e.target;
+    if (t && t.classList && (t.classList.contains('figbody') || t.tagName === 'FIGCAPTION')) marks();
+  }, true);
+  addEventListener('resize', marks);
+  addEventListener('load', marks);
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('.figtabs')) setTimeout(marks, 0);
+  });
+  setTimeout(marks, 0);
+
   // Section rail: light up the section that is on screen.
   var links = {};
   document.querySelectorAll('.rail a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
