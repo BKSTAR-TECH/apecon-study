@@ -883,6 +883,41 @@ body { margin: 0; background: var(--surface-page); color: var(--text-body); font
 a { color: var(--text-link); text-decoration: none; }
 a:hover { color: var(--text-link-hover); }
 
+/* ---- the two reading lanes ---------------------------------------------
+
+   Both lanes are in the document and CSS picks one, so switching keeps the
+   reader exactly where they were - the reason this is a toggle and not a
+   second page. !important is deliberate and narrow: these three rules exist
+   only to decide which of two twins is on screen, and they have to beat the
+   ordinary display rules for .detail and the block roles, which are more
+   specific than any sane lane selector would be. */
+.lane-plain { display: none !important; }
+html.plain-lane .lane-ap { display: none !important; }
+html.plain-lane .lane-plain { display: block !important; }
+
+/* The switch itself. Two segments in one pill, the pressed one filled, which
+   is the shape a reader already knows from a light/dark switcher. The icons
+   carry no text, so each segment states its name for a screen reader and in a
+   tooltip - an icon alone is guessable, never unambiguous. */
+.laneseg { display: inline-flex; gap: 2px; margin: 0 0 14px; padding: 2px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: 999px; }
+.lanebtn { display: grid; place-items: center; width: 30px; height: 26px; padding: 0; border: 0; border-radius: 999px; background: none; color: var(--text-subtle); cursor: pointer; }
+.lanebtn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.lanebtn:hover { color: var(--text-strong); }
+.lanebtn[aria-pressed="true"] { background: var(--surface-brand); color: var(--text-inverse); }
+.lanebtn:focus-visible { outline: 2px solid var(--orange-500); outline-offset: 1px; }
+
+/* A label that is there for a screen reader and not for the eye. */
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Collapsed, the rail is a 34px gutter. Two icons side by side do not fit, so
+   they stack - the switch stays reachable in the one state where the reader
+   has deliberately taken the contents away. */
+.layout.railed .laneseg { flex-direction: column; }
+
+/* The lane is a reading choice, not a document. A printed page carries the
+   lane that was on screen, and never the switch. */
+@media print { .laneseg { display: none; } }
+
 /* ---- hero -------------------------------------------------------------- */
 .hero { background: var(--surface-brand); color: var(--text-inverse); padding: 30px 0 0; }
 .hero .wrap { display: grid; gap: 8px; }
@@ -943,9 +978,14 @@ a:hover { color: var(--text-link-hover); }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .rail {
     position: sticky; top: 0; z-index: 5; margin: 0 0 20px;
-    display: flex; gap: 2px; overflow-x: auto; scrollbar-width: thin;
+    display: flex; align-items: center; gap: 8px;
     background: var(--surface-page); border-bottom: 1px solid var(--border-subtle);
   }
+  /* The section links scroll sideways; the lane switch is pinned beside them.
+     Inside the scroller it would be the first thing to leave the screen, which
+     is the whole failure this move exists to fix. */
+  .railinner { flex: 1 1 auto; min-width: 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: thin; }
+  .laneseg { flex: 0 0 auto; margin: 4px 0; }
   .rail .lab { display: none; }
   .rail a {
     flex: 0 0 auto; max-width: 26ch; overflow: hidden; text-overflow: ellipsis;
@@ -1640,6 +1680,10 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
 .cedref { font-family: var(--font-mono, monospace); font-size: .92em; color: var(--text-subtle);
           background: var(--surface-sunken); border-radius: var(--radius-sm); padding: 0 4px; }
 </style>
+<!-- Before first paint, so a reader who chose the plain lane never sees a
+     frame of the other one. Wrapped because a browser with site data
+     blocked throws on the read rather than returning null. -->
+<script>try{if(localStorage.getItem('apecon-lane')==='plain'){document.documentElement.classList.add('plain-lane');}}catch(e){}</script>
 </head><body>
 <!-- Every distinct defs block on this page, hoisted, first in the document.
 
@@ -1673,7 +1717,7 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   </div>
 </div></header>
 <div class="wrap layout">
-  <nav class="rail"><button type="button" class="railtoggle" aria-expanded="true" title="Hide the contents"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 1.5 L2.5 5 L6.5 8.5"/></svg><span class="lab">On this page</span></button><a href="#s-3.1">3.1 The production function</a><a href="#s-3.2">3.2 Short-run production costs</a><a href="#s-3.3">3.3 Long-run production costs</a><a href="#s-3.4">3.4 Types of profit</a><a href="#s-3.5">3.5 Profit maximization</a><a href="#s-3.6">3.6 Firms&rsquo; short-run and long-run decisions</a><a href="#s-3.7">3.7 Perfect competition: the firm in the short run</a><a href="#s-3.8">3.7 Perfect competition: the long run, and efficiency</a><a href="#s-names">The same idea under another name</a><a href="#s-recall">The card to memorize</a></nav>
+  <nav class="rail"><div class="railinner"><button type="button" class="railtoggle" aria-expanded="true" title="Hide the contents"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M6.5 1.5 L2.5 5 L6.5 8.5"/></svg><span class="lab">On this page</span></button><a href="#s-3.1">3.1 The production function</a><a href="#s-3.2">3.2 Short-run production costs</a><a href="#s-3.3">3.3 Long-run production costs</a><a href="#s-3.4">3.4 Types of profit</a><a href="#s-3.5">3.5 Profit maximization</a><a href="#s-3.6">3.6 Firms&rsquo; short-run and long-run decisions</a><a href="#s-3.7">3.7 Perfect competition: the firm in the short run</a><a href="#s-3.8">3.7 Perfect competition: the long run, and efficiency</a><a href="#s-names">The same idea under another name</a><a href="#s-recall">The card to memorize</a></div></nav>
   <main><section class="sec" id="s-3.1">
   <h2>3.1 The production function</h2>
   <div class="spread has-figs">
@@ -2108,6 +2152,33 @@ table.q-tbl.cmp-tbl tbody th { background: var(--surface-sunken); color: var(--t
   <div class="dlgbar"><button type="button" class="rp" hidden>replay</button><button type="button" class="close">close</button></div>
 </dialog>
 <script>
+  // The reading lane. Both versions are in the document; this only decides
+  // which is shown, so the reader keeps their scroll position and any figure
+  // they had open. The choice is remembered, and the head script applies it
+  // before the first paint on the next visit.
+  (function () {
+    var seg = document.querySelector('.laneseg');
+    if (!seg) return;
+    var root = document.documentElement;
+    var btns = seg.querySelectorAll('.lanebtn');
+    var sync = function () {
+      var on = root.classList.contains('plain-lane');
+      btns.forEach(function (b) {
+        var mine = (b.getAttribute('data-lane') === 'plain') === on;
+        b.setAttribute('aria-pressed', mine ? 'true' : 'false');
+      });
+    };
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var want = b.getAttribute('data-lane') === 'plain';
+        root.classList.toggle('plain-lane', want);
+        try { localStorage.setItem('apecon-lane', want ? 'plain' : 'ap'); } catch (e) {}
+        sync();
+      });
+    });
+    sync();
+  })();
+
 (function () {
   // A figure body taller than the space it has gets a fade at its foot, and
   // loses it at the end of the scroll. Nothing here is content: with the
